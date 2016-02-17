@@ -29,7 +29,6 @@ public class Shoot {
 		xaBall= ball.getXa();
 		g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
 		xa++;
-
 		if(xBall+xa+DIAMETER <= game.getWidth() - 10){
 			return true;
 		}

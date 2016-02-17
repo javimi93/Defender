@@ -56,6 +56,7 @@ public class Game extends JPanel {
 	public static void main(String[] args) throws InterruptedException {
 		JFrame frame = new JFrame("Defender");
 		Game game = new Game();
+		int count=0;
 		frame.add(game);
 		frame.setSize(400, 400);
 		frame.setVisible(true);
@@ -65,7 +66,8 @@ public class Game extends JPanel {
 			game.move();
 			game.repaint();
 			Thread.sleep(10);
-			if(game.ball.getEnemysACTIVOS() == 0){
+			count++;
+			if(game.ball.getEnemysACTIVOS() == 0 && count%100 == 0){
 				game.ball.addEnemysACTIVOS();
 				game.enemy.setPaint(true);
 			}

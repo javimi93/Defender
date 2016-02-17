@@ -51,7 +51,7 @@ public class Ball {
 		}
 		if(shootsACTIVOS > 0 && enemysACTIVOS > 0){
 			for(int i=0; i< shootsACTIVOS;i++){
-				if(game.enemy.getBounds().intersects(shoots.get(i).getBounds())){
+				if(enemysACTIVOS > 0 && game.enemy.getBounds().intersects(shoots.get(i).getBounds())){
 					enemysACTIVOS--;
 					shootsACTIVOS--;
 					game.enemy.setPaint(false);
