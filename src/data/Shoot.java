@@ -14,9 +14,10 @@ public class Shoot {
 	int xBall=0;
 	int yBall=0;
 	Thread shoot;
-
+	private boolean activo=false;
 	private Game game;
 	private Ball ball;
+	private int lastXa2=0;
 
 	public Shoot(Game game, Ball ball) {
 		this.game= game;
@@ -26,15 +27,67 @@ public class Shoot {
 	}
 
 	public boolean paint(Graphics2D g,int lastXa) {
-		xaBall= ball.getXa();
-		g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
+		if(!activo){
+			activo=true;
+			xaBall= ball.getXa();
+			if(lastXa2 != lastXa){
+				lastXa2=lastXa;
+			}
+		}
+
+		if(xaBall == 0){
+			if(lastXa2 > 0){
+				g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
+				xa++;
+				if(xBall+xa+DIAMETER <= game.getWidth() - 10){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else{
+				g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
+				xa--;
+				if(xBall+xa >= - 10){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		}
+		else{
+			if(xaBall > 0 ){
+				g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
+				xa++;
+				if(xBall+xa+DIAMETER <= game.getWidth() - 10){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+			else{
+				g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
+				xa--;
+				if(xBall-+xa >= - 10){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		}
+
+		/*g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
 		xa++;
 		if(xBall+xa+DIAMETER <= game.getWidth() - 10){
 			return true;
 		}
 		else{
 			return false;
-		}
+		}*/
 	}
 
 

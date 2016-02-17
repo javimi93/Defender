@@ -36,7 +36,7 @@ public class Enemy{
 
 	public Rectangle getBounds() {
 		if(paint){
-			return new Rectangle(game.getWidth()/2, game.getHeight()/2, 25, 50);
+			return new Rectangle(game.getWidth()/2, game.getHeight()/2, 50, 25);
 		}
 		else{
 			return null;
