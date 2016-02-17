@@ -40,7 +40,7 @@ public class Shoot {
 
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, Y, WITH, HEIGHT);
+		return new Rectangle(xBall+xa+DIAMETER, yBall+(DIAMETER/2), 10, 10);
 	}
 
 	public int getTopY() {

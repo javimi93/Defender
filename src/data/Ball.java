@@ -17,7 +17,8 @@ public class Ball {
 	private int lastXa=1;
 	private boolean paint=false;
 	private Shoot shoot;
-	private int ACTIVOS=0;
+	private int shootsACTIVOS=0;
+	private int enemysACTIVOS=0;
 	private Vector<Shoot> shoots= new Vector();
 
 	public Ball(Game game) {
@@ -43,13 +44,21 @@ public class Ball {
 			y+=ADD;
 		}
 		if (y+ya > game.getHeight() - DIAMETER){
-			//game.gameOver();
 			y-=ADD;
 		}
-		/*if (collision()){
-			ya = -1;
-			y = game.racquet.getTopY() - DIAMETER;
-		}*/
+		if (collision()){
+			game.gameOver();
+		}
+		if(shootsACTIVOS > 0 && enemysACTIVOS > 0){
+			for(int i=0; i< shootsACTIVOS;i++){
+				if(game.enemy.getBounds().intersects(shoots.get(i).getBounds())){
+					enemysACTIVOS--;
+					shootsACTIVOS--;
+					game.enemy.setPaint(false);
+					shoots.remove(i);
+				}
+			}
+		}
 
 		x = x + xa;
 		y = y + ya;
@@ -62,18 +71,23 @@ public class Ball {
 		ya=0;
 	}
 
-	/*private boolean collision() {
-	//	return game.racquet.getBounds().intersects(getBounds());
-	}*/
+	private boolean collision() {
+		if(enemysACTIVOS > 0){
+			return game.enemy.getBounds().intersects(getBounds());
+		}
+		else{
+			return false;
+		}
+	}
 
 	public void paint(Graphics2D g) {
 		//g.drawImage(image, x, y, 20, 20, null);
 		g.fillOval(x, y, DIAMETER, DIAMETER);
-		for(int i=0; i< ACTIVOS;i++){
+		for(int i=0; i< shootsACTIVOS;i++){
 			paint=shoots.get(i).paint(g,lastXa);
 			if(!paint){
 				shoots.remove(i);
-				ACTIVOS--;
+				shootsACTIVOS--;
 			}
 		}
 	}
@@ -95,7 +109,7 @@ public class Ball {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			shoots.add(new Shoot(game,this));
-			ACTIVOS++;
+			shootsACTIVOS++;
 		}
 	}
 
@@ -113,5 +127,16 @@ public class Ball {
 
 	public int getXa(){
 		return xa;
+	}
+
+	public int getEnemysACTIVOS() {
+		return enemysACTIVOS;
+	}
+
+	public void setEnemysACTIVOS(int enemysACTIVOS) {
+		this.enemysACTIVOS = enemysACTIVOS;
+	}
+	public void addEnemysACTIVOS() {
+		this.enemysACTIVOS++;
 	}
 }
