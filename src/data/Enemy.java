@@ -25,6 +25,9 @@ public class Enemy{
 			g.fillRoundRect(X, Y, 25, 50,5,50);
 			shootEnemy.paint(g);
 		}
+		else{
+			shootEnemy.setXa(0);
+		}
 	}
 
 

@@ -103,6 +103,14 @@ public class ShootEnemy {
 		//}
 	}
 
+	public int getXa() {
+		return xa;
+	}
+
+	public void setXa(int xa) {
+		this.xa = xa;
+	}
+
 	public int getTopY() {
 		return Y - HEIGHT;
 	}
