@@ -6,10 +6,14 @@ import java.awt.event.KeyEvent;
 import java.util.Vector;
 
 public class Ball {
-	int x = 0;
-	int y = 0;
-	int xa= 0;
-	int ya= 0;
+	//Posiciones iniciales de la bola
+	int xInit = 0;
+	int yInit = 0;
+	//Variables de cambio de la posición de la bola en el plano
+	//xMovement es el desplazamiento de la bola sobre el eje x
+	//yMovement es el desplazamiento de la bola sobre el eje y
+	int xMovement = 0;
+	int yMovement = 0;
 	//private BufferedImage image;
 	private static final int DIAMETER = 30;
 	private static final int ADD= 3;
@@ -23,6 +27,7 @@ public class Ball {
 
 	public Ball(Game game) {
 		this.game= game;
+		//TODO cargar imagen nave.
 		/*try
         {
             this.image = ImageIO.read(new File("datos/sprite.jpg"));
@@ -34,17 +39,17 @@ public class Ball {
 	}
 
 	void move() {
-		if (x+xa  < 0){
-			x+=ADD;
+		if (xInit+xMovement  < 0){
+			xInit+=ADD;
 		}
-		if (x+xa > game.getWidth() - DIAMETER){
-			x-=ADD;
+		if (xInit+xMovement > game.getWidth() - DIAMETER){
+			xInit-=ADD;
 		}
-		if (y+ya < 0){
-			y+=ADD;
+		if (yInit+yMovement < 0){
+			yInit+=ADD;
 		}
-		if (y+ya > game.getHeight() - DIAMETER){
-			y-=ADD;
+		if (yInit+yMovement > game.getHeight() - DIAMETER){
+			yInit-=ADD;
 		}
 		if (collision()){
 			game.gameOver();
@@ -60,15 +65,15 @@ public class Ball {
 			}
 		}
 
-		x = x + xa;
-		y = y + ya;
+		xInit = xInit + xMovement;
+		yInit = yInit + yMovement;
 
-		if(xa!=0){
-			lastXa = xa;
+		if(xMovement!=0){
+			lastXa = xMovement;
 		}
 
-		xa=0;
-		ya=0;
+		xMovement=0;
+		yMovement=0;
 	}
 
 	private boolean collision() {
@@ -82,7 +87,7 @@ public class Ball {
 
 	public void paint(Graphics2D g) {
 		//g.drawImage(image, x, y, 20, 20, null);
-		g.fillOval(x, y, DIAMETER, DIAMETER);
+		g.fillOval(xInit, yInit, DIAMETER, DIAMETER);
 		for(int i=0; i< shootsACTIVOS;i++){
 			paint=shoots.get(i).paint(g,lastXa);
 			if(!paint){
@@ -95,16 +100,16 @@ public class Ball {
 
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
-			xa=-ADD;
+			xMovement=-ADD;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-			xa=ADD;
+			xMovement=ADD;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
-			ya=-ADD;
+			yMovement=-ADD;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN){
-			ya=ADD;
+			yMovement=ADD;
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
@@ -114,19 +119,19 @@ public class Ball {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(x, y, DIAMETER, DIAMETER);
+		return new Rectangle(xInit, yInit, DIAMETER, DIAMETER);
 	}
 
 	public int getX(){
-		return x;
+		return xInit;
 	}
 
 	public int getY(){
-		return y;
+		return yInit;
 	}
 
 	public int getXa(){
-		return xa;
+		return xMovement;
 	}
 
 	public int getEnemysACTIVOS() {
