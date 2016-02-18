@@ -20,10 +20,10 @@ public class Ball {
 	private Game game;
 	private int lastXa=1;
 	private boolean paint=false;
-	private Shoot shoot;
+	private ShootCraft shoot;
 	private int shootsACTIVOS=0;
 	private int enemysACTIVOS=0;
-	private Vector<Shoot> shoots= new Vector();
+	private Vector<ShootCraft> shoots= new Vector();
 
 	public Ball(Game game) {
 		this.game= game;
@@ -78,7 +78,7 @@ public class Ball {
 
 	private boolean collision() {
 		if(enemysACTIVOS > 0){
-			return game.enemy.getBounds().intersects(getBounds());
+			return game.enemy.getBounds().intersects(getBounds()) || game.enemy.getShootEnemy().getBounds().intersects(getBounds()) ;
 		}
 		else{
 			return false;
@@ -113,7 +113,7 @@ public class Ball {
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
-			shoots.add(new Shoot(game,this));
+			shoots.add(new ShootCraft(game,this));
 			shootsACTIVOS++;
 		}
 	}

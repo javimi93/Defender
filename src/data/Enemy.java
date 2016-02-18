@@ -1,51 +1,44 @@
 package data;
 
-import java.applet.Applet;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 public class Enemy{
-	private static final int Y = 330;
-	private static final int WITH = 60;
-	private static final int HEIGHT = 10;
-	int x = 0;
+
 	private boolean paint = true;
-
-
-	int xa = 1;
-
 	private Game game;
+	private int X = 0;
+	private int Y = 0;
+	private ShootEnemy shootEnemy ;
 
 	public Enemy(Game game,Ball ball) {
 		this.game= game;
+		shootEnemy=new ShootEnemy(game,this);
 		ball.addEnemysACTIVOS();
 		
 	}
 
-	public void move() {
-		if (x + xa > 0 && x + xa < game.getWidth()-WITH)
-			x = x + xa;
-	}
-
 	public void paint(Graphics2D g) {
 		if(paint){
-			g.fillRoundRect(game.getWidth()/2, game.getHeight()/2, 25, 50,5,50);
+			X = game.getWidth()/2;
+			Y = game.getHeight()/2;
+			g.fillRoundRect(X, Y, 25, 50,5,50);
+			shootEnemy.paint(g);
 		}
 	}
 
 
 	public Rectangle getBounds() {
 		if(paint){
-			return new Rectangle(game.getWidth()/2, game.getHeight()/2, 50, 25);
+			X = game.getWidth()/2;
+			Y = game.getHeight()/2;
+			return new Rectangle(X, Y, 25, 50);
 		}
 		else{
 			return null;
 		}
 	}
 
-	public int getTopY() {
-		return Y - HEIGHT;
-	}
 
 	public boolean isPaint() {
 		return paint;
@@ -53,5 +46,25 @@ public class Enemy{
 
 	public void setPaint(boolean paint) {
 		this.paint = paint;
+	}
+
+	public int getX() {
+		return X;
+	}
+
+	public void setX(int x) {
+		this.X = x;
+	}
+
+	public int getY() {
+		return Y;
+	}
+
+	public void setY(int y) {
+		this.Y = y;
+	}
+
+	public ShootEnemy getShootEnemy() {
+		return shootEnemy;
 	}
 }
