@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Game extends JPanel {
 
+	private static boolean restart=true;
 	Ball ball = new Ball(this);
 	Enemy enemy = new Enemy(this,ball);
 	
@@ -50,11 +51,13 @@ public class Game extends JPanel {
 	
 	public void gameOver() {
 		JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
-		System.exit(ABORT);
+		restart=false;
 	}
 
 	public static void main(String[] args) throws InterruptedException {
+		while(true){
 		JFrame frame = new JFrame("Defender");
+		restart=true;
 		Game game = new Game();
 		int count=0;
 		frame.add(game);
@@ -62,7 +65,7 @@ public class Game extends JPanel {
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		while (true) {
+		while (restart) {
 			game.move();
 			game.repaint();
 			Thread.sleep(10);
@@ -70,8 +73,9 @@ public class Game extends JPanel {
 			if(game.ball.getEnemysACTIVOS() == 0 && count%100 == 0){
 				game.ball.addEnemysACTIVOS();
 				game.enemy.setPaint(true);
-			}
-			
+			}			
+		}
+		frame.dispose();
 		}
 	}
 
