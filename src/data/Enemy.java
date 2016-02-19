@@ -15,7 +15,7 @@ public class Enemy{
 		this.game= game;
 		shootEnemy=new ShootEnemy(game,this);
 		ball.addEnemysACTIVOS();
-		
+
 	}
 
 	public void paint(Graphics2D g) {
@@ -23,11 +23,9 @@ public class Enemy{
 			X = game.getWidth()/2;
 			Y = game.getHeight()/2;
 			g.fillRoundRect(X, Y, 25, 50,5,50);
-			shootEnemy.paint(g);
 		}
-		else{
-			shootEnemy.setXa(0);
-		}
+		shootEnemy.paint(g);
+
 	}
 
 
