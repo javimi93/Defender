@@ -1,5 +1,6 @@
 package data;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -7,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -15,6 +17,8 @@ public class Game extends JPanel {
 
 	private static boolean restart=true;
 	private static boolean terminar=true;
+	private static JLabel puntuacion;
+	private int nPuntuacion=0;
 	static JFrame frame;
 	Ball ball = new Ball(this);
 	Enemy enemy = new Enemy(this,ball);
@@ -67,14 +71,21 @@ public class Game extends JPanel {
 			terminar=false;
 		}
 	}
+	
+	public void updatePuntuacion(){
+		nPuntuacion++;
+		puntuacion.setText("Enemigos Destruidos : "+nPuntuacion);
+	}
 
 	public static void main(String[] args) throws InterruptedException {
 		while(terminar){
+			puntuacion= new JLabel("Enemigos Destruidos : 0");
 			frame = new JFrame("Defender");
 			restart=true;
 			Game game = new Game();
 			int count=0;
 			frame.add(game);
+			frame.add(puntuacion, BorderLayout.NORTH);
 			frame.setSize(400, 400);
 			frame.setVisible(true);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

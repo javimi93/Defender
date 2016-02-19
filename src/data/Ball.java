@@ -22,6 +22,7 @@ public class Ball {
 	private BufferedImage image;
 	private static final int DIAMETER = 30;
 	private static final int ADD= 3;
+	private BufferedImage[] sprites;
 	private Game game;
 	private int lastXa=1;
 	private boolean paint=false;
@@ -41,7 +42,7 @@ public class Ball {
 		final int height = 20;
 		final int rows = 2;
 		final int cols = 21;
-		BufferedImage[] sprites = new BufferedImage[rows * cols];
+		sprites = new BufferedImage[rows * cols];
 
 		for (int i = 1; i < rows; i++)
 		{
@@ -82,6 +83,7 @@ public class Ball {
 		if(shootsACTIVOS > 0 && enemysACTIVOS > 0){
 			for(int i=0; i< shootsACTIVOS;i++){
 				if(enemysACTIVOS > 0 && game.enemy.getBounds().intersects(shoots.get(i).getBounds())){
+					game.updatePuntuacion();
 					enemysACTIVOS--;
 					shootsACTIVOS--;
 					game.enemy.setPaint(false);
@@ -126,9 +128,11 @@ public class Ball {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			xMovement=-ADD;
+			//image=sprites[25];
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			xMovement=ADD;
+			//image=sprites[23];
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
 			yMovement=-ADD;
