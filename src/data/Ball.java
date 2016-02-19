@@ -20,10 +20,9 @@ public class Ball {
 	private Game game;
 	private int lastXa=1;
 	private boolean paint=false;
-	private ShootCraft shoot;
 	private int shootsACTIVOS=0;
 	private int enemysACTIVOS=0;
-	private Vector<ShootCraft> shoots= new Vector();
+	private Vector<ShootCraft> shoots= new Vector<ShootCraft>();
 
 	public Ball(Game game) {
 		this.game= game;

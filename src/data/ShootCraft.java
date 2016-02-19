@@ -5,7 +5,6 @@ import java.awt.Rectangle;
 
 public class ShootCraft {
 	private static final int Y = 330;
-	private static final int WITH = 60;
 	private static final int HEIGHT = 10;
 	private static final int DIAMETER = 30;
 	private boolean direccion=true; //direccion del disparo, true = derecha, false = izquierda

@@ -14,9 +14,11 @@ import javax.swing.JPanel;
 public class Game extends JPanel {
 
 	private static boolean restart=true;
+	private static boolean terminar=true;
+	static JFrame frame;
 	Ball ball = new Ball(this);
 	Enemy enemy = new Enemy(this,ball);
-	
+
 	public Game() {
 		addKeyListener(new KeyListener() {
 			@Override
@@ -38,8 +40,8 @@ public class Game extends JPanel {
 	private void move() {
 		ball.move();
 	}
-	
-	
+
+
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
@@ -48,34 +50,46 @@ public class Game extends JPanel {
 		ball.paint(g2d);
 		enemy.paint(g2d);
 	}
-	
+
 	public void gameOver() {
-		JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
+		//JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
+		Object[] options = {"Accept","Retry"};
+		int n = JOptionPane.showOptionDialog(frame,
+				"Game Over",
+				"Game Over",
+				JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,
+				options,
+				options[1]);
 		restart=false;
+		if(n==0){
+			terminar=false;
+		}
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-		while(true){
-		JFrame frame = new JFrame("Defender");
-		restart=true;
-		Game game = new Game();
-		int count=0;
-		frame.add(game);
-		frame.setSize(400, 400);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		while(terminar){
+			frame = new JFrame("Defender");
+			restart=true;
+			Game game = new Game();
+			int count=0;
+			frame.add(game);
+			frame.setSize(400, 400);
+			frame.setVisible(true);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		while (restart) {
-			game.move();
-			game.repaint();
-			Thread.sleep(10);
-			count++;
-			if(game.ball.getEnemysACTIVOS() == 0 && count%100 == 0){
-				game.ball.addEnemysACTIVOS();
-				game.enemy.setPaint(true);
-			}			
-		}
-		frame.dispose();
+			while (restart) {
+				game.move();
+				game.repaint();
+				Thread.sleep(10);
+				count++;
+				if(game.ball.getEnemysACTIVOS() == 0 && count%100 == 0){
+					game.ball.addEnemysACTIVOS();
+					game.enemy.setPaint(true);
+				}			
+			}
+			frame.dispose();
 		}
 	}
 

@@ -5,22 +5,22 @@ import java.awt.Rectangle;
 
 public class ShootEnemy {
 	private static final int Y = 330;
-	private static final int WITH = 60;
+	//private static final int WITH = 60;
 	private static final int HEIGHT = 10;
 	private static final int DIAMETER = 50;
-	private boolean direccion=true; //direccion del disparo, true = derecha, false = izquierda
+	//private boolean direccion=true; //direccion del disparo, true = derecha, false = izquierda
 	int x = 0;
 	int xa=0;
 	int xEnemy=0;
 	int yEnemy=0;
 	Thread shoot;
-	private boolean activo=false;
-	private Game game;
+	//private boolean activo=false;
+//	private Game game;
 	private Enemy enemy;
-	private int lastXa2=0;
+	//private int lastXa2=0;
 
 	public ShootEnemy(Game game, Enemy enemy) {
-		this.game= game;
+		//this.game= game;
 		this.enemy= enemy;
 	}
 
