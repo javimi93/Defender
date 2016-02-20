@@ -2,105 +2,46 @@ package data;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class ShootEnemy {
 	private static final int Y = 330;
-	//private static final int WITH = 60;
 	private static final int HEIGHT = 10;
 	private static final int DIAMETER = 50;
-	//private boolean direccion=true; //direccion del disparo, true = derecha, false = izquierda
+	private boolean paintShootEnemy=true;
 	int x = 0;
 	int xa=0;
 	int xEnemy=0;
 	int yEnemy=0;
-	Thread shoot;
-	//private boolean activo=false;
-//	private Game game;
 	private Enemy enemy;
-	//private int lastXa2=0;
+	private Craft ball;
 
-	public ShootEnemy(Game game, Enemy enemy) {
+	public ShootEnemy(Game game, Enemy enemy, Craft craft) {
 		//this.game= game;
 		this.enemy= enemy;
+		this.ball=craft;
 	}
 
-	public void paint(Graphics2D g) {
-		/*if(!activo){
-			activo=true;
-			xaBall= ball.getXa();
-			if(lastXa2 != lastXa){
-				lastXa2=lastXa;
-			}
-		}*/
-
-		/*if(xaBall == 0){
-			if(lastXa2 > 0){
-				g.fillRect(xEnemy+xa+DIAMETER,yEnemy+(DIAMETER/2), 10, 10);
-				xa--;
-				direccion=true;
-				if(xEnemy+xa+DIAMETER <= game.getWidth() - 10){
-					return true;
-				}
-				else{
-					return false;
-				}
-			}
-			else{*/
+	public void paint(Graphics2D g,BufferedImage[] sprites) {
 		xEnemy= enemy.getX();
 		yEnemy= enemy.getY();
-		g.fillRect(xEnemy+xa,yEnemy+(DIAMETER/2), 10, 10);
+		g.drawImage(sprites[38], xEnemy+xa, yEnemy-(10/2), 25, 20, null);
+		//g.fillRect(xEnemy+xa,yEnemy+(DIAMETER/2), 10, 10);
 		xa--;
 		//direccion=false;
 		if(xEnemy+xa <= - 10){
 			xa=0;
+			if(ball.getEnemysACTIVOS()==0){
+				paintShootEnemy=false;
+			}
 		}
 	}
-	/*}
-		else{
-			if(xaBall > 0 ){
-				g.fillRect(xEnemy+xa+DIAMETER,yEnemy+(DIAMETER/2), 10, 10);
-				xa++;
-				direccion=true;
-				if(xEnemy+xa+DIAMETER <= game.getWidth() - 10){
-					return true;
-				}
-				else{
-					return false;
-				}
-			}
-			else{
-				g.fillRect(xEnemy+xa,yEnemy+(DIAMETER/2), 10, 10);
-				xa--;
-				direccion=false;
-				if(xEnemy-+xa >= - 10){
-					return true;
-				}
-				else{
-					return false;
-				}
-			}
-		}
-
-		g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
-		xa++;
-		if(xBall+xa+DIAMETER <= game.getWidth() - 10){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}*/
 
 
 	public Rectangle getBounds() {
-		/*if(direccion){
-			return new Rectangle(xEnemy+xa+DIAMETER, yEnemy+(DIAMETER/2), 10, 10);
-		}
-		else{*/
 		xEnemy= enemy.getX();
 		yEnemy= enemy.getY();
-		return new Rectangle(xEnemy+xa, yEnemy+(DIAMETER/2), 10, 10);
-		//}
+		return new Rectangle(xEnemy+xa, yEnemy-(10/2), 10, 10);
 	}
 
 	public int getXa() {
@@ -113,5 +54,13 @@ public class ShootEnemy {
 
 	public int getTopY() {
 		return Y - HEIGHT;
+	}
+
+	public boolean isPaintShootEnemy() {
+		return paintShootEnemy;
+	}
+
+	public void setPaintShootEnemy(boolean paintShootEnemy) {
+		this.paintShootEnemy = paintShootEnemy;
 	}
 }

@@ -6,7 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,10 +22,13 @@ public class Game extends JPanel {
 	private static boolean restart=true;
 	private static boolean terminar=true;
 	private static JLabel puntuacion;
+	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
 	static JFrame frame;
-	Ball ball = new Ball(this);
-	Enemy enemy = new Enemy(this,ball);
+	static Craft craft;
+	private final static int WIDTH = 25;
+	private final static int HEIGHT = 20;
+	static Enemy enemy;
 
 	public Game() {
 		addKeyListener(new KeyListener() {
@@ -35,14 +42,14 @@ public class Game extends JPanel {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				ball.keyPressed(e);
+				craft.keyPressed(e);
 			}
 		});
 		setFocusable(true);
 	}
 
 	private void move() {
-		ball.move();
+		craft.move();
 	}
 
 
@@ -51,8 +58,8 @@ public class Game extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		ball.paint(g2d);
-		enemy.paint(g2d);
+		craft.paint(g2d);
+		enemy.paint(g2d,sprites);
 	}
 
 	public void gameOver() {
@@ -77,12 +84,44 @@ public class Game extends JPanel {
 		puntuacion.setText("Enemigos Destruidos : "+nPuntuacion);
 	}
 
+	public static void tablaSprites(){
+		BufferedImage bigImg;
+		try {
+			bigImg = ImageIO.read(new File("datos/sprite.png"));
+		
+		// The above line throws an checked IOException which must be caught.
+
+		
+		final int rows = 5;
+		final int cols = 21;
+		sprites = new BufferedImage[rows * cols];
+
+		for (int i = 0; i < rows; i++)
+		{
+		    for (int j = 0; j < cols; j++)
+		    {
+		        sprites[(i * cols) + j] = bigImg.getSubimage(
+		            j * WIDTH,
+		            i * HEIGHT,
+		            WIDTH,
+		            HEIGHT
+		        );
+		    }
+		}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static void main(String[] args) throws InterruptedException {
+		tablaSprites();
 		while(terminar){
+			Game game = new Game();
 			puntuacion= new JLabel("Enemigos Destruidos : 0");
 			frame = new JFrame("Defender");
 			restart=true;
-			Game game = new Game();
+			craft = new Craft(game, sprites);
+			enemy = new Enemy(game,craft);
 			int count=0;
 			frame.add(game);
 			frame.add(puntuacion, BorderLayout.NORTH);
@@ -95,10 +134,10 @@ public class Game extends JPanel {
 				game.repaint();
 				Thread.sleep(10);
 				count++;
-				if(game.ball.getEnemysACTIVOS() == 0 && count%100 == 0){
-					game.ball.addEnemysACTIVOS();
-					game.enemy.setPaint(true);
-				}			
+				if(craft.getEnemysACTIVOS() == 0 && count%100 == 0){
+					craft.addEnemysACTIVOS();
+					enemy.setPaint(true);
+				}		
 			}
 			frame.dispose();
 		}

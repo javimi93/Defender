@@ -2,6 +2,7 @@ package data;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class Enemy{
 
@@ -11,20 +12,23 @@ public class Enemy{
 	private int Y = 0;
 	private ShootEnemy shootEnemy ;
 
-	public Enemy(Game game,Ball ball) {
+	public Enemy(Game game,Craft craft) {
 		this.game= game;
-		shootEnemy=new ShootEnemy(game,this);
-		ball.addEnemysACTIVOS();
+		shootEnemy=new ShootEnemy(game,this,craft);
+		craft.addEnemysACTIVOS();
 
 	}
 
-	public void paint(Graphics2D g) {
+	public void paint(Graphics2D g,BufferedImage[] sprites) {
 		if(paint){
 			X = game.getWidth()/2;
 			Y = game.getHeight()/2;
-			g.fillRoundRect(X, Y, 25, 50,5,50);
+			//g.fillRoundRect(X, Y, 25, 50,5,50);
+			g.drawImage(sprites[1], X, Y, 25, 20, null);
 		}
-		shootEnemy.paint(g);
+		if(shootEnemy.isPaintShootEnemy()){
+			shootEnemy.paint(g,sprites);
+		}
 
 	}
 
@@ -33,7 +37,7 @@ public class Enemy{
 		if(paint){
 			X = game.getWidth()/2;
 			Y = game.getHeight()/2;
-			return new Rectangle(X, Y, 25, 50);
+			return new Rectangle(X, Y, 25, 20);
 		}
 		else{
 			return null;
@@ -47,6 +51,7 @@ public class Enemy{
 
 	public void setPaint(boolean paint) {
 		this.paint = paint;
+		shootEnemy.setPaintShootEnemy(true);
 	}
 
 	public int getX() {

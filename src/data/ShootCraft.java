@@ -2,10 +2,9 @@ package data;
 
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
 
 public class ShootCraft {
-	private static final int Y = 330;
-	private static final int HEIGHT = 10;
 	private static final int DIAMETER = 30;
 	private boolean direccion=true; //direccion del disparo, true = derecha, false = izquierda
 	int x = 0;
@@ -16,17 +15,17 @@ public class ShootCraft {
 	Thread shoot;
 	private boolean activo=false;
 	private Game game;
-	private Ball ball;
+	private Craft ball;
 	private int lastXa2=0;
 
-	public ShootCraft(Game game, Ball ball) {
+	public ShootCraft(Game game, Craft craft) {
 		this.game= game;
-		this.ball= ball;
-		xBall= ball.getX();
-		yBall= ball.getY();
+		this.ball= craft;
+		xBall= craft.getX();
+		yBall= craft.getY();
 	}
 
-	public boolean paint(Graphics2D g,int lastXa) {
+	public boolean paint(Graphics2D g,int lastXa,BufferedImage[] sprites) {
 		if(!activo){
 			activo=true;
 			xaBall= ball.getXa();
@@ -37,7 +36,8 @@ public class ShootCraft {
 
 		if(xaBall == 0){
 			if(lastXa2 > 0){
-				g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
+				g.drawImage(sprites[62], xBall+xa+25, yBall+(20/2), 10, 10, null);
+				//g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
 				xa++;
 				direccion=true;
 				if(xBall+xa+DIAMETER <= game.getWidth() - 10){
@@ -48,7 +48,8 @@ public class ShootCraft {
 				}
 			}
 			else{
-				g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
+				g.drawImage(sprites[62], xBall+xa, yBall+(20/2), 10, 10, null);
+				//g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
 				xa--;
 				direccion=false;
 				if(xBall+xa >= - 10){
@@ -61,7 +62,8 @@ public class ShootCraft {
 		}
 		else{
 			if(xaBall > 0 ){
-				g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
+				g.drawImage(sprites[62], xBall+xa+25, yBall+(20/2), 10, 10, null);
+				//g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
 				xa++;
 				direccion=true;
 				if(xBall+xa+DIAMETER <= game.getWidth() - 10){
@@ -72,7 +74,8 @@ public class ShootCraft {
 				}
 			}
 			else{
-				g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
+				g.drawImage(sprites[62], xBall+xa, yBall+(20/2), 10, 10, null);
+				//g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
 				xa--;
 				direccion=false;
 				if(xBall+xa >= - 10){
@@ -83,28 +86,15 @@ public class ShootCraft {
 				}
 			}
 		}
-
-		/*g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
-		xa++;
-		if(xBall+xa+DIAMETER <= game.getWidth() - 10){
-			return true;
-		}
-		else{
-			return false;
-		}*/
 	}
 
 
 	public Rectangle getBounds() {
 		if(direccion){
-			return new Rectangle(xBall+xa+DIAMETER, yBall+(DIAMETER/2), 10, 10);
+			return new Rectangle(xBall+xa+25, yBall+(20/2), 10, 10);
 		}
 		else{
-			return new Rectangle(xBall+xa, yBall+(DIAMETER/2), 10, 10);
+			return new Rectangle(xBall+xa, yBall+(20/2), 10, 10);
 		}
-	}
-
-	public int getTopY() {
-		return Y - HEIGHT;
 	}
 }

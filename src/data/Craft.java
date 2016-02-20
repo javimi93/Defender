@@ -10,7 +10,7 @@ import java.util.Vector;
 
 import javax.imageio.ImageIO;
 
-public class Ball {
+public class Craft {
 	//Posiciones iniciales de la bola
 	int xInit = 0;
 	int yInit = 0;
@@ -20,9 +20,11 @@ public class Ball {
 	int xMovement = 0;
 	int yMovement = 0;
 	private BufferedImage image;
-	private static final int DIAMETER = 30;
+	//private static final int DIAMETER = 30;
 	private static final int ADD= 3;
-	private BufferedImage[] sprites;
+	BufferedImage[] sprites;
+	private final int WIDTH = 25;
+	private final int HEIGHT = 20;
 	private Game game;
 	private int lastXa=1;
 	private boolean paint=false;
@@ -30,51 +32,23 @@ public class Ball {
 	private int enemysACTIVOS=0;
 	private Vector<ShootCraft> shoots= new Vector<ShootCraft>();
 
-	public Ball(Game game) {
+	public Craft(Game game,BufferedImage[] sprites) {
 		this.game= game;
-		/*BufferedImage bigImg;
-		try {
-			bigImg = ImageIO.read(new File("datos/sprite.png"));
-		
-		// The above line throws an checked IOException which must be caught.
-
-		final int width = 25;
-		final int height = 20;
-		final int rows = 2;
-		final int cols = 21;
-		sprites = new BufferedImage[rows * cols];
-
-		for (int i = 1; i < rows; i++)
-		{
-		    for (int j = 0; j < cols; j++)
-		    {
-		        sprites[(i * cols) + j] = bigImg.getSubimage(
-		            j * width,
-		            i * height,
-		            width,
-		            height
-		        );
-		    }
-		}
-		image=sprites[23];
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
+		this.sprites=sprites;
+ 		image=sprites[23];
 	}
 
 	void move() {
-		if (xInit+xMovement  < 0){
-			xInit+=ADD;
-		}
-		if (xInit+xMovement > game.getWidth() - DIAMETER){
-			xInit-=ADD;
-		}
-		if (yInit+yMovement < 0){
-			yInit+=ADD;
-		}
-		if (yInit+yMovement > game.getHeight() - DIAMETER){
+ 		if (xInit+xMovement  < 0){
+ 			xInit+=ADD;
+ 		}
+ 		if (xInit+xMovement > game.getWidth() - WIDTH){
+ 			xInit-=ADD;
+ 		}
+ 		if (yInit+yMovement < 0){
+ 			yInit+=ADD;
+ 		}
+		if (yInit+yMovement > game.getHeight() - HEIGHT){
 			yInit-=ADD;
 		}
 		if (collision()){
@@ -82,11 +56,11 @@ public class Ball {
 		}
 		if(shootsACTIVOS > 0 && enemysACTIVOS > 0){
 			for(int i=0; i< shootsACTIVOS;i++){
-				if(enemysACTIVOS > 0 && game.enemy.getBounds().intersects(shoots.get(i).getBounds())){
+				if(enemysACTIVOS > 0 && Game.enemy.getBounds().intersects(shoots.get(i).getBounds())){
 					game.updatePuntuacion();
 					enemysACTIVOS--;
 					shootsACTIVOS--;
-					game.enemy.setPaint(false);
+					Game.enemy.setPaint(false);
 					shoots.remove(i);
 				}
 			}
@@ -105,7 +79,7 @@ public class Ball {
 
 	private boolean collision() {
 		if(enemysACTIVOS > 0){
-			return game.enemy.getBounds().intersects(getBounds()) || game.enemy.getShootEnemy().getBounds().intersects(getBounds()) ;
+			return Game.enemy.getBounds().intersects(getBounds()) || Game.enemy.getShootEnemy().getBounds().intersects(getBounds()) ;
 		}
 		else{
 			return false;
@@ -113,10 +87,10 @@ public class Ball {
 	}
 
 	public void paint(Graphics2D g) {
-		//g.drawImage(image, xInit, yInit, 20, 20, null);
-		g.fillOval(xInit, yInit, DIAMETER, DIAMETER);
+		g.drawImage(image, xInit, yInit, WIDTH, HEIGHT, null);
+		//g.fillOval(xInit, yInit, DIAMETER, DIAMETER);
 		for(int i=0; i< shootsACTIVOS;i++){
-			paint=shoots.get(i).paint(g,lastXa);
+			paint=shoots.get(i).paint(g,lastXa,sprites);
 			if(!paint){
 				shoots.remove(i);
 				shootsACTIVOS--;
@@ -128,11 +102,11 @@ public class Ball {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			xMovement=-ADD;
-			//image=sprites[25];
+			image=sprites[26];
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			xMovement=ADD;
-			//image=sprites[23];
+			image=sprites[23];
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
 			yMovement=-ADD;
@@ -148,7 +122,7 @@ public class Ball {
 	}
 
 	public Rectangle getBounds() {
-		return new Rectangle(xInit, yInit, DIAMETER, DIAMETER);
+		return new Rectangle(xInit, yInit, WIDTH, HEIGHT);
 	}
 
 	public int getX(){
