@@ -98,8 +98,9 @@ public class Craft {
 
 	public void keyPressed(Vector<KeyEvent> e) {
 		if(!e.isEmpty()){
-			System.out.println(e.size());
-			for(int i=0; i<e.size(); i++){				
+			System.out.println("e.size() = " + e.size());
+			for(int i=0; i<e.size(); i++){
+				System.out.println("Entro al bucle");
 				if (e.get(i).getKeyCode() == KeyEvent.VK_LEFT){
 					xMovement=-ADD;
 					image=sprites[26];
@@ -119,7 +120,9 @@ public class Craft {
 					shoots.add(new ShootCraft(game,this));
 					shootsACTIVOS++;
 				}
+				System.out.println("Salgo del bucle");
 			}
+			System.out.println("Salgo del if");
 		}
 	}
 

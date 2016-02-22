@@ -1,6 +1,5 @@
 package data;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
+import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -24,6 +24,7 @@ public class Game extends JPanel {
 	private static boolean restart=true;
 	private static boolean terminar=true;
 	private static JLabel puntuacion;
+	private static JLabel tiempo;
 	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
 	static JFrame frame;
@@ -47,11 +48,13 @@ public class Game extends JPanel {
 						pressedKeys.remove(i);
 					}
 				}
+				System.out.println("En el Released " + pressedKeys.size());
 				craft.keyPressed(pressedKeys);
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
+				System.out.println("En el Keypressed con " + pressedKeys.size());
 				boolean add = true;
 				for(int i=0; i<pressedKeys.size(); i++){
 					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
@@ -79,6 +82,7 @@ public class Game extends JPanel {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		craft.paint(g2d);
 		enemy.paint(g2d,sprites);
+	
 	}
 
 	public void gameOver() {
@@ -135,20 +139,30 @@ public class Game extends JPanel {
 	public static void main(String[] args) throws InterruptedException {
 		tablaSprites();
 		while(terminar){
+			long TInicio, TFin, time; //Variables para determinar el tiempo de ejecución
+			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
 			Game game = new Game();
 			puntuacion= new JLabel("Enemigos Destruidos : 0");
+			tiempo= new JLabel("Tiempo Transcurrido: 0");
+			puntuacion.setLocation(1000, 0);
 			pressedKeys = new Vector<KeyEvent>();
 			frame = new JFrame("Defender");
 			game.setBackground(Color.BLACK);
 			restart=true;
+			puntuacion.setForeground(Color.WHITE);
+			tiempo.setForeground(Color.WHITE);
+			game.add(puntuacion);
+			game.add(tiempo);
 			craft = new Craft(game, sprites);
 			enemy = new Enemy(game,craft);
 			int count=0;
 			frame.setSize(1000,1000);
 			frame.add(game);
-			//			frame.getContentPane().setBackground(Color.black);
 			frame.setVisible(true);
-			frame.add(puntuacion, BorderLayout.NORTH);
+			//frame.add(puntuacion);
+			
+			//frame.add(puntuacion, BorderLayout.NORTH);
+			//frame.add(tiempo, BorderLayout.NORTH);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 			while (restart) {
@@ -159,7 +173,14 @@ public class Game extends JPanel {
 				if(craft.getEnemysACTIVOS() == 0 && count%100 == 0){
 					craft.addEnemysACTIVOS();
 					enemy.setPaint(true);
-				}		
+				}
+				TFin = System.currentTimeMillis(); //Tomamos la hora en que finalizó el algoritmo y la almacenamos en la variable T
+				time = TFin - TInicio; //Calculamos los milisegundos de diferencia
+				tiempo.setText("Tiempo Transcurrido: "+String.format("%d min, %d sec", 
+					    TimeUnit.MILLISECONDS.toMinutes(time),
+					    TimeUnit.MILLISECONDS.toSeconds(time) - 
+					    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
+					));
 			}
 			frame.dispose();
 		}
