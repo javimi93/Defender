@@ -82,7 +82,11 @@ public class Game extends JPanel {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		craft.paint(g2d);
 		enemy.paint(g2d,sprites);
-	
+		g.setColor(Color.WHITE);
+		g.drawLine(0,this.getWidth(),200,800);	
+		g.drawLine(200, 800, 400, 1000);
+		g.drawLine(400, 1000, 600, 800);
+		g.drawLine(600, 800, 800, 1000);
 	}
 
 	public void gameOver() {
