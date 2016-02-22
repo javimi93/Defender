@@ -1,0 +1,12 @@
+PRIORIDADES:
+
+1: JFrame				- v1.1
+2: Modelo jugador		- v1.0
+3: Modelo enemigos		- v0.5
+4: Menu					- TODO
+5: IA enemigos			- TODO
+6: Mapa aleatorio		- TODO
+7: Scoreboards			- TODO
+8: Musiquitas			- TODO
+9: Pantalla Game Over	- TODO
+10: Retoques movimiento	- TODO
