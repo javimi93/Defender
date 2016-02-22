@@ -1,6 +1,7 @@
 package data;
 
 import java.awt.Color;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -10,9 +11,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Vector;
+
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
+
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -27,6 +31,8 @@ public class Game extends JPanel {
 	private static JLabel tiempo;
 	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
+	//private static boolean empezar=true;
+	private static Sound sound;
 	static JFrame frame;
 	static JPanel panel;
 	static Craft craft;
@@ -43,29 +49,39 @@ public class Game extends JPanel {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
-				for(int i=0; i<pressedKeys.size(); i++){
-					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
-						pressedKeys.remove(i);
-					}
+				/*if(empezar){
+					empezar=false;
 				}
-				System.out.println("En el Released " + pressedKeys.size());
-				craft.keyPressed(pressedKeys);
+				else{*/
+					for(int i=0; i<pressedKeys.size(); i++){
+						if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
+							pressedKeys.remove(i);
+						}
+					}
+					System.out.println("En el Released " + pressedKeys.size());
+					craft.keyPressed(pressedKeys);
+				//}
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				System.out.println("En el Keypressed con " + pressedKeys.size());
-				boolean add = true;
-				for(int i=0; i<pressedKeys.size(); i++){
-					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
-						add=false;
+
+				/*if(empezar){
+				}
+				else{*/
+					System.out.println("En el Keypressed con " + pressedKeys.size());
+					boolean add = true;
+					for(int i=0; i<pressedKeys.size(); i++){
+						if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
+							add=false;
+						}
 					}
+					if(add){
+						pressedKeys.add(e);
+					}
+					craft.keyPressed(pressedKeys);
 				}
-				if(add){
-					pressedKeys.add(e);
-				}
-				craft.keyPressed(pressedKeys);
-			}
+			//}
 		});
 		setFocusable(true);
 	}
@@ -92,6 +108,7 @@ public class Game extends JPanel {
 	public void gameOver() {
 		//JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
 		Object[] options = {"Accept","Retry"};
+		sound.start("Game Over");
 		int n = JOptionPane.showOptionDialog(frame,
 				"Game Over",
 				"Game Over",
@@ -142,33 +159,50 @@ public class Game extends JPanel {
 	}
 	public static void main(String[] args) throws InterruptedException {
 		tablaSprites();
+		sound=new Sound();
+		//empezar=false;
+		Game game = new Game();
+ 		frame = new JFrame("Defender");
+		JPanel menu= new JPanel();
+		JLabel imgMenu=new JLabel(new ImageIcon("datos/intro.png"));
+		game.setBackground(Color.BLACK);
+		menu.add(imgMenu);
+		menu.setBackground(Color.BLACK);
+		frame.add(game);
+		frame.add(menu);
+		frame.setSize(1000,1000);
+		
+		frame.setVisible(true); 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Se obtiene un Clip de sonido
+        
+		sound.start("start");
+		Thread.sleep(3500);
+		/*while(empezar){
+			System.out.println("Entro");
+		}*/
 		while(terminar){
 			long TInicio, TFin, time; //Variables para determinar el tiempo de ejecución
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
-			Game game = new Game();
+			restart=true; 
+			game = new Game();
 			puntuacion= new JLabel("Enemigos Destruidos : 0");
 			tiempo= new JLabel("Tiempo Transcurrido: 0");
+			game.setBackground(Color.BLACK);
 			puntuacion.setLocation(1000, 0);
 			pressedKeys = new Vector<KeyEvent>();
-			frame = new JFrame("Defender");
-			game.setBackground(Color.BLACK);
-			restart=true;
 			puntuacion.setForeground(Color.WHITE);
 			tiempo.setForeground(Color.WHITE);
 			game.add(puntuacion);
-			game.add(tiempo);
+			game.add(tiempo);	
 			craft = new Craft(game, sprites);
-			enemy = new Enemy(game,craft);
-			int count=0;
+			enemy = new Enemy(game,craft);			
 			frame.setSize(1000,1000);
 			frame.add(game);
-			frame.setVisible(true);
-			//frame.add(puntuacion);
-			
-			//frame.add(puntuacion, BorderLayout.NORTH);
-			//frame.add(tiempo, BorderLayout.NORTH);
+			frame.setVisible(true); 
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+			
+			int count=0;
 			while (restart) {
 				game.move();
 				game.repaint();
@@ -181,10 +215,10 @@ public class Game extends JPanel {
 				TFin = System.currentTimeMillis(); //Tomamos la hora en que finalizó el algoritmo y la almacenamos en la variable T
 				time = TFin - TInicio; //Calculamos los milisegundos de diferencia
 				tiempo.setText("Tiempo Transcurrido: "+String.format("%d min, %d sec", 
-					    TimeUnit.MILLISECONDS.toMinutes(time),
-					    TimeUnit.MILLISECONDS.toSeconds(time) - 
-					    TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
-					));
+						TimeUnit.MILLISECONDS.toMinutes(time),
+						TimeUnit.MILLISECONDS.toSeconds(time) - 
+						TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
+						));
 			}
 			frame.dispose();
 		}
