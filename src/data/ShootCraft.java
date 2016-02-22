@@ -14,6 +14,7 @@ public class ShootCraft {
 	int yBall=0;
 	Thread shoot;
 	private boolean activo=false;
+	private final int ADD=3;
 	private Game game;
 	private Craft ball;
 	private int lastXa2=0;
@@ -38,7 +39,7 @@ public class ShootCraft {
 			if(lastXa2 > 0){
 				g.drawImage(sprites[62], xBall+xa+25, yBall+(20/2), 10, 10, null);
 				//g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
-				xa++;
+				xa+=ADD;
 				direccion=true;
 				if(xBall+xa+DIAMETER <= game.getWidth() - 10){
 					return true;
@@ -50,7 +51,7 @@ public class ShootCraft {
 			else{
 				g.drawImage(sprites[62], xBall+xa, yBall+(20/2), 10, 10, null);
 				//g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
-				xa--;
+				xa-=ADD;
 				direccion=false;
 				if(xBall+xa >= - 10){
 					return true;
@@ -64,7 +65,7 @@ public class ShootCraft {
 			if(xaBall > 0 ){
 				g.drawImage(sprites[62], xBall+xa+25, yBall+(20/2), 10, 10, null);
 				//g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
-				xa++;
+				xa+=ADD;
 				direccion=true;
 				if(xBall+xa+DIAMETER <= game.getWidth() - 10){
 					return true;
@@ -76,7 +77,7 @@ public class ShootCraft {
 			else{
 				g.drawImage(sprites[62], xBall+xa, yBall+(20/2), 10, 10, null);
 				//g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
-				xa--;
+				xa-=ADD;
 				direccion=false;
 				if(xBall+xa >= - 10){
 					return true;

@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
@@ -31,6 +32,7 @@ public class Game extends JPanel {
 	private final static int WIDTH = 25;
 	private final static int HEIGHT = 20;
 	static Enemy enemy;
+	private static Vector<KeyEvent> pressedKeys;
 
 	public Game() {
 		addKeyListener(new KeyListener() {
@@ -40,11 +42,26 @@ public class Game extends JPanel {
 
 			@Override
 			public void keyReleased(KeyEvent e) {
+				for(int i=0; i<pressedKeys.size(); i++){
+					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
+						pressedKeys.remove(i);
+					}
+				}
+				craft.keyPressed(pressedKeys);
 			}
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				craft.keyPressed(e);
+				boolean add = true;
+				for(int i=0; i<pressedKeys.size(); i++){
+					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
+						add=false;
+					}
+				}
+				if(add){
+					pressedKeys.add(e);
+				}
+				craft.keyPressed(pressedKeys);
 			}
 		});
 		setFocusable(true);
@@ -80,7 +97,7 @@ public class Game extends JPanel {
 			terminar=false;
 		}
 	}
-	
+
 	public void updatePuntuacion(){
 		nPuntuacion++;
 		puntuacion.setText("Enemigos Destruidos : "+nPuntuacion);
@@ -90,26 +107,26 @@ public class Game extends JPanel {
 		BufferedImage bigImg;
 		try {
 			bigImg = ImageIO.read(new File("datos/sprite.png"));
-		
-		// The above line throws an checked IOException which must be caught.
 
-		
-		final int rows = 5;
-		final int cols = 21;
-		sprites = new BufferedImage[rows * cols];
+			// The above line throws an checked IOException which must be caught.
 
-		for (int i = 0; i < rows; i++)
-		{
-		    for (int j = 0; j < cols; j++)
-		    {
-		        sprites[(i * cols) + j] = bigImg.getSubimage(
-		            j * WIDTH,
-		            i * HEIGHT,
-		            WIDTH,
-		            HEIGHT
-		        );
-		    }
-		}
+
+			final int rows = 5;
+			final int cols = 21;
+			sprites = new BufferedImage[rows * cols];
+
+			for (int i = 0; i < rows; i++)
+			{
+				for (int j = 0; j < cols; j++)
+				{
+					sprites[(i * cols) + j] = bigImg.getSubimage(
+							j * WIDTH,
+							i * HEIGHT,
+							WIDTH,
+							HEIGHT
+							);
+				}
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -120,6 +137,7 @@ public class Game extends JPanel {
 		while(terminar){
 			Game game = new Game();
 			puntuacion= new JLabel("Enemigos Destruidos : 0");
+			pressedKeys = new Vector<KeyEvent>();
 			frame = new JFrame("Defender");
 			game.setBackground(Color.BLACK);
 			restart=true;
@@ -128,7 +146,7 @@ public class Game extends JPanel {
 			int count=0;
 			frame.setSize(1000,1000);
 			frame.add(game);
-//			frame.getContentPane().setBackground(Color.black);
+			//			frame.getContentPane().setBackground(Color.black);
 			frame.setVisible(true);
 			frame.add(puntuacion, BorderLayout.NORTH);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

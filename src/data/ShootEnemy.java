@@ -9,6 +9,7 @@ public class ShootEnemy {
 	private static final int HEIGHT = 10;
 	//private static final int DIAMETER = 50;
 	private boolean paintShootEnemy=true;
+	private final int ADD=3;
 	int x = 0;
 	int xa=0;
 	int xEnemy=0;
@@ -27,7 +28,7 @@ public class ShootEnemy {
 		yEnemy= enemy.getY();
 		g.drawImage(sprites[38], xEnemy+xa, yEnemy-(10/2), 25, 20, null);
 		//g.fillRect(xEnemy+xa,yEnemy+(DIAMETER/2), 10, 10);
-		xa--;
+		xa-=ADD;
 		//direccion=false;
 		if(xEnemy+xa <= - 10){
 			xa=0;

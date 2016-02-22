@@ -18,7 +18,7 @@ public class Craft {
 	int yMovement = 0;
 	private BufferedImage image;
 	//private static final int DIAMETER = 30;
-	private static final int ADD= 3;
+	private static final int ADD= 5;
 	BufferedImage[] sprites;
 	private final int WIDTH = 25;
 	private final int HEIGHT = 20;
@@ -96,25 +96,30 @@ public class Craft {
 	}
 
 
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_LEFT){
-			xMovement=-ADD;
-			image=sprites[26];
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-			xMovement=ADD;
-			image=sprites[23];
-		}
-		if (e.getKeyCode() == KeyEvent.VK_UP){
-			yMovement=-ADD;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN){
-			yMovement=ADD;
-
-		}
-		if (e.getKeyCode() == KeyEvent.VK_SPACE){
-			shoots.add(new ShootCraft(game,this));
-			shootsACTIVOS++;
+	public void keyPressed(Vector<KeyEvent> e) {
+		if(!e.isEmpty()){
+			System.out.println(e.size());
+			for(int i=0; i<e.size(); i++){				
+				if (e.get(i).getKeyCode() == KeyEvent.VK_LEFT){
+					xMovement=-ADD;
+					image=sprites[26];
+				}
+				if (e.get(i).getKeyCode() == KeyEvent.VK_RIGHT){
+					xMovement=ADD;
+					image=sprites[23];
+				}
+				if (e.get(i).getKeyCode() == KeyEvent.VK_UP){
+					yMovement=-ADD;
+				}
+				if (e.get(i).getKeyCode() == KeyEvent.VK_DOWN){
+					yMovement=ADD;
+					
+				}
+				if (e.get(i).getKeyCode() == KeyEvent.VK_SPACE){
+					shoots.add(new ShootCraft(game,this));
+					shootsACTIVOS++;
+				}
+			}
 		}
 	}
 
