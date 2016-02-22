@@ -1,6 +1,7 @@
 package data;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -25,6 +26,7 @@ public class Game extends JPanel {
 	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
 	static JFrame frame;
+	static JPanel panel;
 	static Craft craft;
 	private final static int WIDTH = 25;
 	private final static int HEIGHT = 20;
@@ -119,14 +121,16 @@ public class Game extends JPanel {
 			Game game = new Game();
 			puntuacion= new JLabel("Enemigos Destruidos : 0");
 			frame = new JFrame("Defender");
+			game.setBackground(Color.BLACK);
 			restart=true;
 			craft = new Craft(game, sprites);
 			enemy = new Enemy(game,craft);
 			int count=0;
+			frame.setSize(1000,1000);
 			frame.add(game);
-			frame.add(puntuacion, BorderLayout.NORTH);
-			frame.setSize(400, 400);
+//			frame.getContentPane().setBackground(Color.black);
 			frame.setVisible(true);
+			frame.add(puntuacion, BorderLayout.NORTH);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 			while (restart) {

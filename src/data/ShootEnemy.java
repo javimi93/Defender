@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 public class ShootEnemy {
 	private static final int Y = 330;
 	private static final int HEIGHT = 10;
-	private static final int DIAMETER = 50;
+	//private static final int DIAMETER = 50;
 	private boolean paintShootEnemy=true;
 	int x = 0;
 	int xa=0;
