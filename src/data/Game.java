@@ -141,7 +141,7 @@ public class Game extends JPanel {
 	public static void tablaSprites(){
 		BufferedImage bigImg;
 		try {
-			bigImg = ImageIO.read(new File("datos/sprites2.png"));
+			bigImg = ImageIO.read(new File("datos/imagenes/sprites2.png"));
 
 			final int rows = 9;
 			final int cols = 10;
@@ -175,7 +175,7 @@ public class Game extends JPanel {
 		Game game = new Game();
 		frame = new JFrame("Defender");
 		JPanel menu= new JPanel();
-		JLabel imgMenu=new JLabel(new ImageIcon("datos/intro.png"));
+		JLabel imgMenu=new JLabel(new ImageIcon("datos/imagenes/intro.png"));
 		game.setBackground(Color.BLACK);
 		menu.add(imgMenu);
 		menu.setBackground(Color.BLACK);

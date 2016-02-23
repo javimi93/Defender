@@ -3,10 +3,10 @@ PRIORIDADES:
 1: JFrame				- v1.1
 2: Modelo jugador		- v1.0
 3: Modelo enemigos		- v0.5
-4: Menu					- TODO
+4: Menu					- v0.8
 5: IA enemigos			- TODO
 6: Mapa aleatorio		- TODO
 7: Scoreboards			- TODO
-8: Musiquitas			- TODO
-9: Pantalla Game Over	- TODO
+8: Musiquitas			- v0.1
+9: Pantalla Game Over	- v0.01
 10: Retoques movimiento	- TODO

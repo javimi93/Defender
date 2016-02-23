@@ -18,8 +18,8 @@ public class Sound {
 	 * Constructor que inicializa los sonidos disponibles.
 	 */
 	public Sound(){
-		this.START="datos/start.wav";
-		this.GAMEOVER="datos/game_over.wav";
+		this.START="datos/sonidos/start.wav";
+		this.GAMEOVER="datos/sonidos/game_over.wav";
 	}
 	
 	/*
