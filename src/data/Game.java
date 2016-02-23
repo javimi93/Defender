@@ -31,16 +31,17 @@ public class Game extends JPanel {
 	private static JLabel tiempo;
 	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
-	//private static boolean empezar=true;
 	private static Sound sound;
-	static JFrame frame;
-	static JPanel panel;
-	static Craft craft;
+	private static JFrame frame;
+	private static Craft craft;
 	private final static int WIDTH = 50;
 	private final static int HEIGHT = 40;
 	static Enemy enemy;
 	private static Vector<KeyEvent> pressedKeys;
 
+	/*
+	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.
+	 */
 	public Game() {
 		addKeyListener(new KeyListener() {
 			@Override
@@ -48,11 +49,10 @@ public class Game extends JPanel {
 			}
 
 			@Override
+			/*
+			 * Gestiona cuando se suelta una tecla, se elimina de la cola de teclas pulsadas.
+			 */
 			public void keyReleased(KeyEvent e) {
-				/*if(empezar){
-					empezar=false;
-				}
-				else{*/
 				for(int i=0; i<pressedKeys.size(); i++){
 					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
 						pressedKeys.remove(i);
@@ -60,15 +60,13 @@ public class Game extends JPanel {
 				}
 				System.out.println("En el Released " + pressedKeys.size());
 				craft.keyPressed(pressedKeys);
-				//}
 			}
 
 			@Override
+			/*
+			 * Gestiona cuando se pulsa una tecla, se añade a la cola de teclas pulsadas.
+			 */
 			public void keyPressed(KeyEvent e) {
-
-				/*if(empezar){
-				}
-				else{*/
 				System.out.println("En el Keypressed con " + pressedKeys.size());
 				boolean add = true;
 				for(int i=0; i<pressedKeys.size(); i++){
@@ -81,16 +79,20 @@ public class Game extends JPanel {
 				}
 				craft.keyPressed(pressedKeys);
 			}
-			//}
 		});
 		setFocusable(true);
 	}
 
+	/*
+	 * Mueve la nave.
+	 */
 	private void move() {
 		craft.move();
 	}
-
-
+	
+	/*
+	 * Pinta en cada invocacion todos los elementos del juego.
+	 */
 	public void paint(Graphics g) {
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
@@ -98,11 +100,6 @@ public class Game extends JPanel {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		craft.paint(g2d);
 		enemy.paint(g2d,sprites);
-		/*int y=0;
-		for(int i=0;i<sprites.length;i++){
-			g.drawImage(sprites[i], y, y, 9, 9, null);		
-			y+=10;
-			}*/
 		g.setColor(Color.WHITE);
 		g.drawLine(0,this.getWidth(),200,800);	
 		g.drawLine(200, 800, 400, 1000);
@@ -110,8 +107,10 @@ public class Game extends JPanel {
 		g.drawLine(600, 800, 800, 1000);
 	}
 
+	/*
+	 * Metodo que invoca el modo Game Over.
+	 */
 	public void gameOver() {
-		//JOptionPane.showMessageDialog(this, "Game Over", "Game Over", JOptionPane.YES_NO_OPTION);
 		Object[] options = {"Accept","Retry"};
 		sound.start("Game Over");
 		int n = JOptionPane.showOptionDialog(frame,
@@ -128,18 +127,21 @@ public class Game extends JPanel {
 		}
 	}
 
+	/*
+	 * Actualiza la puntuacion cada vez que se destruye un enemigo.
+	 */
 	public void updatePuntuacion(){
 		nPuntuacion++;
 		puntuacion.setText("Enemigos Destruidos : "+nPuntuacion);
 	}
 
+	/*
+	 * Inicializa la tabla de los spirtes
+	 */
 	public static void tablaSprites(){
 		BufferedImage bigImg;
 		try {
 			bigImg = ImageIO.read(new File("datos/sprites2.png"));
-
-			// The above line throws an checked IOException which must be caught.
-
 
 			final int rows = 9;
 			final int cols = 10;
@@ -159,14 +161,17 @@ public class Game extends JPanel {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+	
+	/*
+	 * Main del juego que lo inicia.
+	 */
 	public static void main(String[] args) throws InterruptedException {
 		tablaSprites();
 		sound=new Sound();
-		//empezar=false;
+		//Se inicia la pantalla de introduccion del juego.
 		Game game = new Game();
 		frame = new JFrame("Defender");
 		JPanel menu= new JPanel();
@@ -177,17 +182,15 @@ public class Game extends JPanel {
 		frame.add(game);
 		frame.add(menu);
 		frame.setSize(1000,1000);
-
 		frame.setVisible(true); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// Se obtiene un Clip de sonido
-
+		//Se inicia el sonido de la intro del juego durante 3 segundos y medio.
 		sound.start("start");
 		Thread.sleep(3500);
-		/*while(empezar){
-			System.out.println("Entro");
-		}*/
+		
+		//Si no hay que terminar el juego
 		while(terminar){
+			//Se crea la pantalla del juego, con el tiempo transcurrido y la puntuacion
 			long TInicio, TFin, time; //Variables para determinar el tiempo de ejecución
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
 			restart=true; 
@@ -208,17 +211,22 @@ public class Game extends JPanel {
 			frame.setVisible(true); 
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			int count=0;
+			
+			//Si el jugador decide reintentar.
 			while (restart) {
 				game.move();
 				game.repaint();
 				Thread.sleep(10);
 				count++;
+				
+				//Renace el enemigo si ha muerto
 				if(craft.getEnemysACTIVOS() == 0 && count%100 == 0){
 					craft.addEnemysACTIVOS();
 					enemy.setPaint(true);
 				}
-				TFin = System.currentTimeMillis(); //Tomamos la hora en que finalizó el algoritmo y la almacenamos en la variable T
-				time = TFin - TInicio; //Calculamos los milisegundos de diferencia
+				TFin = System.currentTimeMillis(); //Se toma la hora en que finalizó el algoritmo y se almacena en la variable T
+				time = TFin - TInicio; //Se calculan los milisegundos de diferencia
+				//Muestra el tiempo de forma formateada
 				tiempo.setText("Tiempo Transcurrido: "+String.format("%d min, %d sec", 
 						TimeUnit.MILLISECONDS.toMinutes(time),
 						TimeUnit.MILLISECONDS.toSeconds(time) - 

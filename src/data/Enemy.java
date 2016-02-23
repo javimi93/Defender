@@ -12,13 +12,20 @@ public class Enemy{
 	private int Y = 0;
 	private ShootEnemy shootEnemy ;
 
+	/*
+	 * Constructor que crea al enemigo y tiene por por parametro, el juego y la nave.
+	 * Cuando se invoca, crea un emeigo y incrementa la variable enemysActivos.
+	 */
 	public Enemy(Game game,Craft craft) {
 		this.game= game;
-		shootEnemy=new ShootEnemy(game,this,craft);
+		shootEnemy=new ShootEnemy(this,craft);
 		craft.addEnemysACTIVOS();
 
 	}
 
+	/*
+	 * Pinta cada invocacion el enemigo y los disparos suyos.
+	 */
 	public void paint(Graphics2D g,BufferedImage[] sprites) {
 		if(paint){
 			X = game.getWidth()/2;
@@ -32,7 +39,9 @@ public class Enemy{
 
 	}
 
-
+	/*
+	 * Devuelve un rectangulo que facilita la deteccion de colision con el enemigo.
+	 */
 	public Rectangle getBounds() {
 		if(paint){
 			X = game.getWidth()/2;

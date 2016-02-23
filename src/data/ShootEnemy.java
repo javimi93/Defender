@@ -5,56 +5,55 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 public class ShootEnemy {
-	private static final int Y = 330;
-	private static final int HEIGHT = 10;
-	//private static final int DIAMETER = 50;
+	private final int WIDTH = 50;
+	private final int HEIGHT = 40;
 	private boolean paintShootEnemy=true;
-	private final int ADD=3;
-	int x = 0;
-	int xa=0;
-	int xEnemy=0;
-	int yEnemy=0;
+	private final int MOVEMENTSPEED=3;
+	private int xMovement=0;
+	private int xEnemy=0;
+	private int yEnemy=0;
 	private Enemy enemy;
 	private Craft ball;
 
-	public ShootEnemy(Game game, Enemy enemy, Craft craft) {
-		//this.game= game;
+	/*
+	 * Constructor del disparo enemigo que recibe por parametro al enemigo propietario y la nave.
+	 */
+	public ShootEnemy(Enemy enemy, Craft craft) {
 		this.enemy= enemy;
 		this.ball=craft;
 	}
 
+	/*
+	 * Cada invocacion pinta el disparo del enemigo.
+	 */
 	public void paint(Graphics2D g,BufferedImage[] sprites) {
 		xEnemy= enemy.getX();
 		yEnemy= enemy.getY();
-		g.drawImage(sprites[29], xEnemy+xa, yEnemy-(10/2), 50, 40, null);
-		//g.fillRect(xEnemy+xa,yEnemy+(DIAMETER/2), 10, 10);
-		xa-=ADD;
-		//direccion=false;
-		if(xEnemy+xa <= - 10){
-			xa=0;
+		g.drawImage(sprites[29], xEnemy+xMovement, yEnemy+(HEIGHT/2), WIDTH, HEIGHT, null);
+		xMovement-=MOVEMENTSPEED;
+		if(xEnemy+xMovement <= - HEIGHT){
+			xMovement=0;
 			if(ball.getEnemysACTIVOS()==0){
 				paintShootEnemy=false;
 			}
 		}
 	}
 
-
+	/*
+	 * Devuelvo el rectangulo que facilita la gestion de colisiones.
+	 */
 	public Rectangle getBounds() {
 		xEnemy= enemy.getX();
 		yEnemy= enemy.getY();
-		return new Rectangle(xEnemy+xa, yEnemy-(10/2), 10, 10);
+		return new Rectangle(xEnemy+xMovement, yEnemy-(10/2), 10, 10);
 	}
 
-	public int getXa() {
-		return xa;
+	public int getXMovement() {
+		return xMovement;
 	}
 
-	public void setXa(int xa) {
-		this.xa = xa;
-	}
-
-	public int getTopY() {
-		return Y - HEIGHT;
+	public void setXmovement(int xMovement) {
+		this.xMovement = xMovement;
 	}
 
 	public boolean isPaintShootEnemy() {

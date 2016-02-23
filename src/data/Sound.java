@@ -10,15 +10,21 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 public class Sound {
 	
-	private String start;
-	private String gameOver;
+	private final String START;
+	private final String GAMEOVER;
 	Clip sonido=null;
 	
+	/*
+	 * Constructor que inicializa los sonidos disponibles.
+	 */
 	public Sound(){
-		this.start="datos/start.wav";
-		this.gameOver="datos/game_over.wav";
+		this.START="datos/start.wav";
+		this.GAMEOVER="datos/game_over.wav";
 	}
-
+	
+	/*
+	 * Comienza la reproduccion del audio seleccionado
+	 */
 	public void start(String sound) {
 		// Se obtiene un Clip de sonido
 		try {
@@ -27,10 +33,10 @@ public class Sound {
         // Se carga con un fichero wav
         switch(sound){
         case "start":
-			sonido.open(AudioSystem.getAudioInputStream(new File(start)));
+			sonido.open(AudioSystem.getAudioInputStream(new File(START)));
 			break;
         case "Game Over":
-        	sonido.open(AudioSystem.getAudioInputStream(new File(gameOver)));
+        	sonido.open(AudioSystem.getAudioInputStream(new File(GAMEOVER)));
         	break;
         }
 		} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
