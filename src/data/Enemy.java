@@ -24,7 +24,7 @@ public class Enemy{
 			X = game.getWidth()/2;
 			Y = game.getHeight()/2;
 			//g.fillRoundRect(X, Y, 25, 50,5,50);
-			g.drawImage(sprites[1], X, Y, 25, 20, null);
+			g.drawImage(sprites[0], X, Y, 50, 40, null);
 		}
 		if(shootEnemy.isPaintShootEnemy()){
 			shootEnemy.paint(g,sprites);

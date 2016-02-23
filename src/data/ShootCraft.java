@@ -37,7 +37,7 @@ public class ShootCraft {
 
 		if(xaBall == 0){
 			if(lastXa2 > 0){
-				g.drawImage(sprites[62], xBall+xa+25, yBall+(20/2), 10, 10, null);
+				g.drawImage(sprites[62], xBall+xa+50, yBall+(60/2), 10, 10, null);
 				//g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
 				xa+=ADD;
 				direccion=true;
@@ -49,7 +49,7 @@ public class ShootCraft {
 				}
 			}
 			else{
-				g.drawImage(sprites[62], xBall+xa, yBall+(20/2), 10, 10, null);
+				g.drawImage(sprites[62], xBall+xa, yBall+(60/2), 10, 10, null);
 				//g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
 				xa-=ADD;
 				direccion=false;
@@ -63,7 +63,7 @@ public class ShootCraft {
 		}
 		else{
 			if(xaBall > 0 ){
-				g.drawImage(sprites[62], xBall+xa+25, yBall+(20/2), 10, 10, null);
+				g.drawImage(sprites[62], xBall+xa+50, yBall+(60/2), 10, 10, null);
 				//g.fillRect(xBall+xa+DIAMETER,yBall+(DIAMETER/2), 10, 10);
 				xa+=ADD;
 				direccion=true;
@@ -75,7 +75,7 @@ public class ShootCraft {
 				}
 			}
 			else{
-				g.drawImage(sprites[62], xBall+xa, yBall+(20/2), 10, 10, null);
+				g.drawImage(sprites[62], xBall+xa, yBall+(60/2), 10, 10, null);
 				//g.fillRect(xBall+xa,yBall+(DIAMETER/2), 10, 10);
 				xa-=ADD;
 				direccion=false;

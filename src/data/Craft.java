@@ -20,8 +20,8 @@ public class Craft {
 	//private static final int DIAMETER = 30;
 	private static final int ADD= 5;
 	BufferedImage[] sprites;
-	private final int WIDTH = 25;
-	private final int HEIGHT = 20;
+	private final int WIDTH = 50;
+	private final int HEIGHT = 40;
 	private Game game;
 	private int lastXa=1;
 	private boolean paint=false;
@@ -32,7 +32,7 @@ public class Craft {
 	public Craft(Game game,BufferedImage[] sprites) {
 		this.game= game;
 		this.sprites=sprites;
- 		image=sprites[23];
+ 		image=sprites[46];
 	}
 
 	void move() {
@@ -103,11 +103,11 @@ public class Craft {
 				System.out.println("Entro al bucle");
 				if (e.get(i).getKeyCode() == KeyEvent.VK_LEFT){
 					xMovement=-ADD;
-					image=sprites[26];
+					image=sprites[49];
 				}
 				if (e.get(i).getKeyCode() == KeyEvent.VK_RIGHT){
 					xMovement=ADD;
-					image=sprites[23];
+					image=sprites[46];
 				}
 				if (e.get(i).getKeyCode() == KeyEvent.VK_UP){
 					yMovement=-ADD;

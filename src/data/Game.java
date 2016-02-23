@@ -36,8 +36,8 @@ public class Game extends JPanel {
 	static JFrame frame;
 	static JPanel panel;
 	static Craft craft;
-	private final static int WIDTH = 25;
-	private final static int HEIGHT = 20;
+	private final static int WIDTH = 50;
+	private final static int HEIGHT = 40;
 	static Enemy enemy;
 	private static Vector<KeyEvent> pressedKeys;
 
@@ -53,13 +53,13 @@ public class Game extends JPanel {
 					empezar=false;
 				}
 				else{*/
-					for(int i=0; i<pressedKeys.size(); i++){
-						if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
-							pressedKeys.remove(i);
-						}
+				for(int i=0; i<pressedKeys.size(); i++){
+					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
+						pressedKeys.remove(i);
 					}
-					System.out.println("En el Released " + pressedKeys.size());
-					craft.keyPressed(pressedKeys);
+				}
+				System.out.println("En el Released " + pressedKeys.size());
+				craft.keyPressed(pressedKeys);
 				//}
 			}
 
@@ -69,18 +69,18 @@ public class Game extends JPanel {
 				/*if(empezar){
 				}
 				else{*/
-					System.out.println("En el Keypressed con " + pressedKeys.size());
-					boolean add = true;
-					for(int i=0; i<pressedKeys.size(); i++){
-						if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
-							add=false;
-						}
+				System.out.println("En el Keypressed con " + pressedKeys.size());
+				boolean add = true;
+				for(int i=0; i<pressedKeys.size(); i++){
+					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
+						add=false;
 					}
-					if(add){
-						pressedKeys.add(e);
-					}
-					craft.keyPressed(pressedKeys);
 				}
+				if(add){
+					pressedKeys.add(e);
+				}
+				craft.keyPressed(pressedKeys);
+			}
 			//}
 		});
 		setFocusable(true);
@@ -98,6 +98,11 @@ public class Game extends JPanel {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		craft.paint(g2d);
 		enemy.paint(g2d,sprites);
+		/*int y=0;
+		for(int i=0;i<sprites.length;i++){
+			g.drawImage(sprites[i], y, y, 9, 9, null);		
+			y+=10;
+			}*/
 		g.setColor(Color.WHITE);
 		g.drawLine(0,this.getWidth(),200,800);	
 		g.drawLine(200, 800, 400, 1000);
@@ -131,13 +136,13 @@ public class Game extends JPanel {
 	public static void tablaSprites(){
 		BufferedImage bigImg;
 		try {
-			bigImg = ImageIO.read(new File("datos/sprite.png"));
+			bigImg = ImageIO.read(new File("datos/sprites2.png"));
 
 			// The above line throws an checked IOException which must be caught.
 
 
-			final int rows = 5;
-			final int cols = 21;
+			final int rows = 9;
+			final int cols = 10;
 			sprites = new BufferedImage[rows * cols];
 
 			for (int i = 0; i < rows; i++)
@@ -150,6 +155,7 @@ public class Game extends JPanel {
 							WIDTH,
 							HEIGHT
 							);
+
 				}
 			}
 		} catch (IOException e) {
@@ -162,7 +168,7 @@ public class Game extends JPanel {
 		sound=new Sound();
 		//empezar=false;
 		Game game = new Game();
- 		frame = new JFrame("Defender");
+		frame = new JFrame("Defender");
 		JPanel menu= new JPanel();
 		JLabel imgMenu=new JLabel(new ImageIcon("datos/intro.png"));
 		game.setBackground(Color.BLACK);
@@ -171,11 +177,11 @@ public class Game extends JPanel {
 		frame.add(game);
 		frame.add(menu);
 		frame.setSize(1000,1000);
-		
+
 		frame.setVisible(true); 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// Se obtiene un Clip de sonido
-        
+
 		sound.start("start");
 		Thread.sleep(3500);
 		/*while(empezar){
@@ -201,7 +207,6 @@ public class Game extends JPanel {
 			frame.add(game);
 			frame.setVisible(true); 
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
 			int count=0;
 			while (restart) {
 				game.move();

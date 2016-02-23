@@ -26,7 +26,7 @@ public class ShootEnemy {
 	public void paint(Graphics2D g,BufferedImage[] sprites) {
 		xEnemy= enemy.getX();
 		yEnemy= enemy.getY();
-		g.drawImage(sprites[38], xEnemy+xa, yEnemy-(10/2), 25, 20, null);
+		g.drawImage(sprites[29], xEnemy+xa, yEnemy-(10/2), 50, 40, null);
 		//g.fillRect(xEnemy+xa,yEnemy+(DIAMETER/2), 10, 10);
 		xa-=ADD;
 		//direccion=false;
