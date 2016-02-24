@@ -17,6 +17,7 @@ public class Craft {
 	int xMovement = 0;
 	int yMovement = 0;
 	private BufferedImage image;
+	//private int nKeyPressed =0;
 	private boolean left=false;
 	private boolean right=false;
 	private boolean up=false;
@@ -140,74 +141,53 @@ public class Craft {
 	 * Metodo que se invoca al pulsar una tecla y define el siguiente movimiento de la nave.
 	 */
 	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_LEFT){
-			left=true;
-			image=sprites[49];
-		}
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-			right=true;
-			image=sprites[46];
-		}
-		if (e.getKeyCode() == KeyEvent.VK_UP){
-			up=true;
-		}
-		if (e.getKeyCode() == KeyEvent.VK_DOWN){
-			down=true;
-
-		}
+		
+			if (e.getKeyCode() == KeyEvent.VK_LEFT){
+				left=true;
+				//nKeyPressed++;
+				image=sprites[49];
+			}
+			if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+				right=true;
+				//nKeyPressed++;
+				image=sprites[46];
+			}
+			if (e.getKeyCode() == KeyEvent.VK_UP){
+				//nKeyPressed++;
+				up=true;
+			}
+			if (e.getKeyCode() == KeyEvent.VK_DOWN){
+				//nKeyPressed++;
+				down=true;
+			}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			space=true;
-			
 		}
-
-
 	}
+
+	/*
+	 * Metodo que se invoca al soltar una tecla.
+	 */
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			left=false;
+			//nKeyPressed--;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=false;
+			//nKeyPressed--;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
 			up=false;
+			//nKeyPressed--;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN){
 			down=false;
+			//nKeyPressed--;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			space=false;
 		}
-
-	}
-
-	/*if(!e.isEmpty()){
-			System.out.println("e.size() = " + e.size());
-			for(int i=0; i<e.size(); i++){
-				System.out.println("Entro al bucle");
-				if (e.get(i).getKeyCode() == KeyEvent.VK_LEFT){
-					xMovement=-MOVEMENTSPEED;
-					image=sprites[49];
-				}
-				if (e.get(i).getKeyCode() == KeyEvent.VK_RIGHT){
-					xMovement=MOVEMENTSPEED;
-					image=sprites[46];
-				}
-				if (e.get(i).getKeyCode() == KeyEvent.VK_UP){
-					yMovement=-MOVEMENTSPEED;
-				}
-				if (e.get(i).getKeyCode() == KeyEvent.VK_DOWN){
-					yMovement=MOVEMENTSPEED;
-
-				}
-				if (e.get(i).getKeyCode() == KeyEvent.VK_SPACE){
-					shoots.add(new ShootCraft(game,this));
-					shootsACTIVOS++;
-				}
-				System.out.println("Salgo del bucle");
-			}
-			System.out.println("Salgo del if");
-		}/*
 	}
 
 	/*
@@ -254,6 +234,14 @@ public class Craft {
 	public void addEnemysACTIVOS() {
 		this.enemysACTIVOS++;
 	}
+
+	/*public int getnKeyPressed() {
+		return nKeyPressed;
+	}
+
+	public void setnKeyPressed(int nKeyPressed) {
+		this.nKeyPressed = nKeyPressed;
+	}*/
 
 
 }

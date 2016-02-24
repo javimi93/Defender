@@ -10,12 +10,8 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Vector;
-
 import java.util.concurrent.TimeUnit;
-
 import javax.imageio.ImageIO;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -37,7 +33,6 @@ public class Game extends JPanel {
 	private final static int WIDTH = 50;
 	private final static int HEIGHT = 40;
 	static Enemy enemy;
-	private static Vector<KeyEvent> pressedKeys;
 
 	/*
 	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.
@@ -50,36 +45,18 @@ public class Game extends JPanel {
 
 			@Override
 			/*
-			 * Gestiona cuando se suelta una tecla, se elimina de la cola de teclas pulsadas.
+			 * Gestiona cuando se suelta una tecla.
 			 */
 			public void keyReleased(KeyEvent e) {
 				craft.keyReleased(e);
-				/*for(int i=0; i<pressedKeys.size(); i++){
-					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
-						pressedKeys.remove(i);
-					}
-				}
-				System.out.println("En el Released " + pressedKeys.size());
-				craft.keyPressed(pressedKeys);*/
 			}
 
 			@Override
 			/*
-			 * Gestiona cuando se pulsa una tecla, se añade a la cola de teclas pulsadas.
+			 * Gestiona cuando se pulsa una tecla.
 			 */
 			public void keyPressed(KeyEvent e) {
 				craft.keyPressed(e);
-				/*System.out.println("En el Keypressed con " + pressedKeys.size());
-				boolean add = true;
-				for(int i=0; i<pressedKeys.size(); i++){
-					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
-						add=false;
-					}
-				}
-				if(add){
-					pressedKeys.add(e);
-				}
-				craft.keyPressed(pressedKeys);*/
 			}
 		});
 		setFocusable(true);
@@ -91,7 +68,7 @@ public class Game extends JPanel {
 	private void move() {
 		craft.move();
 	}
-	
+
 	/*
 	 * Pinta en cada invocacion todos los elementos del juego.
 	 */
@@ -115,6 +92,12 @@ public class Game extends JPanel {
 	public void gameOver() {
 		Object[] options = {"Accept","Retry"};
 		sound.start("Game Over");
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		int n = JOptionPane.showOptionDialog(frame,
 				"Game Over",
 				"Game Over",
@@ -166,7 +149,7 @@ public class Game extends JPanel {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/*
 	 * Main del juego que lo inicia.
 	 */
@@ -178,7 +161,6 @@ public class Game extends JPanel {
 		frame = new JFrame("Defender");
 		JPanel menu= new JPanel();
 		JLabel imgMenu=new JLabel(new ImageIcon("datos/imagenes/intro.png"));
-		game.setBackground(Color.BLACK);
 		menu.add(imgMenu);
 		menu.setBackground(Color.BLACK);
 		frame.add(game);
@@ -189,7 +171,7 @@ public class Game extends JPanel {
 		//Se inicia el sonido de la intro del juego durante 3 segundos y medio.
 		sound.start("start");
 		Thread.sleep(3500);
-		
+
 		//Si no hay que terminar el juego
 		while(terminar){
 			//Se crea la pantalla del juego, con el tiempo transcurrido y la puntuacion
@@ -201,7 +183,6 @@ public class Game extends JPanel {
 			tiempo= new JLabel("Tiempo Transcurrido: 0");
 			game.setBackground(Color.BLACK);
 			puntuacion.setLocation(1000, 0);
-			pressedKeys = new Vector<KeyEvent>();
 			puntuacion.setForeground(Color.WHITE);
 			tiempo.setForeground(Color.WHITE);
 			game.add(puntuacion);
@@ -213,14 +194,14 @@ public class Game extends JPanel {
 			frame.setVisible(true); 
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			int count=0;
-			
+
 			//Si el jugador decide reintentar.
 			while (restart) {
 				game.move();
 				game.repaint();
 				Thread.sleep(10);
 				count++;
-				
+
 				//Renace el enemigo si ha muerto
 				if(craft.getEnemysACTIVOS() == 0 && count%100 == 0){
 					craft.addEnemysACTIVOS();
@@ -235,8 +216,8 @@ public class Game extends JPanel {
 						TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
 						));
 			}
-			frame.dispose();
 		}
+		frame.dispose();
 	}
 
 }

@@ -9,4 +9,4 @@ PRIORIDADES:
 7: Scoreboards			- TODO
 8: Musiquitas			- v0.1
 9: Pantalla Game Over	- v0.01
-10: Retoques movimiento	- TODO
+10: Retoques movimiento	- v1.1
