@@ -19,21 +19,25 @@ public class ShootCraft {
 	private Game game;
 	private Craft ball;
 	private int lastXMovement2=0;
+	private BufferedImage[] sprites;
+	private BufferedImage image;
 
 	/*
 	 * Constructor de los disparos de la nave, que recibe por parametro el juego y la nave.
 	 */
-	public ShootCraft(Game game, Craft craft) {
+	public ShootCraft(Game game, Craft craft,BufferedImage[] sprites) {
 		this.game= game;
 		this.ball= craft;
 		xBall= craft.getX();
-		yBall= craft.getY();	
+		yBall= craft.getY();
+		this.sprites=sprites;
+		this.image=sprites[58];
 		}
 
 	/*
 	 * Cada vez que se invoca se pinta el disparo con su respectivo movimiento.
 	 */
-	public boolean paint(Graphics2D g,int lastXMovement,BufferedImage[] sprites) {
+	public boolean paint(Graphics2D g,int lastXMovement) {
 		//Se utiliza lastXMovement para saber cual ha sido el ultimo movimiento de la nave
 		//por si dispara la nave estando parada.
 		if(!activo){
@@ -48,7 +52,7 @@ public class ShootCraft {
 			if(lastXMovement2 > 0){
 				//Hacia la derecha
 				xMovement+=MOVEMENTSPEED;
-				g.drawImage(sprites[62], xBall+xMovement+WIDTH, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
+				g.drawImage(image, xBall+xMovement+WIDTH, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
 				direccion=true;
 				//Si se ha llegado al limite de la pantalla
 				if(xBall+xMovement+WIDTH <= game.getWidth() - HEIGHT){
@@ -61,7 +65,7 @@ public class ShootCraft {
 			else{
 				//Hacia la izquierda
 				xMovement-=MOVEMENTSPEED;
-				g.drawImage(sprites[62], xBall+xMovement, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
+				g.drawImage(image, xBall+xMovement, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
 				direccion=false;
 				//Si se ha llegado al limite de la pantalla
 				if(xBall+xMovement >= - HEIGHT){
@@ -77,7 +81,7 @@ public class ShootCraft {
 			if(xMovementBall > 0 ){
 				//Hacia la derecha
 				xMovement+=MOVEMENTSPEED;
-				g.drawImage(sprites[62], xBall+xMovement+WIDTH, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
+				g.drawImage(image, xBall+xMovement+WIDTH, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
 				direccion=true;
 				//Si se ha llegado al limite de la pantalla
 				if(xBall+xMovement+WIDTH <= game.getWidth() - HEIGHT){
@@ -90,7 +94,7 @@ public class ShootCraft {
 			else{
 				//Hacia la izquierda
 				xMovement-=MOVEMENTSPEED;
-				g.drawImage(sprites[62], xBall+xMovement, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
+				g.drawImage(image, xBall+xMovement, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
 				direccion=false;
 				//Si se ha llegado al limite de la pantalla
 				if(xBall+xMovement >= - HEIGHT){

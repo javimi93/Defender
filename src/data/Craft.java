@@ -68,7 +68,7 @@ public class Craft {
 			yMovement+=MOVEMENTSPEED;
 		}
 		if(space){
-			shoots.add(new ShootCraft(game,this));
+			shoots.add(new ShootCraft(game,this,sprites));
 			shootsACTIVOS++;
 		}
 		if (xInit+xMovement  < 0){
@@ -129,7 +129,7 @@ public class Craft {
 	public void paint(Graphics2D g) {
 		g.drawImage(image, xInit, yInit, WIDTH, HEIGHT, null);
 		for(int i=0; i< shootsACTIVOS;i++){
-			paint=shoots.get(i).paint(g,lastMovement,sprites);
+			paint=shoots.get(i).paint(g,lastMovement);
 			if(!paint){
 				shoots.remove(i);
 				shootsACTIVOS--;
