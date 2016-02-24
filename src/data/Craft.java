@@ -21,6 +21,7 @@ public class Craft {
 	private boolean right=false;
 	private boolean up=false;
 	private boolean down=false;
+	private boolean space=false;
 	private static final int MOVEMENTSPEED= 3;
 	//Tabla de sprites
 	BufferedImage[] sprites;
@@ -64,6 +65,10 @@ public class Craft {
 		}
 		if(down){
 			yMovement+=MOVEMENTSPEED;
+		}
+		if(space){
+			shoots.add(new ShootCraft(game,this));
+			shootsACTIVOS++;
 		}
 		if (xInit+xMovement  < 0){
 			xMovement+=MOVEMENTSPEED;
@@ -151,8 +156,8 @@ public class Craft {
 
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
-			shoots.add(new ShootCraft(game,this));
-			shootsACTIVOS++;
+			space=true;
+			
 		}
 
 
@@ -169,7 +174,9 @@ public class Craft {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN){
 			down=false;
-
+		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE){
+			space=false;
 		}
 
 	}
