@@ -17,7 +17,11 @@ public class Craft {
 	int xMovement = 0;
 	int yMovement = 0;
 	private BufferedImage image;
-	private static final int MOVEMENTSPEED= 5;
+	private boolean left=false;
+	private boolean right=false;
+	private boolean up=false;
+	private boolean down=false;
+	private static final int MOVEMENTSPEED= 3;
 	//Tabla de sprites
 	BufferedImage[] sprites;
 	//Ancho y largo de los sprites
@@ -42,24 +46,36 @@ public class Craft {
 	public Craft(Game game,BufferedImage[] sprites) {
 		this.game= game;
 		this.sprites=sprites;
- 		image=sprites[46];
+		image=sprites[46];
 	}
 
 	/*
 	 * Metodo que sirve para mover la nave segun la tecla pulsada, a traves de la variable MOVEMENTSPEED.
 	 */
 	void move() {
- 		if (xInit+xMovement  < 0){
- 			xInit+=MOVEMENTSPEED;
- 		}
- 		if (xInit+xMovement > game.getWidth() - WIDTH){
- 			xInit-=MOVEMENTSPEED;
- 		}
- 		if (yInit+yMovement < 0){
- 			yInit+=MOVEMENTSPEED;
- 		}
+		if(left){
+			xMovement-=MOVEMENTSPEED;
+		}
+		if(right){
+			xMovement+=MOVEMENTSPEED;
+		}
+		if(up){
+			yMovement-=MOVEMENTSPEED;
+		}
+		if(down){
+			yMovement+=MOVEMENTSPEED;
+		}
+		if (xInit+xMovement  < 0){
+			xMovement+=MOVEMENTSPEED;
+		}
+		if (xInit+xMovement > game.getWidth() - WIDTH){
+			xMovement-=MOVEMENTSPEED;
+		}
+		if (yInit+yMovement < 0){
+			yMovement+=MOVEMENTSPEED;
+		}
 		if (yInit+yMovement > game.getHeight() - HEIGHT){
-			yInit-=MOVEMENTSPEED;
+			yMovement-=MOVEMENTSPEED;
 		}
 		//Si se produce una colision ente la nave y los disparos o el enemigo. Se acaba el juego.
 		if (collision()){
@@ -78,8 +94,8 @@ public class Craft {
 			}
 		}
 
-		xInit = xInit + xMovement;
-		yInit = yInit + yMovement;
+		xInit += xMovement;
+		yInit += yMovement;
 
 		if(xMovement!=0){
 			lastMovement = xMovement;
@@ -118,8 +134,47 @@ public class Craft {
 	/*
 	 * Metodo que se invoca al pulsar una tecla y define el siguiente movimiento de la nave.
 	 */
-	public void keyPressed(Vector<KeyEvent> e) {
-		if(!e.isEmpty()){
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT){
+			left=true;
+			image=sprites[49];
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+			right=true;
+			image=sprites[46];
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP){
+			up=true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN){
+			down=true;
+
+		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE){
+			shoots.add(new ShootCraft(game,this));
+			shootsACTIVOS++;
+		}
+
+
+	}
+	public void keyReleased(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_LEFT){
+			left=false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+			right=false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP){
+			up=false;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN){
+			down=false;
+
+		}
+
+	}
+
+	/*if(!e.isEmpty()){
 			System.out.println("e.size() = " + e.size());
 			for(int i=0; i<e.size(); i++){
 				System.out.println("Entro al bucle");
@@ -136,7 +191,7 @@ public class Craft {
 				}
 				if (e.get(i).getKeyCode() == KeyEvent.VK_DOWN){
 					yMovement=MOVEMENTSPEED;
-					
+
 				}
 				if (e.get(i).getKeyCode() == KeyEvent.VK_SPACE){
 					shoots.add(new ShootCraft(game,this));
@@ -145,7 +200,7 @@ public class Craft {
 				System.out.println("Salgo del bucle");
 			}
 			System.out.println("Salgo del if");
-		}
+		}/*
 	}
 
 	/*
@@ -154,7 +209,7 @@ public class Craft {
 	public Rectangle getBounds() {
 		return new Rectangle(xInit, yInit, WIDTH, HEIGHT);
 	}
-	
+
 	/*
 	 * Devuelve la X inicial de la nave.
 	 */
@@ -192,4 +247,6 @@ public class Craft {
 	public void addEnemysACTIVOS() {
 		this.enemysACTIVOS++;
 	}
+
+
 }

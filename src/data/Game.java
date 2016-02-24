@@ -53,13 +53,14 @@ public class Game extends JPanel {
 			 * Gestiona cuando se suelta una tecla, se elimina de la cola de teclas pulsadas.
 			 */
 			public void keyReleased(KeyEvent e) {
-				for(int i=0; i<pressedKeys.size(); i++){
+				craft.keyReleased(e);
+				/*for(int i=0; i<pressedKeys.size(); i++){
 					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
 						pressedKeys.remove(i);
 					}
 				}
 				System.out.println("En el Released " + pressedKeys.size());
-				craft.keyPressed(pressedKeys);
+				craft.keyPressed(pressedKeys);*/
 			}
 
 			@Override
@@ -67,7 +68,8 @@ public class Game extends JPanel {
 			 * Gestiona cuando se pulsa una tecla, se añade a la cola de teclas pulsadas.
 			 */
 			public void keyPressed(KeyEvent e) {
-				System.out.println("En el Keypressed con " + pressedKeys.size());
+				craft.keyPressed(e);
+				/*System.out.println("En el Keypressed con " + pressedKeys.size());
 				boolean add = true;
 				for(int i=0; i<pressedKeys.size(); i++){
 					if(pressedKeys.get(i).getKeyCode() == e.getKeyCode()){
@@ -77,7 +79,7 @@ public class Game extends JPanel {
 				if(add){
 					pressedKeys.add(e);
 				}
-				craft.keyPressed(pressedKeys);
+				craft.keyPressed(pressedKeys);*/
 			}
 		});
 		setFocusable(true);
