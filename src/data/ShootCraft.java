@@ -19,7 +19,6 @@ public class ShootCraft {
 	private Game game;
 	private Craft ball;
 	private int lastXMovement2=0;
-	private BufferedImage[] sprites;
 	private BufferedImage image;
 
 	/*
@@ -30,7 +29,6 @@ public class ShootCraft {
 		this.ball= craft;
 		xBall= craft.getX();
 		yBall= craft.getY();
-		this.sprites=sprites;
 		this.image=sprites[58];
 		}
 

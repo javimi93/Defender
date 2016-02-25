@@ -30,7 +30,6 @@ public class Enemy{
 		if(paint){
 			X = game.getWidth()/2;
 			Y = game.getHeight()/2;
-			//g.fillRoundRect(X, Y, 25, 50,5,50);
 			g.drawImage(sprites[0], X, Y, 50, 40, null);
 		}
 		if(shootEnemy.isPaintShootEnemy()){
@@ -46,7 +45,7 @@ public class Enemy{
 		if(paint){
 			X = game.getWidth()/2;
 			Y = game.getHeight()/2;
-			return new Rectangle(X, Y, 25, 20);
+			return new Rectangle(X, Y, 50, 40);
 		}
 		else{
 			return null;

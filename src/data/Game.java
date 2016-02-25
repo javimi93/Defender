@@ -30,6 +30,7 @@ public class Game extends JPanel {
 	private static Sound sound;
 	private static JFrame frame;
 	private static Craft craft;
+	static Villager villager;
 	private final static int WIDTH = 50;
 	private final static int HEIGHT = 40;
 	static Enemy enemy;
@@ -79,6 +80,7 @@ public class Game extends JPanel {
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		craft.paint(g2d);
 		enemy.paint(g2d,sprites);
+		villager.paint(g2d, sprites);
 		g.setColor(Color.WHITE);
 		g.drawLine(0,this.getWidth(),200,800);	
 		g.drawLine(200, 800, 400, 1000);
@@ -186,8 +188,9 @@ public class Game extends JPanel {
 			puntuacion.setForeground(Color.WHITE);
 			tiempo.setForeground(Color.WHITE);
 			game.add(puntuacion);
-			game.add(tiempo);	
-			craft = new Craft(game, sprites);
+			game.add(tiempo);
+			villager= new Villager(game,craft);
+			craft = new Craft(game, sprites,villager);
 			enemy = new Enemy(game,craft);			
 			frame.setSize(1000,1000);
 			frame.add(game);

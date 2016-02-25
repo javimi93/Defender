@@ -30,6 +30,7 @@ public class Craft {
 	private final int WIDTH = 50;
 	private final int HEIGHT = 40;
 	private Game game;
+	private Villager villager;
 	//Ultimo movimiento de la nave
 	private int lastMovement=1;
 	//Variable que sirve si se debe pintar el enemigo
@@ -38,6 +39,7 @@ public class Craft {
 	private int shootsACTIVOS=0;
 	//Enemigos Activos
 	private int enemysACTIVOS=0;
+	boolean pickedVillager=false;
 	//Vector que almacena todos los disparos de la nave activos
 	private Vector<ShootCraft> shoots= new Vector<ShootCraft>();
 
@@ -45,10 +47,11 @@ public class Craft {
 	 * Constructor de la clase Craft que recibe el juego y los sprites por parametro.
 	 * Y pone por defecto la imagen de la nave que se mueve hacia la derecha.
 	 */
-	public Craft(Game game,BufferedImage[] sprites) {
+	public Craft(Game game,BufferedImage[] sprites,Villager villager) {
 		this.game= game;
 		this.sprites=sprites;
 		image=sprites[46];
+		this.villager=villager;
 	}
 
 	/*
@@ -87,6 +90,10 @@ public class Craft {
 		if (collision()){
 			game.gameOver();
 		}
+		//Si coge el aldeano
+		if (pickVillager()){
+			pickedVillager = true;
+		}
 		//Si se produce una colision entre un enemigo y un disparo, se elimina el disparo y el enemigo.
 		if(shootsACTIVOS > 0 && enemysACTIVOS > 0){
 			for(int i=0; i< shootsACTIVOS;i++){
@@ -122,12 +129,28 @@ public class Craft {
 			return false;
 		}
 	}
+	
+	/*
+	 * Metodo que detecta una colision entre la nave y el aldeano.
+	 */
+	private boolean pickVillager() {
+		//if(enemysACTIVOS > 0){
+			return Game.villager.getBounds().intersects(getBounds());
+		//}
+		//else{
+		//	return false;
+		//}
+	}
 
 	/*
 	 * Metodo que pinta cada vez la nave en su posicion y sus disparos.
 	 */
 	public void paint(Graphics2D g) {
 		g.drawImage(image, xInit, yInit, WIDTH, HEIGHT, null);
+		if(pickedVillager && !villager.getBounds().intersects(new Rectangle(0,800, 1000, 200))){
+			villager.setX(xInit);
+			villager.setY(yInit+HEIGHT);
+		}
 		for(int i=0; i< shootsACTIVOS;i++){
 			paint=shoots.get(i).paint(g,lastMovement);
 			if(!paint){
