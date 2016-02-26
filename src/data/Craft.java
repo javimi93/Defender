@@ -73,6 +73,8 @@ public class Craft {
 		if(space){
 			shoots.add(new ShootCraft(game,this,sprites));
 			shootsACTIVOS++;
+			/*Game.sound.stop();
+			Game.sound.start("shoot");*/
 		}
 		if (xInit+xMovement  < 0){
 			xMovement+=MOVEMENTSPEED;

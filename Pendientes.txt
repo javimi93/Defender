@@ -10,3 +10,4 @@ PRIORIDADES:
 8: Musiquitas			- v0.1
 9: Pantalla Game Over	- v0.01
 10: Retoques movimiento	- v1.1
+11: Aldeanos			- v0.1

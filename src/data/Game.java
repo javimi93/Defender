@@ -27,7 +27,7 @@ public class Game extends JPanel {
 	private static JLabel tiempo;
 	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
-	private static Sound sound;
+	static Sound sound;
 	private static JFrame frame;
 	private static Craft craft;
 	static Villager villager;
@@ -82,10 +82,17 @@ public class Game extends JPanel {
 		enemy.paint(g2d,sprites);
 		villager.paint(g2d, sprites);
 		g.setColor(Color.WHITE);
-		g.drawLine(0,this.getWidth(),200,800);	
-		g.drawLine(200, 800, 400, 1000);
-		g.drawLine(400, 1000, 600, 800);
-		g.drawLine(600, 800, 800, 1000);
+		g.drawLine(-800+craft.getX(), 960, -1000+craft.getX(), 800);
+		g.drawLine(-600+craft.getX(), 800, -800+craft.getX(), 960);
+		g.drawLine(-400+craft.getX(), 960, -600+craft.getX(), 800);
+		g.drawLine(-200+craft.getX(), 800, -400+craft.getX(), 960);
+		g.drawLine(0+craft.getX(),960,-200+craft.getX(),800);	
+		
+		g.drawLine(0+craft.getX(),960,200+craft.getX(),800);	
+		g.drawLine(200+craft.getX(), 800, 400+craft.getX(), 960);
+		g.drawLine(400+craft.getX(), 960, 600+craft.getX(), 800);
+		g.drawLine(600+craft.getX(), 800, 800+craft.getX(), 960);
+		g.drawLine(800+craft.getX(), 960, 1000+craft.getX(), 800);
 	}
 
 	/*
