@@ -202,11 +202,15 @@ public class Craft {
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			left=false;
-			//nKeyPressed--;
+			if (right){
+				image=sprites[46];
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=false;
-			//nKeyPressed--;
+			if (left){
+				image=sprites[49];
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
 			up=false;
