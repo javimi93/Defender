@@ -170,12 +170,16 @@ public class Craft {
 			if (e.getKeyCode() == KeyEvent.VK_LEFT){
 				left=true;
 				//nKeyPressed++;
-				image=sprites[49];
+				if (!right){
+					image=sprites[49];
+				}
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 				right=true;
 				//nKeyPressed++;
-				image=sprites[46];
+				if (!left){
+					image=sprites[46];
+				}
 			}
 			if (e.getKeyCode() == KeyEvent.VK_UP){
 				//nKeyPressed++;
