@@ -169,14 +169,16 @@ public class Craft {
 		
 			if (e.getKeyCode() == KeyEvent.VK_LEFT){
 				left=true;
-				//nKeyPressed++;
+				//Si la nave no estaba moviendose ya hacia la derecha,
+				//se actualiza el sprite
 				if (!right){
 					image=sprites[49];
 				}
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 				right=true;
-				//nKeyPressed++;
+				//Si la nave no estaba moviendose ya hacia la izquierda,
+				//se actualiza el sprite
 				if (!left){
 					image=sprites[46];
 				}
