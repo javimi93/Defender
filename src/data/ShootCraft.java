@@ -15,7 +15,7 @@ public class ShootCraft {
 	private int xBall=0;
 	private int yBall=0;
 	private boolean activo=false;
-	private final int MOVEMENTSPEED=4;
+	private final int MOVEMENTSPEED=5;
 	private Game game;
 	private Craft ball;
 	private int lastXMovement2=0;

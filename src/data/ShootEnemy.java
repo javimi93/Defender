@@ -8,7 +8,7 @@ public class ShootEnemy {
 	private final int WIDTH = 50;
 	private final int HEIGHT = 40;
 	private boolean paintShootEnemy=true;
-	private final int MOVEMENTSPEED=3;
+	private final int MOVEMENTSPEED=4;
 	private int xMovement=0;
 	private int xEnemy=0;
 	private int yEnemy=0;

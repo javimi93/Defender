@@ -23,7 +23,7 @@ public class Craft {
 	private boolean up=false;
 	private boolean down=false;
 	private boolean space=false;
-	private static final int MOVEMENTSPEED= 3;
+	private static final int MOVEMENTSPEED= 4;
 	//Tabla de sprites
 	BufferedImage[] sprites;
 	//Ancho y largo de los sprites

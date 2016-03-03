@@ -1,10 +1,12 @@
 package data;
 
 import java.awt.Color;
-
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.RenderingHints;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
@@ -24,6 +26,7 @@ public class Game extends JPanel {
 	private static boolean restart=true;
 	private static boolean terminar=true;
 	private static JLabel puntuacion;
+	private static Dimension dim;
 	private static JLabel tiempo;
 	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
@@ -82,7 +85,7 @@ public class Game extends JPanel {
 		enemy.paint(g2d,sprites);
 		villager.paint(g2d, sprites);
 		g.setColor(Color.WHITE);
-		g.drawLine(-800+craft.getX(), 960, -1000+craft.getX(), 800);
+		g.drawLine(-1920+craft.getX(), 960, -1000+craft.getX(), 800);
 		g.drawLine(-600+craft.getX(), 800, -800+craft.getX(), 960);
 		g.drawLine(-400+craft.getX(), 960, -600+craft.getX(), 800);
 		g.drawLine(-200+craft.getX(), 800, -400+craft.getX(), 960);
@@ -165,17 +168,22 @@ public class Game extends JPanel {
 	public static void main(String[] args) throws InterruptedException {
 		tablaSprites();
 		sound=new Sound();
+		dim = Toolkit.getDefaultToolkit().getScreenSize();
 		//Se inicia la pantalla de introduccion del juego.
 		Game game = new Game();
 		frame = new JFrame("Defender");
 		JPanel menu= new JPanel();
-		JLabel imgMenu=new JLabel(new ImageIcon("datos/imagenes/intro.png"));
+		ImageIcon icon = new ImageIcon("datos/imagenes/intro.png");
+		Image image = icon.getImage().getScaledInstance((int)dim.getWidth(), (int)dim.getHeight(), Image.SCALE_SMOOTH);
+		icon.setImage(image);
+		JLabel imgMenu=new JLabel(icon);
 		menu.add(imgMenu);
 		menu.setBackground(Color.BLACK);
 		frame.add(game);
 		frame.add(menu);
-		frame.setSize(1000,1000);
+		frame.setSize(dim);
 		frame.setVisible(true); 
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Se inicia el sonido de la intro del juego durante 3 segundos y medio.
 		sound.start("start");
@@ -199,7 +207,8 @@ public class Game extends JPanel {
 			villager= new Villager(game,craft);
 			craft = new Craft(game, sprites,villager);
 			enemy = new Enemy(game,craft);			
-			frame.setSize(1000,1000);
+			frame.setSize(dim);
+	        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			frame.add(game);
 			frame.setVisible(true); 
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
