@@ -53,7 +53,7 @@ public class ShootCraft {
 				g.drawImage(image, xBall+xMovement+WIDTH, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
 				direccion=true;
 				//Si se ha llegado al limite de la pantalla
-				if(xBall+xMovement+WIDTH <= game.getWidth() - HEIGHT){
+				if(xBall+xMovement+WIDTH <= game.getWidth()){
 					return true;
 				}
 				else{
@@ -66,7 +66,7 @@ public class ShootCraft {
 				g.drawImage(image, xBall+xMovement, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
 				direccion=false;
 				//Si se ha llegado al limite de la pantalla
-				if(xBall+xMovement >= - HEIGHT){
+				if(xBall+xMovement >= - WIDTH){
 					return true;
 				}
 				else{
@@ -82,7 +82,7 @@ public class ShootCraft {
 				g.drawImage(image, xBall+xMovement+WIDTH, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
 				direccion=true;
 				//Si se ha llegado al limite de la pantalla
-				if(xBall+xMovement+WIDTH <= game.getWidth() - HEIGHT){
+				if(xBall+xMovement+WIDTH <= game.getWidth()){
 					return true;
 				}
 				else{
@@ -95,7 +95,7 @@ public class ShootCraft {
 				g.drawImage(image, xBall+xMovement, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
 				direccion=false;
 				//Si se ha llegado al limite de la pantalla
-				if(xBall+xMovement >= - HEIGHT){
+				if(xBall+xMovement >= - WIDTH){
 					return true;
 				}
 				else{
