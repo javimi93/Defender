@@ -149,6 +149,7 @@ public class Craft {
 	 */
 	public void paint(Graphics2D g) {
 		g.drawImage(image, xInit, yInit, WIDTH, HEIGHT, null);
+		//g.drawRect(xInit, yInit, WIDTH, HEIGHT-10); 
 		if(pickedVillager && !villager.getBounds().intersects(new Rectangle(0,800, 1000, 200))){
 			villager.setX(xInit);
 			villager.setY(yInit+HEIGHT-10);
@@ -229,7 +230,7 @@ public class Craft {
 	 * Devuelve un Rectangulo que rodea a la nave para facilitar la deteccion de colisiones.
 	 */
 	public Rectangle getBounds() {
-		return new Rectangle(xInit, yInit, WIDTH, HEIGHT);
+		return new Rectangle(xInit, yInit, WIDTH, HEIGHT-10);
 	}
 
 	/*
