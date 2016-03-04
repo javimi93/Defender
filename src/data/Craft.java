@@ -10,7 +10,7 @@ import java.util.Vector;
 public class Craft {
 	//Posiciones iniciales de la bola
 	int xInit = 0;
-	int yInit = 0;
+	int yInit = 50;
 	//Variables de cambio de la posición de la bola en el plano
 	//xMovement es el desplazamiento de la bola sobre el eje x
 	//yMovement es el desplazamiento de la bola sobre el eje y
@@ -27,7 +27,7 @@ public class Craft {
 	//Tabla de sprites
 	BufferedImage[] sprites;
 	//Ancho y largo de los sprites
-	private final int WIDTH = 50;
+	private final int WIDTH = 65;
 	private final int HEIGHT = 40;
 	private Game game;
 	private Villager villager;
@@ -50,7 +50,7 @@ public class Craft {
 	public Craft(Game game,BufferedImage[] sprites,Villager villager) {
 		this.game= game;
 		this.sprites=sprites;
-		image=sprites[46];
+		image=sprites[68];
 		this.villager=villager;
 	}
 
@@ -82,7 +82,7 @@ public class Craft {
 		if (xInit+xMovement > game.getWidth() - WIDTH){
 			xMovement-=MOVEMENTSPEED;
 		}
-		if (yInit+yMovement < 0){
+		if (yInit+yMovement < 50){
 			yMovement+=MOVEMENTSPEED;
 		}
 		if (yInit+yMovement > game.getHeight() - HEIGHT){
@@ -151,7 +151,7 @@ public class Craft {
 		g.drawImage(image, xInit, yInit, WIDTH, HEIGHT, null);
 		if(pickedVillager && !villager.getBounds().intersects(new Rectangle(0,800, 1000, 200))){
 			villager.setX(xInit);
-			villager.setY(yInit+HEIGHT);
+			villager.setY(yInit+HEIGHT-10);
 		}
 		for(int i=0; i< shootsACTIVOS;i++){
 			paint=shoots.get(i).paint(g,lastMovement);
@@ -172,7 +172,7 @@ public class Craft {
 				//Si la nave no estaba moviendose ya hacia la derecha,
 				//se actualiza el sprite
 				if (!right){
-					image=sprites[49];
+					image=sprites[69];
 				}
 			}
 			if (e.getKeyCode() == KeyEvent.VK_RIGHT){
@@ -180,7 +180,7 @@ public class Craft {
 				//Si la nave no estaba moviendose ya hacia la izquierda,
 				//se actualiza el sprite
 				if (!left){
-					image=sprites[46];
+					image=sprites[68];
 				}
 			}
 			if (e.getKeyCode() == KeyEvent.VK_UP){
@@ -203,13 +203,13 @@ public class Craft {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			left=false;
 			if (right){
-				image=sprites[46];
+				image=sprites[68];
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=false;
 			if (left){
-				image=sprites[49];
+				image=sprites[69];
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){

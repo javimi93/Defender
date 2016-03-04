@@ -24,17 +24,30 @@ import javax.swing.JPanel;
 public class Game extends JPanel {
 
 	private static boolean restart=true;
+	//private static int minutos1=0;
+	//private static int minutos2=0;
+	private static int segundos1=0;
+	private static int segundos2=0;
+	private static long TInicio; //Variables para determinar el tiempo de ejecución
+	private static long TFin;
+	private static long time;
+	private static long minutos=0;
+	private static long segundos=0;
+	private static long segundosaux=0;
 	private static boolean terminar=true;
-	private static JLabel puntuacion;
+	//private static JLabel puntuacion;
 	private static Dimension dim;
-	private static JLabel tiempo;
+	//private static JLabel tiempo;
 	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
+	private int nPuntuacionAux=0;
+	private int nPuntuacion1=0;
+	private int nPuntuacion2=0;
 	static Sound sound;
 	private static JFrame frame;
 	private static Craft craft;
 	static Villager villager;
-	private final static int WIDTH = 50;
+	private static int WIDTH = 45;
 	private final static int HEIGHT = 40;
 	static Enemy enemy;
 
@@ -84,13 +97,65 @@ public class Game extends JPanel {
 		craft.paint(g2d);
 		enemy.paint(g2d,sprites);
 		villager.paint(g2d, sprites);
+
+
+
+		//Se dibuja el tiempo con sprites
+
+		minutos=TimeUnit.MILLISECONDS.toMinutes(time);
+		segundos= TimeUnit.MILLISECONDS.toSeconds(time) - 
+				TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time));
+		if(segundos!=segundosaux){
+			segundos2++;
+		}	
+		segundosaux=segundos;
+
+		if(segundos2==10){
+			segundos1++;
+			segundos2=0;
+		}
+		if(segundos1==6){
+			segundos1=0;
+			segundos2=0;
+		}
+
+		g.drawImage(sprites[27], (int)dim.getWidth()/2-50, 5, 45, 40, null);
+		g.drawImage(sprites[(int)minutos+27], (int)dim.getWidth()/2+30-50, 5, 45, 40, null);
+		g.drawImage(sprites[37], (int)dim.getWidth()/2+30+30-50, 5, 45, 40, null);
+		g.drawImage(sprites[segundos1+27], (int)dim.getWidth()/2+30+30+30-50, 5, 45, 40, null);
+		g.drawImage(sprites[segundos2+27], (int)dim.getWidth()/2+30+30+30+30-50, 5, 45, 40, null);
+
+		//Se pinta la puntuacion
+		g.drawImage(sprites[0], (int)dim.getWidth()/2-250, 0, 45, 40, null);
+		if(nPuntuacion!=nPuntuacionAux){
+			nPuntuacion2++;
+		}
+		nPuntuacionAux=nPuntuacion;
+		
+		if(nPuntuacion2==10){
+			nPuntuacion1++;
+			nPuntuacion2=0;
+		}
+		if(nPuntuacion1==6){
+			nPuntuacion1=0;
+			nPuntuacion2=0;
+		}
+		if(nPuntuacion1 > 0){
+			g.drawImage(sprites[nPuntuacion1+27], (int)dim.getWidth()/2+40-250, 5, 45, 40, null);
+		}
+		g.drawImage(sprites[nPuntuacion2+27], (int)dim.getWidth()/2+40+40-250, 5, 45, 40, null);
+
+		//Se pinta barra de separacion
+		
 		g.setColor(Color.WHITE);
+		g.drawLine(0,50,(int)dim.getWidth(),50);
+
 		g.drawLine(-1920+craft.getX(), 960, -1000+craft.getX(), 800);
 		g.drawLine(-600+craft.getX(), 800, -800+craft.getX(), 960);
 		g.drawLine(-400+craft.getX(), 960, -600+craft.getX(), 800);
 		g.drawLine(-200+craft.getX(), 800, -400+craft.getX(), 960);
 		g.drawLine(0+craft.getX(),960,-200+craft.getX(),800);	
-		
+
 		g.drawLine(0+craft.getX(),960,200+craft.getX(),800);	
 		g.drawLine(200+craft.getX(), 800, 400+craft.getX(), 960);
 		g.drawLine(400+craft.getX(), 960, 600+craft.getX(), 800);
@@ -129,7 +194,6 @@ public class Game extends JPanel {
 	 */
 	public void updatePuntuacion(){
 		nPuntuacion++;
-		puntuacion.setText("Enemigos Destruidos : "+nPuntuacion);
 	}
 
 	/*
@@ -138,25 +202,30 @@ public class Game extends JPanel {
 	public static void tablaSprites(){
 		BufferedImage bigImg;
 		try {
-			bigImg = ImageIO.read(new File("datos/imagenes/sprites2.png"));
+			bigImg = ImageIO.read(new File("datos/imagenes/sprites1.png"));
 
-			final int rows = 9;
-			final int cols = 10;
-			sprites = new BufferedImage[rows * cols];
+			int rows = 67;
+			int cols = 1;
+			sprites = new BufferedImage[70 * cols];
 
 			for (int i = 0; i < rows; i++)
 			{
 				for (int j = 0; j < cols; j++)
 				{
 					sprites[(i * cols) + j] = bigImg.getSubimage(
-							j * WIDTH,
-							i * HEIGHT,
+							i * WIDTH,
+							j * HEIGHT,
 							WIDTH,
 							HEIGHT
 							);
 
 				}
 			}
+
+			WIDTH=65;
+			bigImg = ImageIO.read(new File("datos/imagenes/sprites2.png"));
+			sprites[68] = bigImg.getSubimage(0 * WIDTH,0 * HEIGHT,WIDTH,HEIGHT);
+			sprites[69] = bigImg.getSubimage(1 * WIDTH,0 * HEIGHT,WIDTH,HEIGHT);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -183,7 +252,7 @@ public class Game extends JPanel {
 		frame.add(menu);
 		frame.setSize(dim);
 		frame.setVisible(true); 
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Se inicia el sonido de la intro del juego durante 3 segundos y medio.
 		sound.start("start");
@@ -192,23 +261,22 @@ public class Game extends JPanel {
 		//Si no hay que terminar el juego
 		while(terminar){
 			//Se crea la pantalla del juego, con el tiempo transcurrido y la puntuacion
-			long TInicio, TFin, time; //Variables para determinar el tiempo de ejecución
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
 			restart=true; 
 			game = new Game();
-			puntuacion= new JLabel("Enemigos Destruidos : 0");
-			tiempo= new JLabel("Tiempo Transcurrido: 0");
+			//puntuacion= new JLabel("Enemigos Destruidos : 0");
+			//tiempo= new JLabel(new ImageIcon(sprites[10]));
 			game.setBackground(Color.BLACK);
-			puntuacion.setLocation(1000, 0);
-			puntuacion.setForeground(Color.WHITE);
-			tiempo.setForeground(Color.WHITE);
-			game.add(puntuacion);
-			game.add(tiempo);
+			//puntuacion.setLocation(1000, 0);
+			//puntuacion.setForeground(Color.WHITE);
+			//tiempo.setForeground(Color.WHITE);
+			//game.add(puntuacion);
+			//game.add(tiempo);
 			villager= new Villager(game,craft);
 			craft = new Craft(game, sprites,villager);
 			enemy = new Enemy(game,craft);			
 			frame.setSize(dim);
-	        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			frame.add(game);
 			frame.setVisible(true); 
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -216,6 +284,8 @@ public class Game extends JPanel {
 
 			//Si el jugador decide reintentar.
 			while (restart) {
+				TFin = System.currentTimeMillis(); //Se toma la hora en que finalizó el algoritmo y se almacena en la variable T
+				time = TFin - TInicio; //Se calculan los milisegundos de diferencia
 				game.move();
 				game.repaint();
 				Thread.sleep(10);
@@ -226,14 +296,13 @@ public class Game extends JPanel {
 					craft.addEnemysACTIVOS();
 					enemy.setPaint(true);
 				}
-				TFin = System.currentTimeMillis(); //Se toma la hora en que finalizó el algoritmo y se almacena en la variable T
-				time = TFin - TInicio; //Se calculan los milisegundos de diferencia
+
 				//Muestra el tiempo de forma formateada
-				tiempo.setText("Tiempo Transcurrido: "+String.format("%d min, %d sec", 
+				/*tiempo.setText("Tiempo Transcurrido: "+String.format("%d min, %d sec", 
 						TimeUnit.MILLISECONDS.toMinutes(time),
 						TimeUnit.MILLISECONDS.toSeconds(time) - 
 						TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
-						));
+						));*/
 			}
 		}
 		frame.dispose();

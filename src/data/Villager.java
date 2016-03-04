@@ -11,6 +11,7 @@ public class Villager{
 	private int X = 0;
 	private int Y = 0;
 	private ShootEnemy shootEnemy ;
+	
 
 	/*
 	 * Constructor que crea al enemigo y tiene por por parametro, el juego y la nave.
@@ -18,17 +19,15 @@ public class Villager{
 	 */
 	public Villager(Game game,Craft craft) {
 		this.game= game;
-		this.X = 800;
-		this.Y = 50;
 	}
 
 	/*
 	 * Pinta cada invocacion el enemigo y los disparos suyos.
 	 */
 	public void paint(Graphics2D g,BufferedImage[] sprites) {
-			
-			//g.fillRoundRect(X, Y, 25, 50,5,50);
-			g.drawImage(sprites[9], X, Y, 50, 40, null);
+		X = game.getWidth()/2;
+		Y = 50;
+		g.drawImage(sprites[5], X, Y, 45, 40, null);
 	}
 
 	/*
@@ -36,7 +35,7 @@ public class Villager{
 	 */
 	public Rectangle getBounds() {
 		if(paint){
-			return new Rectangle(X, Y, 50, 40);
+			return new Rectangle(X, Y, 45, 40);
 		}
 		else{
 			return null;

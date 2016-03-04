@@ -7,13 +7,12 @@ import java.awt.image.BufferedImage;
 public class ShootCraft {
 	private boolean direccion=true; //direccion del disparo, true = derecha, false = izquierda
 	//Ancho y largo de los sprites
-	private final int WIDTH = 50;
+	private final int WIDTH = 45;
 	private final int HEIGHT = 40;
-	private final int POSITIONSHOOT= 60;
 	private int xMovement=0;
-	private int xMovementBall = 1;
-	private int xBall=0;
-	private int yBall=0;
+	private int xMovementCraft = 1;
+	private int xCraft=0;
+	private int yCraft=0;
 	private boolean activo=false;
 	private final int MOVEMENTSPEED=5;
 	private Game game;
@@ -27,9 +26,9 @@ public class ShootCraft {
 	public ShootCraft(Game game, Craft craft,BufferedImage[] sprites) {
 		this.game= game;
 		this.ball= craft;
-		xBall= craft.getX();
-		yBall= craft.getY();
-		this.image=sprites[58];
+		xCraft= craft.getX();
+		yCraft= craft.getY();
+		this.image=sprites[14];
 		}
 
 	/*
@@ -40,20 +39,20 @@ public class ShootCraft {
 		//por si dispara la nave estando parada.
 		if(!activo){
 			activo=true;
-			xMovementBall= ball.getXMovement();
+			xMovementCraft= ball.getXMovement();
 			if(lastXMovement2 != lastXMovement){
 				lastXMovement2=lastXMovement;
 			}
 		}
 		//Si la nave esta parada
-		if(xMovementBall == 0){
+		if(xMovementCraft == 0){
 			if(lastXMovement2 > 0){
 				//Hacia la derecha
 				xMovement+=MOVEMENTSPEED;
-				g.drawImage(image, xBall+xMovement+WIDTH, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
+				g.drawImage(image, xCraft+xMovement+WIDTH, yCraft, WIDTH, HEIGHT, null);
 				direccion=true;
 				//Si se ha llegado al limite de la pantalla
-				if(xBall+xMovement+WIDTH <= game.getWidth()){
+				if(xCraft+xMovement+WIDTH <= game.getWidth()){
 					return true;
 				}
 				else{
@@ -63,10 +62,10 @@ public class ShootCraft {
 			else{
 				//Hacia la izquierda
 				xMovement-=MOVEMENTSPEED;
-				g.drawImage(image, xBall+xMovement, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
+				g.drawImage(image, xCraft+xMovement-WIDTH/2, yCraft, WIDTH, HEIGHT, null);
 				direccion=false;
 				//Si se ha llegado al limite de la pantalla
-				if(xBall+xMovement >= - WIDTH){
+				if(xCraft+xMovement >= - WIDTH){
 					return true;
 				}
 				else{
@@ -76,13 +75,13 @@ public class ShootCraft {
 		}
 		//Si la nave se esta moviendo
 		else{
-			if(xMovementBall > 0 ){
+			if(xMovementCraft > 0 ){
 				//Hacia la derecha
 				xMovement+=MOVEMENTSPEED;
-				g.drawImage(image, xBall+xMovement+WIDTH, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
+				g.drawImage(image, xCraft+xMovement+WIDTH, yCraft, WIDTH, HEIGHT, null);
 				direccion=true;
 				//Si se ha llegado al limite de la pantalla
-				if(xBall+xMovement+WIDTH <= game.getWidth()){
+				if(xCraft+xMovement+WIDTH <= game.getWidth()){
 					return true;
 				}
 				else{
@@ -92,10 +91,10 @@ public class ShootCraft {
 			else{
 				//Hacia la izquierda
 				xMovement-=MOVEMENTSPEED;
-				g.drawImage(image, xBall+xMovement, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT, null);
+				g.drawImage(image, xCraft+xMovement-WIDTH/2, yCraft, WIDTH, HEIGHT, null);
 				direccion=false;
 				//Si se ha llegado al limite de la pantalla
-				if(xBall+xMovement >= - WIDTH){
+				if(xCraft+xMovement >= - WIDTH){
 					return true;
 				}
 				else{
@@ -110,10 +109,10 @@ public class ShootCraft {
 	 */
 	public Rectangle getBounds() {
 		if(direccion){
-			return new Rectangle(xBall+xMovement+WIDTH, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT);
+			return new Rectangle(xCraft+xMovement+WIDTH/2, yCraft, WIDTH, HEIGHT);
 		}
 		else{
-			return new Rectangle(xBall+xMovement, yBall+(POSITIONSHOOT/2), WIDTH, HEIGHT);
+			return new Rectangle(xCraft+xMovement-WIDTH/2, yCraft, WIDTH, HEIGHT);
 		}
 	}
 }
