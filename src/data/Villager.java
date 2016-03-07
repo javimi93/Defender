@@ -17,16 +17,16 @@ public class Villager{
 	 * Constructor que crea al enemigo y tiene por por parametro, el juego y la nave.
 	 * Cuando se invoca, crea un emeigo y incrementa la variable enemysActivos.
 	 */
-	public Villager(Game game,Craft craft) {
-		this.game= game;
+	public Villager(double Width,Craft craft) {
+		this.X = (int) (Width/2);
+		this.Y = 50;
 	}
-
 	/*
 	 * Pinta cada invocacion el enemigo y los disparos suyos.
 	 */
 	public void paint(Graphics2D g,BufferedImage[] sprites) {
-		X = game.getWidth()/2;
-		Y = 50;
+		
+		//g.drawRect(X, Y, 45, 40); 
 		g.drawImage(sprites[5], X, Y, 45, 40, null);
 	}
 

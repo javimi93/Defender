@@ -287,7 +287,7 @@ public class Game extends JPanel {
 			//tiempo.setForeground(Color.WHITE);
 			//game.add(puntuacion);
 			//game.add(tiempo);
-			villager= new Villager(game,craft);
+			villager= new Villager(dim.getWidth(),craft);
 			craft = new Craft(game, sprites,villager);
 			enemy = new Enemy(game,craft);			
 			frame.setSize(dim);
