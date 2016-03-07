@@ -119,7 +119,18 @@ public class Game extends JPanel {
 			segundos2=0;
 		}
 
-		g.drawImage(sprites[27], (int)dim.getWidth()/2-50, 5, 45, 40, null);
+		Color myWhite = new Color(255, 0, 0); // Color white
+		int rgb = myWhite.getRGB();
+	    BufferedImage img = null;
+		img = sprites[27];
+
+		/*for (int i = 0; i < 45; i++) {
+		    for (int j = 0; j < 40; j++) {
+		        img.setRGB(i, j, rgb);
+		    }
+		}*/
+		
+		g.drawImage(img, (int)dim.getWidth()/2-50, 5, 45, 40, null);
 		g.drawImage(sprites[(int)minutos+27], (int)dim.getWidth()/2+30-50, 5, 45, 40, null);
 		g.drawImage(sprites[37], (int)dim.getWidth()/2+30+30-50, 5, 45, 40, null);
 		g.drawImage(sprites[segundos1+27], (int)dim.getWidth()/2+30+30+30-50, 5, 45, 40, null);
