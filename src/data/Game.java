@@ -41,8 +41,8 @@ public class Game extends JPanel {
 	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
 	private int nPuntuacionAux=0;
-	private int nPuntuacion1=0;
-	private int nPuntuacion2=0;
+	private static int nPuntuacion1=0;
+	private static int nPuntuacion2=0;
 	static Sound sound;
 	private static JFrame frame;
 	private static Craft craft;
@@ -136,14 +136,14 @@ public class Game extends JPanel {
 			nPuntuacion1++;
 			nPuntuacion2=0;
 		}
-		if(nPuntuacion1==6){
+		if(nPuntuacion1==10){
 			nPuntuacion1=0;
 			nPuntuacion2=0;
 		}
 		if(nPuntuacion1 > 0){
 			g.drawImage(sprites[nPuntuacion1+27], (int)dim.getWidth()/2+40-250, 5, 45, 40, null);
 		}
-		g.drawImage(sprites[nPuntuacion2+27], (int)dim.getWidth()/2+40+40-250, 5, 45, 40, null);
+		g.drawImage(sprites[nPuntuacion2+27], (int)dim.getWidth()/2+30+40-250, 5, 45, 40, null);
 
 		//Se pinta barra de separacion
 		
@@ -261,6 +261,10 @@ public class Game extends JPanel {
 		//Si no hay que terminar el juego
 		while(terminar){
 			//Se crea la pantalla del juego, con el tiempo transcurrido y la puntuacion
+			segundos1=0;
+			segundos2=0;
+			nPuntuacion1=0;
+			nPuntuacion2=0;
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
 			restart=true; 
 			game = new Game();
@@ -284,10 +288,10 @@ public class Game extends JPanel {
 
 			//Si el jugador decide reintentar.
 			while (restart) {
-				TFin = System.currentTimeMillis(); //Se toma la hora en que finalizó el algoritmo y se almacena en la variable T
-				time = TFin - TInicio; //Se calculan los milisegundos de diferencia
 				game.move();
 				game.repaint();
+				TFin = System.currentTimeMillis(); //Se toma la hora en que finalizó el algoritmo y se almacena en la variable T
+				time = TFin - TInicio; //Se calculan los milisegundos de diferencia
 				Thread.sleep(10);
 				count++;
 
