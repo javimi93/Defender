@@ -119,10 +119,10 @@ public class ShootCraft {
 	 */
 	public Rectangle getBounds() {
 		if(direccion){
-			return new Rectangle(xCraft+xMovement+WIDTH/2, yCraft, WIDTH, HEIGHT);
+			return new Rectangle(xCraft+xMovement+WIDTH*5, yCraft+HEIGHT*4, WIDTH, HEIGHT);
 		}
 		else{
-			return new Rectangle(xCraft+xMovement-WIDTH/2, yCraft, WIDTH, HEIGHT);
+			return new Rectangle(xCraft+xMovement, yCraft+HEIGHT*4, WIDTH, HEIGHT);
 		}
 	}
 }
