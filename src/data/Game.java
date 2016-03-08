@@ -121,15 +121,20 @@ public class Game extends JPanel {
 
 		Color myWhite = new Color(255, 0, 0); // Color white
 		int rgb = myWhite.getRGB();
-	    BufferedImage img = null;
+		BufferedImage img = null;
+		//Blanco Amarillo Verde Naranja Rojo Rosa Morado Azul Cyan
+		//255 255 255, 255 255 0, 0 255 0, 255 128 0, 255 0 0, 	255 0 127, 153 0 153, 0 0 255, 0 255 255
 		img = sprites[27];
 
-		/*for (int i = 0; i < 45; i++) {
-		    for (int j = 0; j < 40; j++) {
-		        img.setRGB(i, j, rgb);
-		    }
-		}*/
-		
+		for (int i = 0; i < 45; i++) {
+			for (int j = 0; j < 40; j++) {
+				int osa=img.getRGB(i, j);
+				if(osa!=0){
+					img.setRGB(i, j, rgb);
+				}
+			}
+		}
+
 		g.drawImage(img, (int)dim.getWidth()/2-50, 5, 45, 40, null);
 		g.drawImage(sprites[(int)minutos+27], (int)dim.getWidth()/2+30-50, 5, 45, 40, null);
 		g.drawImage(sprites[37], (int)dim.getWidth()/2+30+30-50, 5, 45, 40, null);
@@ -142,7 +147,7 @@ public class Game extends JPanel {
 			nPuntuacion2++;
 		}
 		nPuntuacionAux=nPuntuacion;
-		
+
 		if(nPuntuacion2==10){
 			nPuntuacion1++;
 			nPuntuacion2=0;
@@ -157,7 +162,7 @@ public class Game extends JPanel {
 		g.drawImage(sprites[nPuntuacion2+27], (int)dim.getWidth()/2+30+40-250, 5, 45, 40, null);
 
 		//Se pinta barra de separacion
-		
+
 		g.setColor(Color.WHITE);
 		g.drawLine(0,50,(int)dim.getWidth(),50);
 
