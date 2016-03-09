@@ -27,26 +27,19 @@ public class Game extends JPanel {
 	private static boolean restart=true;
 	//private static int minutos1=0;
 	//private static int minutos2=0;
-	private static int segundos1=0;
-	private static int segundos2=0;
 	private static long TInicio; //Variables para determinar el tiempo de ejecución
 	private static long TFin;
 	private static long time;
-	private static long minutos=0;
-	private static long segundos=0;
-	private static long segundosaux=0;
 	private static boolean terminar=true;
 	//private static JLabel puntuacion;
 	private static Dimension dim;
 	//private static JLabel tiempo;
 	private static BufferedImage[] sprites;
 	private int nPuntuacion=0;
-	private int nPuntuacionAux=0;
-	private static int nPuntuacion1=0;
-	private static int nPuntuacion2=0;
 	static Sound sound;
 	private static JFrame frame;
 	private static Craft craft;
+	private static ScoreBoard scoreBoard;
 	static Villager villager;
 	private static int WIDTH = 45;
 	private final static int HEIGHT = 40;
@@ -98,74 +91,7 @@ public class Game extends JPanel {
 		craft.paint(g2d);
 		enemy.paint(g2d,sprites);
 		villager.paint(g2d, sprites);
-
-
-
-		//Se dibuja el tiempo con sprites
-
-		minutos=TimeUnit.MILLISECONDS.toMinutes(time);
-		segundos= TimeUnit.MILLISECONDS.toSeconds(time) - 
-				TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time));
-		if(segundos!=segundosaux){
-			segundos2++;
-		}	
-		segundosaux=segundos;
-
-		if(segundos2==10){
-			segundos1++;
-			segundos2=0;
-		}
-		if(segundos1==6){
-			segundos1=0;
-			segundos2=0;
-		}
-
-		Color myWhite = new Color(255, 255, 0); // Color white
-		int rgb = myWhite.getRGB();
-		BufferedImage img = null;
-		//Blanco Amarillo Verde Naranja Rojo Rosa Morado Azul Cyan
-		//255 255 255, 255 255 0, 0 255 0, 255 128 0, 255 0 0, 	255 0 127, 153 0 153, 0 0 255, 0 255 255
-		img = sprites[27];
-
-		for (int i = 0; i < 45; i++) {
-			for (int j = 0; j < 40; j++) {
-				int osa=img.getRGB(i, j);
-				if(osa!=0){
-					img.setRGB(i, j, rgb);
-				}
-			}
-		}
-
-		g.drawImage(img, (int)dim.getWidth()/2-50, 5, 45, 40, null);
-		g.drawImage(sprites[(int)minutos+27], (int)dim.getWidth()/2+30-50, 5, 45, 40, null);
-		g.drawImage(sprites[37], (int)dim.getWidth()/2+30+30-50, 5, 45, 40, null);
-		g.drawImage(sprites[segundos1+27], (int)dim.getWidth()/2+30+30+30-50, 5, 45, 40, null);
-		g.drawImage(sprites[segundos2+27], (int)dim.getWidth()/2+30+30+30+30-50, 5, 45, 40, null);
-
-		//Se pinta la puntuacion
-		g.drawImage(sprites[0], (int)dim.getWidth()/2-250, 0, 45, 40, null);
-		if(nPuntuacion!=nPuntuacionAux){
-			nPuntuacion2++;
-		}
-		nPuntuacionAux=nPuntuacion;
-
-		if(nPuntuacion2==10){
-			nPuntuacion1++;
-			nPuntuacion2=0;
-		}
-		if(nPuntuacion1==10){
-			nPuntuacion1=0;
-			nPuntuacion2=0;
-		}
-		if(nPuntuacion1 > 0){
-			g.drawImage(sprites[nPuntuacion1+27], (int)dim.getWidth()/2+40-250, 5, 45, 40, null);
-		}
-		g.drawImage(sprites[nPuntuacion2+27], (int)dim.getWidth()/2+30+40-250, 5, 45, 40, null);
-
-		//Se pinta barra de separacion
-
-		g.setColor(Color.WHITE);
-		g.drawLine(0,50,(int)dim.getWidth(),50);
+		scoreBoard.paint(g2d, time);
 
 		g.drawLine(-1920+craft.getX(), 960, -1000+craft.getX(), 800);
 		g.drawLine(-600+craft.getX(), 800, -800+craft.getX(), 960);
@@ -210,7 +136,7 @@ public class Game extends JPanel {
 	 * Actualiza la puntuacion cada vez que se destruye un enemigo.
 	 */
 	public void updatePuntuacion(){
-		nPuntuacion++;
+		scoreBoard.addPuntuacion();
 	}
 
 	/*
@@ -266,6 +192,7 @@ public class Game extends JPanel {
 		menu.add(imgMenu);
 		menu.setBackground(Color.BLACK);
 		frame.add(game,BorderLayout.CENTER);
+		frame.setMinimumSize(new Dimension((int)dim.getWidth()/2,(int)dim.getHeight()/2));
 		frame.add(menu,BorderLayout.CENTER);
 		frame.setSize(dim);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -278,10 +205,6 @@ public class Game extends JPanel {
 		//Si no hay que terminar el juego
 		while(terminar){
 			//Se crea la pantalla del juego, con el tiempo transcurrido y la puntuacion
-			segundos1=0;
-			segundos2=0;
-			nPuntuacion1=0;
-			nPuntuacion2=0;
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
 			restart=true; 
 			game = new Game();
@@ -295,6 +218,7 @@ public class Game extends JPanel {
 			//game.add(puntuacion);
 			//game.add(tiempo);
 			villager= new Villager(dim.getWidth(),craft);
+			scoreBoard= new ScoreBoard(game,sprites);
 			craft = new Craft(game, sprites,villager);
 			enemy = new Enemy(game,craft);			
 			frame.setSize(dim);
