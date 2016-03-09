@@ -274,7 +274,7 @@ public class Game extends JPanel {
 		//Se inicia el sonido de la intro del juego durante 3 segundos y medio.
 		sound.start("start");
 		Thread.sleep(3500);
-
+		frame.remove(menu);
 		//Si no hay que terminar el juego
 		while(terminar){
 			//Se crea la pantalla del juego, con el tiempo transcurrido y la puntuacion
@@ -285,6 +285,7 @@ public class Game extends JPanel {
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
 			restart=true; 
 			game = new Game();
+			
 			//puntuacion= new JLabel("Enemigos Destruidos : 0");
 			//tiempo= new JLabel(new ImageIcon(sprites[10]));
 			game.setBackground(Color.BLACK);
