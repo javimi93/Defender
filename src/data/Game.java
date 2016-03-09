@@ -1,5 +1,6 @@
 package data;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -119,7 +120,7 @@ public class Game extends JPanel {
 			segundos2=0;
 		}
 
-		Color myWhite = new Color(255, 0, 0); // Color white
+		Color myWhite = new Color(255, 255, 0); // Color white
 		int rgb = myWhite.getRGB();
 		BufferedImage img = null;
 		//Blanco Amarillo Verde Naranja Rojo Rosa Morado Azul Cyan
@@ -264,12 +265,12 @@ public class Game extends JPanel {
 		JLabel imgMenu=new JLabel(icon);
 		menu.add(imgMenu);
 		menu.setBackground(Color.BLACK);
-		frame.add(game);
-		frame.add(menu);
+		frame.add(game,BorderLayout.CENTER);
+		frame.add(menu,BorderLayout.CENTER);
 		frame.setSize(dim);
-		frame.setVisible(true); 
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);
 		//Se inicia el sonido de la intro del juego durante 3 segundos y medio.
 		sound.start("start");
 		Thread.sleep(3500);
@@ -297,9 +298,9 @@ public class Game extends JPanel {
 			enemy = new Enemy(game,craft);			
 			frame.setSize(dim);
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			frame.add(game);
-			frame.setVisible(true); 
+			frame.add(game,BorderLayout.CENTER);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setVisible(true); 
 			int count=0;
 
 			//Si el jugador decide reintentar.
