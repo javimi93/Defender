@@ -11,23 +11,28 @@ public class Villager{
 	private int X = 0;
 	private int Y = 0;
 	private ShootEnemy shootEnemy ;
-	
+	private boolean moveVillager=false;
+
 
 	/*
 	 * Constructor que crea al enemigo y tiene por por parametro, el juego y la nave.
 	 * Cuando se invoca, crea un emeigo y incrementa la variable enemysActivos.
 	 */
-	public Villager(double Width,Craft craft) {
-		this.X = (int) (Width/2);
-		this.Y = 50;
+	public Villager(Game game,Craft craft) {
+		this.game = game;
 	}
 	/*
 	 * Pinta cada invocacion el enemigo y los disparos suyos.
 	 */
 	public void paint(Graphics2D g,BufferedImage[] sprites) {
-		
-		//g.drawRect(X, Y, 45, 40); 
-		g.drawImage(sprites[5], X, Y, 45, 40, null);
+		if(moveVillager){
+			//g.drawRect(X, Y, 45, 40); 
+			g.drawImage(sprites[5], X, Y, 45, 40, null);
+		}
+		else{
+			g.drawImage(sprites[5], game.getWidth()/2, 50, 45, 40, null);
+
+		}
 	}
 
 	/*
@@ -35,7 +40,12 @@ public class Villager{
 	 */
 	public Rectangle getBounds() {
 		if(paint){
-			return new Rectangle(X, Y, 45, 40);
+			if(moveVillager){
+				return new Rectangle(X, Y, 45, 40);
+			}
+			else{
+				return new Rectangle(game.getWidth()/2, 50, 45, 40);
+			}
 		}
 		else{
 			return null;
@@ -58,6 +68,7 @@ public class Villager{
 
 	public void setX(int x) {
 		this.X = x;
+		moveVillager=true;
 	}
 
 	public int getY() {
