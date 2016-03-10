@@ -24,17 +24,12 @@ import javax.swing.JPanel;
 public class Game extends JPanel {
 
 	private static boolean restart=true;
-	//private static int minutos1=0;
-	//private static int minutos2=0;
 	private static long TInicio; //Variables para determinar el tiempo de ejecución
 	private static long TFin;
 	private static long time;
 	private static boolean terminar=true;
-	//private static JLabel puntuacion;
 	private static Dimension dim;
-	//private static JLabel tiempo;
 	private static BufferedImage[] sprites;
-	private int nPuntuacion=0;
 	static Sound sound;
 	private static JFrame frame;
 	private static Craft craft;
@@ -207,15 +202,7 @@ public class Game extends JPanel {
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
 			restart=true; 
 			game = new Game();
-			
-			//puntuacion= new JLabel("Enemigos Destruidos : 0");
-			//tiempo= new JLabel(new ImageIcon(sprites[10]));
 			game.setBackground(Color.BLACK);
-			//puntuacion.setLocation(1000, 0);
-			//puntuacion.setForeground(Color.WHITE);
-			//tiempo.setForeground(Color.WHITE);
-			//game.add(puntuacion);
-			//game.add(tiempo);
 			villager= new Villager(game,craft);
 			scoreBoard= new ScoreBoard(game,sprites);
 			craft = new Craft(game, sprites,villager);

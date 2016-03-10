@@ -30,7 +30,7 @@ public class Villager{
 			g.drawImage(sprites[5], X, Y, 45, 40, null);
 		}
 		else{
-			g.drawImage(sprites[5], game.getWidth()/2, 50, 45, 40, null);
+			g.drawImage(sprites[5], game.getWidth()/2, game.getHeight()/3, 45, 40, null);
 
 		}
 	}
@@ -44,7 +44,7 @@ public class Villager{
 				return new Rectangle(X, Y, 45, 40);
 			}
 			else{
-				return new Rectangle(game.getWidth()/2, 50, 45, 40);
+				return new Rectangle(game.getWidth()/2, game.getHeight()/3, 45, 40);
 			}
 		}
 		else{
