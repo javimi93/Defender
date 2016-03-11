@@ -1,5 +1,6 @@
 package data;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -18,14 +19,33 @@ public class ScoreBoard {
 	private int nPuntuacion1=0;
 	private int nPuntuacion2=0;
 	BufferedImage [] sprites;
+	private int vidas=3;
 	
+	/*
+	 * Constructor de la clase ScoreBoard que recibe el juego y los sprites por parametro.
+	 */
 	public ScoreBoard(Game game, BufferedImage [] sprites){
 		this.game=game;
 		this.sprites=sprites;
 	}
 	
+	/*
+	 * Metodo que pinta en pantalla la puntuacion del jugador y el tiempo de partida transcurrido
+	 */
 	public void paint(Graphics2D g,long time) {
 		//Se dibuja el tiempo con sprites
+		
+				switch (vidas){
+				case 3:
+					g.drawImage(sprites[65], game.getWidth()/10, 0, 45, 40, null);
+					g.drawImage(sprites[65], game.getWidth()/10+45, 0, 45, 40, null);
+					break;
+					
+				case 2:
+					g.drawImage(sprites[65], game.getWidth()/10, 0, 45, 40, null);
+					break;
+
+				}
 
 				minutos=TimeUnit.MILLISECONDS.toMinutes(time);
 				segundos= TimeUnit.MILLISECONDS.toSeconds(time) - 
@@ -67,7 +87,7 @@ public class ScoreBoard {
 				g.drawImage(sprites[segundos2+27], game.getWidth()/2+30+30+30+30-50, 5, 45, 40, null);
 
 				//Se pinta la puntuacion
-				g.drawImage(sprites[0], game.getWidth()/2-250, 0, 45, 40, null);
+				//g.drawImage(sprites[0], game.getWidth()/2-250, 0, 45, 40, null);
 				if(nPuntuacion!=nPuntuacionAux){
 					nPuntuacion2++;
 				}
@@ -82,18 +102,33 @@ public class ScoreBoard {
 					nPuntuacion2=0;
 				}
 				if(nPuntuacion1 > 0){
-					g.drawImage(sprites[nPuntuacion1+27], game.getWidth()/2+40-250, 5, 45, 40, null);
+				//g.drawImage(sprites[nPuntuacion1+27], game.getWidth()/10+35+20, 40, 45, 40, null);
+				//g.drawImage(sprites[nPuntuacion1+27], game.getWidth()/10+20+35*2, 40, 45, 40, null);
+
+					g.drawImage(sprites[nPuntuacion1+27], game.getWidth()/10+20+35*3, 40, 45, 40, null);
 				}
-				g.drawImage(sprites[nPuntuacion2+27], game.getWidth()/2+30+40-250, 5, 45, 40, null);
+				g.drawImage(sprites[nPuntuacion2+27], game.getWidth()/10+20+35*4, 40, 45, 40, null);
 
 				//Se pinta barra de separacion
 
-				g.setColor(Color.WHITE);
-				g.drawLine(0,50,game.getWidth(),50);
+				g.setColor(Color.BLUE);
+				g.setStroke(new BasicStroke(5));
+				g.drawLine(0,80,game.getWidth(),80);
 	}
 	
+	/*
+	 * Metodo que incrementa la puntuacion del jugador
+	 */
 	public void addPuntuacion(){
 		nPuntuacion++;
+	}
+
+	public int getVidas() {
+		return vidas;
+	}
+
+	public void decreaseVidas() {
+		vidas--;
 	}
 
 }

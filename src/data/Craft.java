@@ -10,7 +10,7 @@ import java.util.Vector;
 public class Craft {
 	//Posiciones iniciales de la bola
 	int xInit = 0;
-	int yInit = 50;
+	int yInit = 80;
 	//Variables de cambio de la posición de la bola en el plano
 	//xMovement es el desplazamiento de la bola sobre el eje x
 	//yMovement es el desplazamiento de la bola sobre el eje y
@@ -40,6 +40,7 @@ public class Craft {
 	//Enemigos Activos
 	private int enemysACTIVOS=0;
 	boolean pickedVillager=false;
+	ScoreBoard scoreBoard;
 	//Vector que almacena todos los disparos de la nave activos
 	private Vector<ShootCraft> shoots= new Vector<ShootCraft>();
 
@@ -47,11 +48,12 @@ public class Craft {
 	 * Constructor de la clase Craft que recibe el juego y los sprites por parametro.
 	 * Y pone por defecto la imagen de la nave que se mueve hacia la derecha.
 	 */
-	public Craft(Game game,BufferedImage[] sprites,Villager villager) {
+	public Craft(Game game,BufferedImage[] sprites,Villager villager, ScoreBoard scoreBoard) {
 		this.game= game;
 		this.sprites=sprites;
 		image=sprites[68];
 		this.villager=villager;
+		this.scoreBoard=scoreBoard;
 	}
 
 	/*
@@ -71,7 +73,7 @@ public class Craft {
 			yMovement+=MOVEMENTSPEED;
 		}
 		if(space){
-			shoots.add(new ShootCraft(game,this,sprites));
+			shoots.add(new ShootCraft(game,this));
 			shootsACTIVOS++;
 			/*Game.sound.stop();
 			Game.sound.start("shoot");*/
@@ -82,7 +84,7 @@ public class Craft {
 		if (xInit+xMovement > game.getWidth() - WIDTH){
 			xMovement-=MOVEMENTSPEED;
 		}
-		if (yInit+yMovement < 50){
+		if (yInit+yMovement < 80){
 			yMovement+=MOVEMENTSPEED;
 		}
 		if (yInit+yMovement > game.getHeight() - HEIGHT){
@@ -90,6 +92,7 @@ public class Craft {
 		}
 		//Si se produce una colision ente la nave y los disparos o el enemigo. Se acaba el juego.
 		if (collision()){
+			scoreBoard.decreaseVidas();
 			game.gameOver();
 		}
 		//Si coge el aldeano
@@ -131,13 +134,13 @@ public class Craft {
 			return false;
 		}
 	}
-	
+
 	/*
 	 * Metodo que detecta una colision entre la nave y el aldeano.
 	 */
 	private boolean pickVillager() {
 		//if(enemysACTIVOS > 0){
-			return Game.villager.getBounds().intersects(getBounds());
+		return Game.villager.getBounds().intersects(getBounds());
 		//}
 		//else{
 		//	return false;
@@ -167,31 +170,31 @@ public class Craft {
 	 * Metodo que se invoca al pulsar una tecla y define el siguiente movimiento de la nave.
 	 */
 	public void keyPressed(KeyEvent e) {
-		
-			if (e.getKeyCode() == KeyEvent.VK_LEFT){
-				left=true;
-				//Si la nave no estaba moviendose ya hacia la derecha,
-				//se actualiza el sprite
-				if (!right){
-					image=sprites[69];
-				}
+
+		if (e.getKeyCode() == KeyEvent.VK_LEFT){
+			left=true;
+			//Si la nave no estaba moviendose ya hacia la derecha,
+			//se actualiza el sprite
+			if (!right){
+				image=sprites[69];
 			}
-			if (e.getKeyCode() == KeyEvent.VK_RIGHT){
-				right=true;
-				//Si la nave no estaba moviendose ya hacia la izquierda,
-				//se actualiza el sprite
-				if (!left){
-					image=sprites[68];
-				}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
+			right=true;
+			//Si la nave no estaba moviendose ya hacia la izquierda,
+			//se actualiza el sprite
+			if (!left){
+				image=sprites[68];
 			}
-			if (e.getKeyCode() == KeyEvent.VK_UP){
-				//nKeyPressed++;
-				up=true;
-			}
-			if (e.getKeyCode() == KeyEvent.VK_DOWN){
-				//nKeyPressed++;
-				down=true;
-			}
+		}
+		if (e.getKeyCode() == KeyEvent.VK_UP){
+			//nKeyPressed++;
+			up=true;
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN){
+			//nKeyPressed++;
+			down=true;
+		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			space=true;
 		}

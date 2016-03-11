@@ -3,7 +3,6 @@ package data;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 public class ShootCraft {
 	private boolean direccion=true; //direccion del disparo, true = derecha, false = izquierda
@@ -19,17 +18,14 @@ public class ShootCraft {
 	private Game game;
 	private Craft ball;
 	private int lastXMovement2=0;
-	private BufferedImage image;
-	
 	/*
 	 * Constructor de los disparos de la nave, que recibe por parametro el juego y la nave.
 	 */
-	public ShootCraft(Game game, Craft craft,BufferedImage[] sprites) {
+	public ShootCraft(Game game, Craft craft) {
 		this.game= game;
 		this.ball= craft;
 		xCraft= craft.getX();
 		yCraft= craft.getY();
-		this.image=sprites[14];
 		}
 
 	/*

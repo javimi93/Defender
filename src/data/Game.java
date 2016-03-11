@@ -17,13 +17,12 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class Game extends JPanel {
 
-	private static boolean restart=true;
+	private static int restart=3;
 	private static long TInicio; //Variables para determinar el tiempo de ejecución
 	private static long TFin;
 	private static long time;
@@ -82,12 +81,26 @@ public class Game extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		craft.paint(g2d);
-		enemy.paint(g2d,sprites);
-		villager.paint(g2d, sprites);
-		scoreBoard.paint(g2d, time);
+		if(scoreBoard.getVidas()>0){
+			craft.paint(g2d);
+			enemy.paint(g2d,sprites);
+			villager.paint(g2d, sprites);
+			scoreBoard.paint(g2d, time);
+		}
+		else{
+			scoreBoard.paint(g2d, time);
+			g.drawImage(sprites[45], this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
+			g.drawImage(sprites[39], this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
+			g.drawImage(sprites[51], this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
+			g.drawImage(sprites[43], this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
+			
+			g.drawImage(sprites[53], this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
+			g.drawImage(sprites[60], this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
+			g.drawImage(sprites[43], this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
+			g.drawImage(sprites[56], this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
+		}
 
-		g.drawLine(-1920+craft.getX(), 960, -1000+craft.getX(), 800);
+		/*g.drawLine(-1920+craft.getX(), 960, -1000+craft.getX(), 800);
 		g.drawLine(-600+craft.getX(), 800, -800+craft.getX(), 960);
 		g.drawLine(-400+craft.getX(), 960, -600+craft.getX(), 800);
 		g.drawLine(-200+craft.getX(), 800, -400+craft.getX(), 960);
@@ -97,32 +110,26 @@ public class Game extends JPanel {
 		g.drawLine(200+craft.getX(), 800, 400+craft.getX(), 960);
 		g.drawLine(400+craft.getX(), 960, 600+craft.getX(), 800);
 		g.drawLine(600+craft.getX(), 800, 800+craft.getX(), 960);
-		g.drawLine(800+craft.getX(), 960, 1000+craft.getX(), 800);
+		g.drawLine(800+craft.getX(), 960, 1000+craft.getX(), 800);*/
 	}
 
 	/*
 	 * Metodo que invoca el modo Game Over.
 	 */
 	public void gameOver() {
-		Object[] options = {"Accept","Retry"};
-		sound.start("Game Over");
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		this.repaint();
+		if(scoreBoard.getVidas()==0){
+			sound.start("Game Over");
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			restart--;
 		}
-		int n = JOptionPane.showOptionDialog(frame,
-				"Game Over",
-				"Game Over",
-				JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.QUESTION_MESSAGE,
-				null,
-				options,
-				options[1]);
-		restart=false;
-		if(n==0){
-			terminar=false;
+		else{
+			restart--;
+			craft = new Craft(this, sprites,villager,scoreBoard);
 		}
 	}
 
@@ -200,22 +207,20 @@ public class Game extends JPanel {
 		while(terminar){
 			//Se crea la pantalla del juego, con el tiempo transcurrido y la puntuacion
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
-			restart=true; 
 			game = new Game();
 			game.setBackground(Color.BLACK);
 			villager= new Villager(game,craft);
 			scoreBoard= new ScoreBoard(game,sprites);
-			craft = new Craft(game, sprites,villager);
+			craft = new Craft(game, sprites,villager,scoreBoard);
 			enemy = new Enemy(game,craft);			
 			frame.setSize(dim);
-			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			frame.add(game,BorderLayout.CENTER);
-			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true); 
 			int count=0;
+			restart=3;
 
 			//Si el jugador decide reintentar.
-			while (restart) {
+			while (restart>0) {
 				game.move();
 				game.repaint();
 				TFin = System.currentTimeMillis(); //Se toma la hora en que finalizó el algoritmo y se almacena en la variable T
@@ -228,13 +233,6 @@ public class Game extends JPanel {
 					craft.addEnemysACTIVOS();
 					enemy.setPaint(true);
 				}
-
-				//Muestra el tiempo de forma formateada
-				/*tiempo.setText("Tiempo Transcurrido: "+String.format("%d min, %d sec", 
-						TimeUnit.MILLISECONDS.toMinutes(time),
-						TimeUnit.MILLISECONDS.toSeconds(time) - 
-						TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(time))
-						));*/
 			}
 		}
 		frame.dispose();
