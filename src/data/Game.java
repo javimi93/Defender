@@ -126,10 +126,12 @@ public class Game extends JPanel {
 				e.printStackTrace();
 			}
 			restart--;
+			sound.start("start");
 		}
 		else{
 			restart--;
 			craft = new Craft(this, sprites,villager,scoreBoard);
+			villager= new Villager(this,craft);
 		}
 	}
 
