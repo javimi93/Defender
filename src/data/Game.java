@@ -214,6 +214,7 @@ public class Game extends JPanel {
 			craft = new Craft(game, sprites,villager,scoreBoard);
 			enemy = new Enemy(game,craft);			
 			frame.setSize(dim);
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			frame.add(game,BorderLayout.CENTER);
 			frame.setVisible(true); 
 			int count=0;
