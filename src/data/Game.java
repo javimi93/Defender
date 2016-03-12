@@ -26,7 +26,6 @@ public class Game extends JPanel {
 	private static long TInicio; //Variables para determinar el tiempo de ejecución
 	private static long TFin;
 	private static long time;
-	private static boolean terminar=true;
 	private static Dimension dim;
 	private static BufferedImage[] sprites;
 	static Sound sound;
@@ -205,20 +204,21 @@ public class Game extends JPanel {
 		sound.start("start");
 		Thread.sleep(3500);
 		frame.remove(menu);
+		
+		game = new Game();
+		game.setBackground(Color.BLACK);
+		frame.setSize(dim);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.add(game,BorderLayout.CENTER);
+		frame.setVisible(true); 
 		//Si no hay que terminar el juego
-		while(terminar){
+		while(true){
 			//Se crea la pantalla del juego, con el tiempo transcurrido y la puntuacion
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
-			game = new Game();
-			game.setBackground(Color.BLACK);
 			villager= new Villager(game,craft);
 			scoreBoard= new ScoreBoard(game,sprites);
 			craft = new Craft(game, sprites,villager,scoreBoard);
 			enemy = new Enemy(game,craft);			
-			frame.setSize(dim);
-			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-			frame.add(game,BorderLayout.CENTER);
-			frame.setVisible(true); 
 			int count=0;
 			restart=3;
 
@@ -238,7 +238,7 @@ public class Game extends JPanel {
 				}
 			}
 		}
-		frame.dispose();
+		//frame.dispose();
 	}
 
 }
