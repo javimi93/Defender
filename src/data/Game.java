@@ -22,10 +22,20 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Game extends JPanel {
 
+	int xCraft=0;
+	int yCraft=0;
+	int xCraft1=0;
+	int yCraft1=0;
+	int xCraft2=0;
+	int yCraft2=0;
+	int xCraft3=0;
+	int yCraft3=0;
+	int explosiones=0;
 	private static int restart=3;
 	private static long TInicio; //Variables para determinar el tiempo de ejecución
 	private static long TFin;
 	private static long time;
+	private static boolean terminar=true;
 	private static Dimension dim;
 	private static BufferedImage[] sprites;
 	static Sound sound;
@@ -36,6 +46,7 @@ public class Game extends JPanel {
 	private static int WIDTH = 45;
 	private final static int HEIGHT = 40;
 	static Enemy enemy;
+	boolean explosion=false;
 
 	/*
 	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.
@@ -80,26 +91,98 @@ public class Game extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		if(scoreBoard.getVidas()>0){
+		if(explosion){
+			int inercia=1;
+			int puntos=100;
+			int dx=5;
+
+			double gravedad=0.1;
+			int enfriamiento=3;
+			int dy=5;
+			int caosX=3;
+			double dif=Math.PI/5;
+			double ang=0;
+			ang=ang+dif;
+			double dxx=dx+inercia*Math.sin(ang)+Math.random()*4-2;
+			double dyy=dy+inercia*Math.cos(ang)+Math.random()*4-2;
+			int temp=80+(int)Math.round(Math.random()*40-20);
+			temp=temp-enfriamiento;
+			dx=(int) (dxx+(caosX*Math.random()-caosX/2));
+			dy=(int) (dyy+gravedad);
+			// Choque contra el suelo
+
+			xCraft+=dx;
+			yCraft+=dy;
+			xCraft1-=dx;
+			yCraft1-=dy;
+			xCraft2+=dx;
+			yCraft2-=dy;
+			xCraft3-=dx;
+			yCraft3+=dy;
+			int X=(int)Math.round(xCraft);
+			int Y=(int)Math.round(yCraft);
+			int XX=(int)Math.round(xCraft1);
+			int YY=(int)Math.round(yCraft1);  
+			int XX1=(int)Math.round(xCraft2);
+			int YY1=(int)Math.round(yCraft2);  
+			int XX2=(int)Math.round(xCraft3);
+			int YY2=(int)Math.round(yCraft3);  
+			g.setColor(Color.YELLOW);
+			if(Y>80){
+				g.fillOval(X,Y,10,10);
+			}
+			if(YY>80){
+				g.fillOval(XX,YY,10,10);
+			}
+			if(YY1>80){
+				g.fillOval(XX1,YY1,10,10);
+			}
+			if(YY2>80){
+				g.fillOval(XX2,YY2,10,10);
+			}
+			enemy.paint(g2d,sprites);
+			villager.paint(g2d, sprites);
+			scoreBoard.paint(g2d, time);
+			explosiones++;
+			if(explosiones>=puntos){
+				explosion = false;
+				explosiones= 0;
+				restart--;
+				if(scoreBoard.getVidas()==0){
+					scoreBoard.paint(g2d, time);
+					g.drawImage(sprites[45], this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(sprites[39], this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(sprites[51], this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(sprites[43], this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
+
+					g.drawImage(sprites[53], this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(sprites[60], this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(sprites[43], this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(sprites[56], this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
+					sound.start("Game Over");
+				}
+				else{
+					craft = new Craft(this, sprites,villager,scoreBoard);
+					villager= new Villager(this,craft);
+				}
+			}
+			else{
+				craft = new Craft(this, sprites,villager,scoreBoard);
+				villager= new Villager(this,craft);
+			}
+		}
+
+		else{
 			craft.paint(g2d);
 			enemy.paint(g2d,sprites);
 			villager.paint(g2d, sprites);
 			scoreBoard.paint(g2d, time);
 		}
-		else{
-			scoreBoard.paint(g2d, time);
-			g.drawImage(sprites[45], this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
-			g.drawImage(sprites[39], this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
-			g.drawImage(sprites[51], this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
-			g.drawImage(sprites[43], this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
-			
-			g.drawImage(sprites[53], this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
-			g.drawImage(sprites[60], this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
-			g.drawImage(sprites[43], this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
-			g.drawImage(sprites[56], this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
-		}
+	}
 
-		/*g.drawLine(-1920+craft.getX(), 960, -1000+craft.getX(), 800);
+
+
+	/*g.drawLine(-1920+craft.getX(), 960, -1000+craft.getX(), 800);
 		g.drawLine(-600+craft.getX(), 800, -800+craft.getX(), 960);
 		g.drawLine(-400+craft.getX(), 960, -600+craft.getX(), 800);
 		g.drawLine(-200+craft.getX(), 800, -400+craft.getX(), 960);
@@ -110,28 +193,21 @@ public class Game extends JPanel {
 		g.drawLine(400+craft.getX(), 960, 600+craft.getX(), 800);
 		g.drawLine(600+craft.getX(), 800, 800+craft.getX(), 960);
 		g.drawLine(800+craft.getX(), 960, 1000+craft.getX(), 800);*/
-	}
 
 	/*
 	 * Metodo que invoca el modo Game Over.
 	 */
 	public void gameOver() {
+		explosion=true;
+		xCraft=craft.getX();
+		xCraft1=xCraft;
+		xCraft2=xCraft;
+		xCraft3=xCraft;
+		yCraft=craft.getY();
+		yCraft1=yCraft;
+		yCraft2=yCraft;
+		yCraft3=yCraft;
 		this.repaint();
-		if(scoreBoard.getVidas()==0){
-			sound.start("Game Over");
-			try {
-				Thread.sleep(1500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			restart--;
-			sound.start("start");
-		}
-		else{
-			restart--;
-			craft = new Craft(this, sprites,villager,scoreBoard);
-			villager= new Villager(this,craft);
-		}
 	}
 
 	/*
@@ -204,23 +280,23 @@ public class Game extends JPanel {
 		sound.start("start");
 		Thread.sleep(3500);
 		frame.remove(menu);
-		
-		game = new Game();
-		game.setBackground(Color.BLACK);
-		frame.setSize(dim);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		frame.add(game,BorderLayout.CENTER);
-		frame.setVisible(true); 
 		//Si no hay que terminar el juego
-		while(true){
+		while(terminar){
 			//Se crea la pantalla del juego, con el tiempo transcurrido y la puntuacion
 			TInicio = System.currentTimeMillis(); //Tomamos la hora en que inicio el algoritmo y la almacenamos en la variable inicio
+			game = new Game();
+			game.setBackground(Color.BLACK);
 			villager= new Villager(game,craft);
 			scoreBoard= new ScoreBoard(game,sprites);
 			craft = new Craft(game, sprites,villager,scoreBoard);
 			enemy = new Enemy(game,craft);			
+			frame.setSize(dim);
+			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+			frame.add(game,BorderLayout.CENTER);
+			frame.setVisible(true); 
 			int count=0;
 			restart=3;
+
 
 			//Si el jugador decide reintentar.
 			while (restart>0) {
@@ -237,8 +313,10 @@ public class Game extends JPanel {
 					enemy.setPaint(true);
 				}
 			}
+			Thread.sleep(1500);
+			sound.start("start");
 		}
-		//frame.dispose();
+		frame.dispose();
 	}
 
 }
