@@ -47,6 +47,7 @@ public class Game extends JPanel {
 	private final static int HEIGHT = 40;
 	static Enemy enemy;
 	boolean explosion=false;
+	boolean firstTime=true;
 
 	/*
 	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.
@@ -87,97 +88,47 @@ public class Game extends JPanel {
 	 * Pinta en cada invocacion todos los elementos del juego.
 	 */
 	public void paint(Graphics g) {
-		super.paint(g);
-		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
-		if(explosion){
-			int inercia=1;
-			int puntos=100;
-			int dx=5;
+			super.paint(g);
+			Graphics2D g2d = (Graphics2D) g;
+			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+					RenderingHints.VALUE_ANTIALIAS_ON);
+			if(explosion){
+				int puntos=100;
+				craft.explosion(g2d);
+				enemy.paint(g2d,sprites);
+				villager.paint(g2d, sprites);
+				scoreBoard.paint(g2d, time);
+				explosiones++;
+				if(explosiones>=puntos){
+					explosion = false;
+					explosiones= 0;
+					restart--;
+					if(scoreBoard.getVidas()==0){
+						scoreBoard.paint(g2d, time);
+						g.drawImage(sprites[45], this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(sprites[39], this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(sprites[51], this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(sprites[43], this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
 
-			double gravedad=0.1;
-			int enfriamiento=3;
-			int dy=5;
-			int caosX=3;
-			double dif=Math.PI/5;
-			double ang=0;
-			ang=ang+dif;
-			double dxx=dx+inercia*Math.sin(ang)+Math.random()*4-2;
-			double dyy=dy+inercia*Math.cos(ang)+Math.random()*4-2;
-			int temp=80+(int)Math.round(Math.random()*40-20);
-			temp=temp-enfriamiento;
-			dx=(int) (dxx+(caosX*Math.random()-caosX/2));
-			dy=(int) (dyy+gravedad);
-			// Choque contra el suelo
-
-			xCraft+=dx;
-			yCraft+=dy;
-			xCraft1-=dx;
-			yCraft1-=dy;
-			xCraft2+=dx;
-			yCraft2-=dy;
-			xCraft3-=dx;
-			yCraft3+=dy;
-			int X=(int)Math.round(xCraft);
-			int Y=(int)Math.round(yCraft);
-			int XX=(int)Math.round(xCraft1);
-			int YY=(int)Math.round(yCraft1);  
-			int XX1=(int)Math.round(xCraft2);
-			int YY1=(int)Math.round(yCraft2);  
-			int XX2=(int)Math.round(xCraft3);
-			int YY2=(int)Math.round(yCraft3);  
-			g.setColor(Color.YELLOW);
-			if(Y>80){
-				g.fillOval(X,Y,10,10);
-			}
-			if(YY>80){
-				g.fillOval(XX,YY,10,10);
-			}
-			if(YY1>80){
-				g.fillOval(XX1,YY1,10,10);
-			}
-			if(YY2>80){
-				g.fillOval(XX2,YY2,10,10);
-			}
-			enemy.paint(g2d,sprites);
-			villager.paint(g2d, sprites);
-			scoreBoard.paint(g2d, time);
-			explosiones++;
-			if(explosiones>=puntos){
-				explosion = false;
-				explosiones= 0;
-				restart--;
-				if(scoreBoard.getVidas()==0){
-					scoreBoard.paint(g2d, time);
-					g.drawImage(sprites[45], this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(sprites[39], this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(sprites[51], this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(sprites[43], this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
-
-					g.drawImage(sprites[53], this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(sprites[60], this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(sprites[43], this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(sprites[56], this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
-					sound.start("Game Over");
-				}
-				else{
-					craft = new Craft(this, sprites,villager,scoreBoard);
-					villager= new Villager(this,craft);
+						g.drawImage(sprites[53], this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(sprites[60], this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(sprites[43], this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(sprites[56], this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
+						sound.start("Game Over");
+					}
+					else{
+						craft = new Craft(this, sprites,villager,scoreBoard);
+						villager= new Villager(this,craft);
+					}
 				}
 			}
+
 			else{
-				craft = new Craft(this, sprites,villager,scoreBoard);
-				villager= new Villager(this,craft);
+				craft.paint(g2d);
+				enemy.paint(g2d,sprites);
+				villager.paint(g2d, sprites);
+				scoreBoard.paint(g2d, time);
 			}
-		}
-
-		else{
-			craft.paint(g2d);
-			enemy.paint(g2d,sprites);
-			villager.paint(g2d, sprites);
-			scoreBoard.paint(g2d, time);
-		}
 	}
 
 
@@ -199,14 +150,6 @@ public class Game extends JPanel {
 	 */
 	public void gameOver() {
 		explosion=true;
-		xCraft=craft.getX();
-		xCraft1=xCraft;
-		xCraft2=xCraft;
-		xCraft3=xCraft;
-		yCraft=craft.getY();
-		yCraft1=yCraft;
-		yCraft2=yCraft;
-		yCraft3=yCraft;
 		this.repaint();
 	}
 
