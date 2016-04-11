@@ -47,6 +47,7 @@ public class Craft {
 	Vector <Integer> yExplosion=new Vector<Integer>();
 	//Vector que almacena todos los disparos de la nave activos
 	private Vector<ShootCraft> shoots= new Vector<ShootCraft>();
+	Sound sound=new Sound();
 
 	/*
 	 * Constructor de la clase Craft que recibe el juego y los sprites por parametro.
@@ -200,7 +201,13 @@ public class Craft {
 			down=true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
-			space=true;
+			if(!space){
+				space=true;
+				if(sound.isActivo()){
+					sound.stop();
+				}
+				sound.start("shoot");
+			}
 		}
 	}
 
@@ -240,7 +247,7 @@ public class Craft {
 		return new Rectangle(xInit, yInit, WIDTH, HEIGHT-10);
 	}
 
-	public void explosion(Graphics2D g){
+	public Explosion[] explosion(Graphics2D g,Explosion[] explosion){
 		int inercia=1;
 		double gravedad=0.1;
 		int enfriamiento=3;
@@ -256,68 +263,26 @@ public class Craft {
 		temp=temp-enfriamiento;
 		dx=(int) (dxx+(caosX*Math.random()-caosX/2));
 		dy=(int) (dyy+gravedad);
-		// Choque contra el suelo
-		if(firstTime){
-			xExplosion.add(0,(int)Math.round(xInit));
-			yExplosion.add(0,(int)Math.round(yInit));
-			xExplosion.add(1,(int)Math.round(xInit));
-			yExplosion.add(1,(int)Math.round(yInit));
-			xExplosion.add(2,(int)Math.round(xInit));
-			yExplosion.add(2,(int)Math.round(yInit));
-			xExplosion.add(3,(int)Math.round(xInit));
-			yExplosion.add(3,(int)Math.round(yInit));
-			xExplosion.add(4,(int)Math.round(xInit));
-			yExplosion.add(4,(int)Math.round(yInit));
-			xExplosion.add(5,(int)Math.round(xInit));
-			yExplosion.add(5,(int)Math.round(yInit));
-			xExplosion.add(6,(int)Math.round(xInit));
-			yExplosion.add(6,(int)Math.round(yInit));
-			xExplosion.add(7,(int)Math.round(xInit));
-			yExplosion.add(7,(int)Math.round(yInit));
-			firstTime=false;
-			xInit=0;
-			yInit=80;
-		}
-		else{
-			xExplosion.set(0,(int)Math.round(xExplosion.get(0)+dx));
-			yExplosion.set(0,(int)Math.round(yExplosion.get(0)+dy));
-			xExplosion.set(1,(int)Math.round(xExplosion.get(1)-dx));
-			yExplosion.set(1,(int)Math.round(yExplosion.get(1)-dy));
-			xExplosion.set(2,(int)Math.round(xExplosion.get(2)+dx));
-			yExplosion.set(2,(int)Math.round(yExplosion.get(2)-dy));
-			xExplosion.set(3,(int)Math.round(xExplosion.get(3)-dx));
-			yExplosion.set(3,(int)Math.round(yExplosion.get(3)+dy));
-			xExplosion.set(4,(int)Math.round(xExplosion.get(4)-dx));
-			yExplosion.set(4,(int)Math.round(yExplosion.get(4)));
-			xExplosion.set(5,(int)Math.round(xExplosion.get(5)));
-			yExplosion.set(5,(int)Math.round(yExplosion.get(5)+dy));
-			xExplosion.set(6,(int)Math.round(xExplosion.get(6)+dx));
-			yExplosion.set(6,(int)Math.round(yExplosion.get(6)));
-			xExplosion.set(7,(int)Math.round(xExplosion.get(7)));
-			yExplosion.set(7,(int)Math.round(yExplosion.get(7)-dy));
-		}
+		xInit=0;
+		yInit=80;
+		int n=0;
 		g.setColor(Color.YELLOW);
-		if(yExplosion.get(0)>80){
-			g.fillOval(xExplosion.get(0),yExplosion.get(0),10,10);
+		for(int i=0; i<explosion.length;i++){
+			n=(int)(Math.random()*(1000-1))+1;
+			if(n>500){
+				dx=-dx;
+			}
+			n=(int)(Math.random()*(1000-1))+1;
+			if(n>500){
+				dy=-dy;
+			}
+			explosion[i]=new Explosion(explosion[i].getX()+dx,explosion[i].getY()+dy);
+			if(explosion[i].getY()>80){
+				g.fillOval(explosion[i].getX(),explosion[i].getY(),10,10);
+			}
 		}
-		if(yExplosion.get(1)>80){
-			g.fillOval(xExplosion.get(1),yExplosion.get(1),10,10);
-		}
-		if(yExplosion.get(2)>80){
-			g.fillOval(xExplosion.get(2),yExplosion.get(2),10,10);
-		}
-		if(yExplosion.get(3)>80){
-			g.fillOval(xExplosion.get(3),yExplosion.get(3),10,10);
-		}
-		g.fillOval(xExplosion.get(4),yExplosion.get(4),10,10);
-		if(yExplosion.get(5)>80){
-			g.fillOval(xExplosion.get(5),yExplosion.get(5),10,10);
-		}
-		g.fillOval(xExplosion.get(6),yExplosion.get(6),10,10);
-		if(yExplosion.get(7)>80){
-			g.fillOval(xExplosion.get(7),yExplosion.get(7),10,10);
-		}
-		
+		return explosion;
+
 	}
 
 	/*

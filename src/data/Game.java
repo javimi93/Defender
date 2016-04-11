@@ -48,7 +48,7 @@ public class Game extends JPanel {
 	static Enemy enemy;
 	boolean explosion=false;
 	boolean firstTime=true;
-
+	private Explosion [] explosionTable=new Explosion[100];
 	/*
 	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.
 	 */
@@ -92,9 +92,10 @@ public class Game extends JPanel {
 			Graphics2D g2d = (Graphics2D) g;
 			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 					RenderingHints.VALUE_ANTIALIAS_ON);
+			
 			if(explosion){
-				int puntos=100;
-				craft.explosion(g2d);
+				int puntos=250;
+				explosionTable=craft.explosion(g2d,explosionTable);
 				enemy.paint(g2d,sprites);
 				villager.paint(g2d, sprites);
 				scoreBoard.paint(g2d, time);
@@ -124,6 +125,10 @@ public class Game extends JPanel {
 			}
 
 			else{
+				for(int i=0; i<explosionTable.length;i++){
+
+					explosionTable[i]=new Explosion(craft.xInit,craft.yInit);
+				}
 				craft.paint(g2d);
 				enemy.paint(g2d,sprites);
 				villager.paint(g2d, sprites);
@@ -149,6 +154,7 @@ public class Game extends JPanel {
 	 * Metodo que invoca el modo Game Over.
 	 */
 	public void gameOver() {
+		sound.start("explosion");
 		explosion=true;
 		this.repaint();
 	}
