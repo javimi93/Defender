@@ -106,15 +106,15 @@ public class Game extends JPanel {
 					restart--;
 					if(scoreBoard.getVidas()==0){
 						scoreBoard.paint(g2d, time);
-						g.drawImage(sprites[45], this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(sprites[39], this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(sprites[51], this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(sprites[43], this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(scoreBoard.getImage(sprites[45]), this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(scoreBoard.getImage(sprites[39]), this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(scoreBoard.getImage(sprites[51]), this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
 
-						g.drawImage(sprites[53], this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(sprites[60], this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(sprites[43], this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(sprites[56], this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(scoreBoard.getImage(sprites[53]), this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(scoreBoard.getImage(sprites[60]), this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
+						g.drawImage(scoreBoard.getImage(sprites[56]), this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
 						sound.start("Game Over");
 					}
 					else{

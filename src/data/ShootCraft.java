@@ -18,14 +18,16 @@ public class ShootCraft {
 	private Game game;
 	private Craft ball;
 	private int lastXMovement2=0;
+	private ScoreBoard scoreBoard;
 	/*
 	 * Constructor de los disparos de la nave, que recibe por parametro el juego y la nave.
 	 */
-	public ShootCraft(Game game, Craft craft) {
+	public ShootCraft(Game game, Craft craft,ScoreBoard scoreBoard) {
 		this.game= game;
 		this.ball= craft;
 		xCraft= craft.getX();
 		yCraft= craft.getY();
+		this.scoreBoard=scoreBoard;
 		}
 
 	/*
@@ -47,7 +49,7 @@ public class ShootCraft {
 			if(lastXMovement2 > 0){
 				//Hacia la derecha
 				xMovement+=MOVEMENTSPEED;
-				g.setColor(c);
+				g.setColor(scoreBoard.getColor());
 				g.fillRect(xCraft+xMovement+WIDTH*5, yCraft+HEIGHT*4, WIDTH, HEIGHT);
 				//g.drawImage(image, xCraft+xMovement+WIDTH, yCraft, WIDTH, HEIGHT, null);
 				direccion=true;
@@ -62,7 +64,7 @@ public class ShootCraft {
 			else{
 				//Hacia la izquierda
 				xMovement-=MOVEMENTSPEED;
-				g.setColor(c);
+				g.setColor(scoreBoard.getColor());
 				g.fillRect(xCraft+xMovement, yCraft+HEIGHT*4, WIDTH, HEIGHT);
 				//g.drawImage(image, xCraft+xMovement-WIDTH/2, yCraft, WIDTH, HEIGHT, null);
 				direccion=false;
@@ -80,7 +82,7 @@ public class ShootCraft {
 			if(xMovementCraft > 0 ){
 				//Hacia la derecha
 				xMovement+=MOVEMENTSPEED;
-				g.setColor(c);
+				g.setColor(scoreBoard.getColor());
 				g.fillRect(xCraft+xMovement+WIDTH*5, yCraft+HEIGHT*4, WIDTH, HEIGHT);
 				//g.drawImage(image, xCraft+xMovement+WIDTH, yCraft, WIDTH, HEIGHT, null);
 				direccion=true;
@@ -95,7 +97,7 @@ public class ShootCraft {
 			else{
 				//Hacia la izquierda
 				xMovement-=MOVEMENTSPEED;
-				g.setColor(c);
+				g.setColor(scoreBoard.getColor());
 				g.fillRect(xCraft+xMovement, yCraft+HEIGHT*4, WIDTH, HEIGHT);
 				//g.drawImage(image, xCraft+xMovement-WIDTH/2, yCraft, WIDTH, HEIGHT, null);
 				direccion=false;

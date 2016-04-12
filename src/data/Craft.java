@@ -78,7 +78,7 @@ public class Craft {
 			yMovement+=MOVEMENTSPEED;
 		}
 		if(space){
-			shoots.add(new ShootCraft(game,this));
+			shoots.add(new ShootCraft(game,this,scoreBoard));
 			shootsACTIVOS++;
 			/*Game.sound.stop();
 			Game.sound.start("shoot");*/
@@ -266,7 +266,7 @@ public class Craft {
 		xInit=0;
 		yInit=80;
 		int n=0;
-		g.setColor(Color.YELLOW);
+		g.setColor(Color.WHITE);
 		for(int i=0; i<explosion.length;i++){
 			n=(int)(Math.random()*(1000-1))+1;
 			if(n>500){
