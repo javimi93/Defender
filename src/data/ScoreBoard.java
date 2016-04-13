@@ -78,23 +78,23 @@ public class ScoreBoard {
 		switch(chosenColour){
 		case "Blanco"://255 255 255 
 			color = new Color(R, G, B);
-			B--;
+			B-=3;
 			if(B==0){
 				chosenColour="Amarillo";
 			}
 			break;
 		case "Amarillo"://255 255 0
 			color = new Color(R, G, B);
-			R--;
+			R-=3;
 			if(R==0){
 				chosenColour="Verde";
 			}
 			break;
 		case "Verde"://0 255 0
 			color = new Color(R, G, B);
-			R++;
+			R+=3;
 			if(G!=128){
-				G--;
+				G-=1;
 			}
 			if(R==255){
 				chosenColour="Naranja";
@@ -102,23 +102,23 @@ public class ScoreBoard {
 			break;
 		case "Naranja"://255 128 0
 			color = new Color(R, G, B);
-			G--;
+			G-=2;
 			if(G==0){
 				chosenColour="Rojo";
 			}
 			break;
 		case "Rojo"://255 0 0
 			color = new Color(R, G, B);
-			B++;
+			B+=1;
 			if(B==127){
 				chosenColour="Rosa";
 			}
 			break;
 		case "Rosa"://255 0 127
 			color = new Color(R, G, B);
-			R--;
+			R-=3;
 			if(B!=153){
-				B++;
+				B+=2;
 			}
 			if(R==153){
 				chosenColour="Morado";
@@ -126,9 +126,9 @@ public class ScoreBoard {
 			break;
 		case "Morado"://153 0 153
 			color = new Color(R, G, B);
-			R--;
+			R-=3;
 			if(B!=255){
-			B++;
+			B+=3;
 			}
 			if(R==0){
 				chosenColour="Azul";
@@ -137,14 +137,14 @@ public class ScoreBoard {
 			break;
 		case "Azul"://0 0 255
 			color = new Color(R, G, B);
-			G++;
+			G+=3;
 			if(G==255){
 				chosenColour="Cyan";
 			}
 			break;
 		case "Cyan"://0 255 255
 			color = new Color(R, G, B);
-			R++;
+			R+=3;
 			if(R==255){
 				chosenColour="Blanco";
 			}

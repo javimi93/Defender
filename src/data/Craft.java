@@ -247,7 +247,7 @@ public class Craft {
 		return new Rectangle(xInit, yInit, WIDTH, HEIGHT-10);
 	}
 
-	public Explosion[] explosion(Graphics2D g,Explosion[] explosion){
+	public Explosion[] explosion(Graphics2D g,Explosion[] explosion,Color color){
 		int inercia=1;
 		double gravedad=0.1;
 		int enfriamiento=3;
@@ -266,7 +266,7 @@ public class Craft {
 		xInit=0;
 		yInit=80;
 		int n=0;
-		g.setColor(Color.WHITE);
+		g.setColor(color);
 		for(int i=0; i<explosion.length;i++){
 			n=(int)(Math.random()*(1000-1))+1;
 			if(n>500){

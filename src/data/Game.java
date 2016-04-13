@@ -48,6 +48,7 @@ public class Game extends JPanel {
 	static Enemy enemy;
 	boolean explosion=false;
 	boolean firstTime=true;
+	private int puntos=250;
 	private Explosion [] explosionTable=new Explosion[100];
 	/*
 	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.
@@ -88,52 +89,56 @@ public class Game extends JPanel {
 	 * Pinta en cada invocacion todos los elementos del juego.
 	 */
 	public void paint(Graphics g) {
-			super.paint(g);
-			Graphics2D g2d = (Graphics2D) g;
-			g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-					RenderingHints.VALUE_ANTIALIAS_ON);
-			
-			if(explosion){
-				int puntos=250;
-				explosionTable=craft.explosion(g2d,explosionTable);
-				enemy.paint(g2d,sprites);
-				villager.paint(g2d, sprites);
-				scoreBoard.paint(g2d, time);
-				explosiones++;
-				if(explosiones>=puntos){
-					explosion = false;
-					explosiones= 0;
-					restart--;
-					if(scoreBoard.getVidas()==0){
-						scoreBoard.paint(g2d, time);
-						g.drawImage(scoreBoard.getImage(sprites[45]), this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(scoreBoard.getImage(sprites[39]), this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(scoreBoard.getImage(sprites[51]), this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
+		super.paint(g);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
 
-						g.drawImage(scoreBoard.getImage(sprites[53]), this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(scoreBoard.getImage(sprites[60]), this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
-						g.drawImage(scoreBoard.getImage(sprites[56]), this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
-						sound.start("Game Over");
-					}
-					else{
-						craft = new Craft(this, sprites,villager,scoreBoard);
-						villager= new Villager(this,craft);
-					}
+		if(explosion){
+			/*if(explosiones>200){
+					explosionTable=craft.explosion(g2d,explosionTable,Color.YELLOW);
+				}
+				else{*/
+			explosionTable=craft.explosion(g2d,explosionTable,Color.WHITE);
+			//}
+			enemy.paint(g2d,sprites);
+			villager.paint(g2d, sprites);
+			scoreBoard.paint(g2d, time);
+			explosiones++;
+			if(explosiones>=puntos){
+				explosion = false;
+				explosiones= 0;
+				restart--;
+				if(scoreBoard.getVidas()==0){
+					scoreBoard.paint(g2d, time);
+					g.drawImage(scoreBoard.getImage(sprites[45]), this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(scoreBoard.getImage(sprites[39]), this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(scoreBoard.getImage(sprites[51]), this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
+
+					g.drawImage(scoreBoard.getImage(sprites[53]), this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(scoreBoard.getImage(sprites[60]), this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
+					g.drawImage(scoreBoard.getImage(sprites[56]), this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
+					sound.start("Game Over");
+				}
+				else{
+					craft = new Craft(this, sprites,villager,scoreBoard);
+					villager= new Villager(this,craft);
 				}
 			}
+		}
 
-			else{
-				for(int i=0; i<explosionTable.length;i++){
+		else{
+			for(int i=0; i<explosionTable.length;i++){
 
-					explosionTable[i]=new Explosion(craft.xInit,craft.yInit);
-				}
-				craft.paint(g2d);
-				enemy.paint(g2d,sprites);
-				villager.paint(g2d, sprites);
-				scoreBoard.paint(g2d, time);
+				explosionTable[i]=new Explosion(craft.xInit,craft.yInit);
 			}
+			craft.paint(g2d);
+			enemy.paint(g2d,sprites);
+			villager.paint(g2d, sprites);
+			scoreBoard.paint(g2d, time);
+		}
 	}
 
 
