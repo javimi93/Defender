@@ -1,6 +1,5 @@
 package data;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
@@ -36,7 +35,6 @@ public class ShootCraft {
 	public boolean paint(Graphics2D g,int lastXMovement) {
 		//Se utiliza lastXMovement para saber cual ha sido el ultimo movimiento de la nave
 		//por si dispara la nave estando parada.
-		Color c=new Color(255,0,0);
 		if(!activo){
 			activo=true;
 			xMovementCraft= ball.getXMovement();

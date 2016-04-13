@@ -36,6 +36,7 @@ public class Game extends JPanel {
 	private static long TFin;
 	private static long time;
 	private static boolean terminar=true;
+	private static boolean endLevel=false;
 	private static Dimension dim;
 	private static BufferedImage[] sprites;
 	static Sound sound;
@@ -93,19 +94,55 @@ public class Game extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-
-		if(explosion){
-			/*if(explosiones>200){
-					explosionTable=craft.explosion(g2d,explosionTable,Color.YELLOW);
-				}
-				else{*/
-			explosionTable=craft.explosion(g2d,explosionTable,Color.WHITE);
-			//}
-			enemy.paint(g2d,sprites);
-			villager.paint(g2d, sprites);
+		//Termina un nivel
+		 if(endLevel){
 			scoreBoard.paint(g2d, time);
-			explosiones++;
-			if(explosiones>=puntos){
+			//Attack
+			g.drawImage(scoreBoard.getImage(sprites[39]), (this.getWidth()/2-200)-50, (this.getHeight()-500)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[58]), (this.getWidth()/2+35-200)-50, (this.getHeight()-500)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[58]), (this.getWidth()/2+35*2-200)-50, (this.getHeight()-500)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[39]), (this.getWidth()/2+35*3-200)-50, (this.getHeight()-500)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[41]), (this.getWidth()/2+35*4-200)-50, (this.getHeight()-500)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[49]), (this.getWidth()/2+35*5-200)-50, (this.getHeight()-500)/2, 45, 40, null);
+			//Wave 1
+			g.drawImage(scoreBoard.getImage(sprites[61]), (this.getWidth()/2+35*6-200+25)-50, (this.getHeight()-500)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[39]), (this.getWidth()/2+35*7-200+25)-50, (this.getHeight()-500)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[60]), (this.getWidth()/2+35*8-200+25)-50, (this.getHeight()-500)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[43]), (this.getWidth()/2+35*9-200+25)-50, (this.getHeight()-500)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[28]), (this.getWidth()/2+35*11-200+25)-50, (this.getHeight()-500)/2, 45, 40, null);
+			//Completed
+			g.drawImage(scoreBoard.getImage(sprites[41]), (this.getWidth()/2+35-200+25)-50, (this.getHeight()-400)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[53]), (this.getWidth()/2+35*2-200+25)-50, (this.getHeight()-400)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[51]), (this.getWidth()/2+35*3-200+25)-50, (this.getHeight()-400)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[54]), (this.getWidth()/2+35*4-200+25)-50, (this.getHeight()-400)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[50]), (this.getWidth()/2+35*5-200+25)-50, (this.getHeight()-400)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[43]), (this.getWidth()/2+35*6-200+25)-50, (this.getHeight()-400)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[58]), (this.getWidth()/2+35*7-200+25)-50, (this.getHeight()-400)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[43]), (this.getWidth()/2+35*8-200+25)-50, (this.getHeight()-400)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[42]), (this.getWidth()/2+35*9-200+25)-50, (this.getHeight()-400)/2, 45, 40, null);
+			//Bonus X 100
+			g.drawImage(scoreBoard.getImage(sprites[40]), (this.getWidth()/2-200+25)-50, (this.getHeight()-200)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[53]), (this.getWidth()/2+35-200+25)-50, (this.getHeight()-200)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[52]), (this.getWidth()/2+35*2-200+25)-50, (this.getHeight()-200)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[59]), (this.getWidth()/2+35*3-200+25)-50, (this.getHeight()-200)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[57]), (this.getWidth()/2+35*4-200+25)-50, (this.getHeight()-200)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[62]), (this.getWidth()/2+35*6-200+25)-50, (this.getHeight()-200)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[28]), (this.getWidth()/2+35*8-200+25)-50, (this.getHeight()-200)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[27]), (this.getWidth()/2+35*9-200+25)-50, (this.getHeight()-200)/2, 45, 40, null);
+			g.drawImage(scoreBoard.getImage(sprites[27]), (this.getWidth()/2+35*10-200+25)-50, (this.getHeight()-200)/2, 45, 40, null);
+			//Aldeanos
+			int x=0;
+			int y=1;
+			for(int i=0;i<4;i++){
+				g.drawImage((sprites[5]), (this.getWidth()/2+x*y-200+25)-50, (this.getHeight()-100)/2, 45, 40, null);
+				x=35;
+				if(i>=2){
+					  y++;
+				}
+			}
+		}
+		 //Ha terminado explosion
+		 else if(explosiones>=puntos){
 				explosion = false;
 				explosiones= 0;
 				restart--;
@@ -127,8 +164,20 @@ public class Game extends JPanel {
 					villager= new Villager(this,craft);
 				}
 			}
+		 //Hay explosion activa
+		 else if(explosion){
+			/*if(explosiones>200){
+					explosionTable=craft.explosion(g2d,explosionTable,Color.YELLOW);
+				}
+				else{*/
+			explosionTable=craft.explosion(g2d,explosionTable,Color.WHITE);
+			//}
+			enemy.paint(g2d,sprites);
+			villager.paint(g2d, sprites);
+			scoreBoard.paint(g2d, time);
+			explosiones++;
 		}
-
+		 //Funcionamiento normal
 		else{
 			for(int i=0; i<explosionTable.length;i++){
 
@@ -161,6 +210,11 @@ public class Game extends JPanel {
 	public void gameOver() {
 		sound.start("explosion");
 		explosion=true;
+		this.repaint();
+	}
+	
+	public void endLevel() {
+		endLevel=true;
 		this.repaint();
 	}
 
@@ -265,6 +319,13 @@ public class Game extends JPanel {
 				if(craft.getEnemysACTIVOS() == 0 && count%100 == 0){
 					craft.addEnemysACTIVOS();
 					enemy.setPaint(true);
+				}
+				if(endLevel){
+					Thread.sleep(5000);
+					endLevel=false;
+					craft = new Craft(game, sprites,villager,scoreBoard);
+					enemy = new Enemy(game,craft);
+					craft.setMAXPUNTUACION(craft.getMAXPUNTUACION()+250);
 				}
 			}
 			Thread.sleep(1500);

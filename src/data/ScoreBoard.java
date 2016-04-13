@@ -24,7 +24,6 @@ public class ScoreBoard {
 	private int vidas=3;
 	public Color color;
 	private String chosenColour="Blanco";
-	private int count=0;
 	private int R=255;
 	private int G=255;
 	private int B=255;
@@ -225,6 +224,14 @@ public class ScoreBoard {
 			}
 		}
 		return img;
+	}
+
+	public int getnPuntuacion() {
+		return nPuntuacion;
+	}
+
+	public void setnPuntuacion(int nPuntuacion) {
+		this.nPuntuacion = nPuntuacion;
 	}
 
 }

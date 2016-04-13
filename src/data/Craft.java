@@ -42,6 +42,7 @@ public class Craft {
 	//Enemigos Activos
 	private int enemysACTIVOS=0;
 	boolean pickedVillager=false;
+	private int MAXPUNTUACION=250;
 	ScoreBoard scoreBoard;
 	Vector <Integer> xExplosion=new Vector<Integer>();
 	Vector <Integer> yExplosion=new Vector<Integer>();
@@ -113,6 +114,9 @@ public class Craft {
 					shootsACTIVOS--;
 					Game.enemy.setPaint(false);
 					shoots.remove(i);
+					if(scoreBoard.getnPuntuacion()>MAXPUNTUACION){
+						game.endLevel();
+					}
 				}
 			}
 		}
@@ -331,6 +335,14 @@ public class Craft {
 				}
 			}
 		}
+	}
+
+	public int getMAXPUNTUACION() {
+		return MAXPUNTUACION;
+	}
+
+	public void setMAXPUNTUACION(int mAXPUNTUACION) {
+		MAXPUNTUACION = mAXPUNTUACION;
 	}
 
 	/*public int getnKeyPressed() {
