@@ -12,6 +12,12 @@ public class Craft {
 	//Posiciones iniciales de la bola
 	int xInit = 0;
 	int yInit = 80;
+	int countEjeX=0;
+	int countEjeY=0;
+	boolean avisarEjeX1=false;
+	boolean avisarEjeX2=false;
+	boolean avisarEjeY1=false;
+	boolean avisarEjeY2=false;
 	boolean firstTime=true;
 	//Variables de cambio de la posición de la bola en el plano
 	//xMovement es el desplazamiento de la bola sobre el eje x
@@ -25,7 +31,7 @@ public class Craft {
 	private boolean up=false;
 	private boolean down=false;
 	private boolean space=false;
-	private static final int MOVEMENTSPEED= 4;
+	private static int MOVEMENTSPEED= 4;
 	//Tabla de sprites
 	BufferedImage[] sprites;
 	//Ancho y largo de los sprites
@@ -182,27 +188,95 @@ public class Craft {
 
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			left=true;
+			if(avisarEjeX2){
+				countEjeX=0;
+				avisarEjeX2=false;
+				MOVEMENTSPEED=4;
+			}
 			//Si la nave no estaba moviendose ya hacia la derecha,
 			//se actualiza el sprite
 			if (!right){
 				image=sprites[69];
 			}
+			if(countEjeX<5){
+				countEjeX++;
+			}
+			else{
+				if(MOVEMENTSPEED<8){
+					MOVEMENTSPEED++;
+				}
+				else{
+					avisarEjeX1=true;
+				}
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=true;
+			if(avisarEjeX1){
+				countEjeX=0;
+				MOVEMENTSPEED=4;
+				avisarEjeX1=false;
+			}
 			//Si la nave no estaba moviendose ya hacia la izquierda,
 			//se actualiza el sprite
 			if (!left){
 				image=sprites[68];
 			}
+			if(countEjeX<5){
+				countEjeX++;
+			}
+			else{
+				if(MOVEMENTSPEED<8){
+					MOVEMENTSPEED++;
+				}
+				else{
+					avisarEjeX2=true;
+				}
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
 			//nKeyPressed++;
 			up=true;
+			if(avisarEjeY2){
+				countEjeY=0;
+				avisarEjeY2=false;
+				MOVEMENTSPEED=4;
+			}
+			//Si la nave no estaba moviendose ya hacia la derecha,
+			//se actualiza el sprite
+			if(countEjeY<5){
+				countEjeY++;
+			}
+			else{
+				if(MOVEMENTSPEED<8){
+					MOVEMENTSPEED++;
+				}
+				else{
+					avisarEjeY1=true;
+				}
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN){
 			//nKeyPressed++;
 			down=true;
+			if(avisarEjeY1){
+				countEjeY=0;
+				MOVEMENTSPEED=4;
+				avisarEjeY1=false;
+			}
+			//Si la nave no estaba moviendose ya hacia la izquierda,
+			//se actualiza el sprite
+			if(countEjeY<5){
+				countEjeY++;
+			}
+			else{
+				if(MOVEMENTSPEED<8){
+					MOVEMENTSPEED++;
+				}
+				else{
+					avisarEjeY2=true;
+				}
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			if(!space){
