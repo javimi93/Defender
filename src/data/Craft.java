@@ -12,8 +12,7 @@ public class Craft {
 	//Posiciones iniciales de la bola
 	int xInit = 0;
 	int yInit = 80;
-	int countEjeX=0;
-	int countEjeY=0;
+	int countAceleracion=0;
 	boolean avisar1=false;
 	boolean avisar2=false;
 	boolean firstTime=true;
@@ -168,12 +167,42 @@ public class Craft {
 	 */
 	public void paint(Graphics2D g) {
 		g.drawImage(image, xInit, yInit, WIDTH, HEIGHT, null);
-		if(left || right){
+		if(left || right || up || down){
 			if(left){
-				g.drawImage(llama, xInit+WIDTH, yInit+10, 18, 15, null);
+				if(MOVEMENTSPEED>4){
+					g.drawImage(llama, xInit+WIDTH, yInit+10, 50, 15, null);
+				}
+				else{
+					g.drawImage(llama, xInit+WIDTH, yInit+10, 18, 15, null);
+				}
 			}
-			else{
-				g.drawImage(llama, xInit-20, yInit+10, 18, 15, null);
+			else if(right){
+				if(MOVEMENTSPEED>4){
+					g.drawImage(llama, xInit-50, yInit+10, 50, 15, null);
+				}
+				else{
+					g.drawImage(llama, xInit-20, yInit+10, 18, 15, null);
+				}
+			}
+			else {
+				if(lastMovement>0){
+					//right
+					if(MOVEMENTSPEED>4){
+						g.drawImage(llama, xInit-50, yInit+10, 50, 15, null);
+					}
+					else{
+						g.drawImage(llama, xInit-20, yInit+10, 18, 15, null);
+					}
+				}
+				else{
+					//left
+					if(MOVEMENTSPEED>4){
+						g.drawImage(llama, xInit+WIDTH, yInit+10, 50, 15, null);
+					}
+					else{
+						g.drawImage(llama, xInit+WIDTH, yInit+10, 18, 15, null);
+					}
+				}
 			}
 		}
 		//g.drawRect(xInit, yInit, WIDTH, HEIGHT-10); 
@@ -198,7 +227,7 @@ public class Craft {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			left=true;
 			if(avisar2){
-				countEjeX=0;
+				countAceleracion=0;
 				avisar2=false;
 				MOVEMENTSPEED=4;
 			}
@@ -208,8 +237,8 @@ public class Craft {
 				image=sprites[69];
 				llama=sprites[71];
 			}
-			if(countEjeX<5){
-				countEjeX++;
+			if(countAceleracion<5){
+				countAceleracion++;
 			}
 			else{
 				if(MOVEMENTSPEED<8){
@@ -223,7 +252,7 @@ public class Craft {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=true;
 			if(avisar1){
-				countEjeX=0;
+				countAceleracion=0;
 				MOVEMENTSPEED=4;
 				avisar1=false;
 			}
@@ -233,8 +262,8 @@ public class Craft {
 				image=sprites[68];
 				llama=sprites[70];
 			}
-			if(countEjeX<2){
-				countEjeX++;
+			if(countAceleracion<2){
+				countAceleracion++;
 			}
 			else{
 				if(MOVEMENTSPEED<8){
@@ -249,14 +278,14 @@ public class Craft {
 			//nKeyPressed++;
 			up=true;
 			if(avisar2){
-				countEjeX=0;
+				countAceleracion=0;
 				avisar2=false;
 				MOVEMENTSPEED=4;
 			}
 			//Si la nave no estaba moviendose ya hacia la derecha,
 			//se actualiza el sprite
-			if(countEjeX<2){
-				countEjeX++;
+			if(countAceleracion<2){
+				countAceleracion++;
 			}
 			else{
 				if(MOVEMENTSPEED<8){
@@ -271,14 +300,14 @@ public class Craft {
 			//nKeyPressed++;
 			down=true;
 			if(avisar1){
-				countEjeY=0;
+				countAceleracion=0;
 				MOVEMENTSPEED=4;
 				avisar1=false;
 			}
 			//Si la nave no estaba moviendose ya hacia la izquierda,
 			//se actualiza el sprite
-			if(countEjeX<5){
-				countEjeX++;
+			if(countAceleracion<5){
+				countAceleracion++;
 			}
 			else{
 				if(MOVEMENTSPEED<8){
@@ -306,6 +335,8 @@ public class Craft {
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			left=false;
+			MOVEMENTSPEED=4;
+			countAceleracion=0;
 			if (right){
 				image=sprites[68];
 				llama=sprites[71];
@@ -313,6 +344,8 @@ public class Craft {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=false;
+			MOVEMENTSPEED=4;
+			countAceleracion=0;
 			if (left){
 				image=sprites[69];
 				llama=sprites[70];
@@ -320,10 +353,14 @@ public class Craft {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
 			up=false;
+			MOVEMENTSPEED=4;
+			countAceleracion=0;
 			//nKeyPressed--;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN){
 			down=false;
+			MOVEMENTSPEED=4;
+			countAceleracion=0;
 			//nKeyPressed--;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
