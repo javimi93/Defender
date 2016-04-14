@@ -23,6 +23,7 @@ public class Craft {
 	int xMovement = 0;
 	int yMovement = 0;
 	private BufferedImage image;
+	private BufferedImage llama;
 	//private int nKeyPressed =0;
 	private boolean left=false;
 	private boolean right=false;
@@ -62,6 +63,7 @@ public class Craft {
 		this.game= game;
 		this.sprites=sprites;
 		image=sprites[68];
+		llama=sprites[70];
 		this.villager=villager;
 		this.scoreBoard=scoreBoard;
 		game.addVillagersAlive();
@@ -166,6 +168,14 @@ public class Craft {
 	 */
 	public void paint(Graphics2D g) {
 		g.drawImage(image, xInit, yInit, WIDTH, HEIGHT, null);
+		if(left || right){
+			if(left){
+				g.drawImage(llama, xInit+WIDTH, yInit+10, 18, 15, null);
+			}
+			else{
+				g.drawImage(llama, xInit-20, yInit+10, 18, 15, null);
+			}
+		}
 		//g.drawRect(xInit, yInit, WIDTH, HEIGHT-10); 
 		if(pickedVillager && !villager.getBounds().intersects(new Rectangle(0,800, 1000, 200))){
 			villager.setX(xInit);
@@ -196,6 +206,7 @@ public class Craft {
 			//se actualiza el sprite
 			if (!right){
 				image=sprites[69];
+				llama=sprites[71];
 			}
 			if(countEjeX<5){
 				countEjeX++;
@@ -220,6 +231,7 @@ public class Craft {
 			//se actualiza el sprite
 			if (!left){
 				image=sprites[68];
+				llama=sprites[70];
 			}
 			if(countEjeX<2){
 				countEjeX++;
@@ -296,12 +308,14 @@ public class Craft {
 			left=false;
 			if (right){
 				image=sprites[68];
+				llama=sprites[71];
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=false;
 			if (left){
 				image=sprites[69];
+				llama=sprites[70];
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
@@ -354,8 +368,46 @@ public class Craft {
 				dy=-dy;
 			}
 			explosion[i]=new Explosion(explosion[i].getX()+dx,explosion[i].getY()+dy);
-			if(explosion[i].getY()>80 && explosion[i].getY()<game.getHeight()  || explosion[i].getX()>0 && explosion[i].getX()<game.getWidth()){
+			if(explosion[i].getY()>80 && explosion[i].getY()<game.getHeight()  && explosion[i].getX()>0 && explosion[i].getX()<game.getWidth()){
 				g.fillOval(explosion[i].getX(),explosion[i].getY(),10,10);
+			}
+		}
+		return explosion;
+
+	}
+
+	public Explosion[] implosion(Graphics2D g,Explosion[] explosion,Color color){
+		int inercia=1;
+		double gravedad=0.1;
+		int enfriamiento=3;
+		int dx=0;
+		int dy=0;
+		int caosX=0;
+		double dif=Math.PI/5;
+		double ang=0;
+		ang=ang+dif;
+		double dxx=dx+inercia*Math.sin(ang)+Math.random()*4-2;
+		double dyy=dy+inercia*Math.cos(ang)+Math.random()*4-2;
+		int temp=80+(int)Math.round(Math.random()*40-20);
+		temp=temp-enfriamiento;
+		dx=(int) (dxx+(caosX*Math.random()-caosX/2));
+		dy=(int) (dyy+gravedad);
+		xInit=0;
+		yInit=80;
+		int n=0;
+		g.setColor(color);
+		for(int i=0; i<explosion.length;i++){
+			n=(int)(Math.random()*(1000-1))+1;
+			if(n>500){
+				dx=-dx;
+			}
+			n=(int)(Math.random()*(1000-1))+1;
+			if(n>500){
+				dy=-dy;
+			}
+			explosion[i]=new Explosion(explosion[i].getX()+dx,explosion[i].getY()+dy);
+			if(explosion[i].getY()>80 && explosion[i].getY()<game.getHeight()  && explosion[i].getX()>0 && explosion[i].getX()<game.getWidth()){
+				g.fillOval(explosion[i].getX(),explosion[i].getY(),5,5);
 			}
 		}
 		return explosion;

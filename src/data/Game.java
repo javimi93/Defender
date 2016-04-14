@@ -45,12 +45,14 @@ public class Game extends JPanel {
 	private static ScoreBoard scoreBoard;
 	static Villager villager;
 	private static int WIDTH = 45;
-	private final static int HEIGHT = 40;
+	private static int HEIGHT = 40;
 	static Enemy enemy;
 	boolean explosion=false;
 	boolean firstTime=true;
-	private int puntos=250;
+	boolean implosion=false;
+	private static int puntos=250;
 	private Explosion [] explosionTable=new Explosion[60];
+	private static Explosion [] implosionTable=new Explosion[60];
 	private int villagersAlive = 0;
 	/*
 	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.
@@ -95,8 +97,21 @@ public class Game extends JPanel {
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+		//implosion
+		if(implosion){
+			enemy.paint(g2d,sprites);
+			villager.paint(g2d, sprites);
+			scoreBoard.paint(g2d, time);
+			implosionTable=craft.implosion(g2d,implosionTable,Color.WHITE);
+			explosiones++;
+			if(explosiones>=puntos){
+				implosion=false;
+				explosiones=0;
+				puntos=250;
+			}
+		}
 		//Termina un nivel
-		 if(endLevel){
+		else if(endLevel){
 			scoreBoard.paint(g2d, time);
 			//Attack
 			g.drawImage(scoreBoard.getImage(sprites[39]), (this.getWidth()/2-200)-50, (this.getHeight()-500)/2, 45, 40, null);
@@ -160,10 +175,14 @@ public class Game extends JPanel {
 					g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
 					g.drawImage(scoreBoard.getImage(sprites[56]), this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
 					sound.start("Game Over");
+					implosion=true;
+					puntos=50;
 				}
 				else{
 					craft = new Craft(this, sprites,villager,scoreBoard);
 					villager= new Villager(this,craft);
+					implosion=true;
+					puntos=50;
 				}
 			}
 		 //Hay explosion activa
@@ -248,7 +267,7 @@ public class Game extends JPanel {
 
 			int rows = 67;
 			int cols = 1;
-			sprites = new BufferedImage[70 * cols];
+			sprites = new BufferedImage[72];
 
 			for (int i = 0; i < rows; i++)
 			{
@@ -268,6 +287,13 @@ public class Game extends JPanel {
 			bigImg = ImageIO.read(new File("datos/imagenes/sprites2.png"));
 			sprites[68] = bigImg.getSubimage(0 * WIDTH,0 * HEIGHT,WIDTH,HEIGHT);
 			sprites[69] = bigImg.getSubimage(1 * WIDTH,0 * HEIGHT,WIDTH,HEIGHT);
+			WIDTH=18;
+			HEIGHT=5;
+			bigImg = ImageIO.read(new File("datos/imagenes/llama_motor_izq.png"));
+			sprites[70] = bigImg.getSubimage(0 * WIDTH,0 * HEIGHT,WIDTH,HEIGHT);
+			bigImg = ImageIO.read(new File("datos/imagenes/llama_motor_der.png"));
+			sprites[71] = bigImg.getSubimage(0 * WIDTH,0 * HEIGHT,WIDTH,HEIGHT);
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -297,6 +323,11 @@ public class Game extends JPanel {
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		for(int i=0; i<implosionTable.length;i++){
+
+			implosionTable[i]=new Explosion(0,80);
+		}
+		puntos=50;
 		//Se inicia el sonido de la intro del juego durante 3 segundos y medio.
 		sound.start("start");
 		Thread.sleep(3500);
