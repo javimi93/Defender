@@ -51,6 +51,7 @@ public class Game extends JPanel {
 	boolean firstTime=true;
 	private int puntos=250;
 	private Explosion [] explosionTable=new Explosion[100];
+	private int villagersAlive = 0;
 	/*
 	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.
 	 */
@@ -133,13 +134,14 @@ public class Game extends JPanel {
 			//Aldeanos
 			int x=0;
 			int y=1;
-			for(int i=0;i<4;i++){
+			for(int i=0;i<villagersAlive;i++){
 				g.drawImage((sprites[5]), (this.getWidth()/2+x*y-200+25)-50, (this.getHeight()-100)/2, 45, 40, null);
 				x=35;
 				if(i>=2){
 					  y++;
 				}
 			}
+			scoreBoard.setnPuntuacion(scoreBoard.getnPuntuacion()+villagersAlive*100);
 		}
 		 //Ha terminado explosion
 		 else if(explosiones>=puntos){
@@ -223,6 +225,17 @@ public class Game extends JPanel {
 	 */
 	public void updatePuntuacion(){
 		scoreBoard.addPuntuacion();
+	}
+
+	public int getVillagersAlive() {
+		return villagersAlive;
+	}
+
+	public void setVillagersAlive(int villagersAlive) {
+		this.villagersAlive = villagersAlive;
+	}
+	public void addVillagersAlive() {
+		this.villagersAlive++;
 	}
 
 	/*

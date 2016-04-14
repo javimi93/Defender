@@ -64,6 +64,7 @@ public class Craft {
 		image=sprites[68];
 		this.villager=villager;
 		this.scoreBoard=scoreBoard;
+		game.addVillagersAlive();
 	}
 
 	/*
