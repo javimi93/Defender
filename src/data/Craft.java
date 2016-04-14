@@ -15,6 +15,8 @@ public class Craft {
 	int countAceleracion=0;
 	boolean avisar1=false;
 	boolean avisar2=false;
+	boolean avisar3=false;
+	boolean avisar4=false;
 	boolean firstTime=true;
 	//Variables de cambio de la posición de la bola en el plano
 	//xMovement es el desplazamiento de la bola sobre el eje x
@@ -275,11 +277,10 @@ public class Craft {
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
-			//nKeyPressed++;
 			up=true;
-			if(avisar2){
+			if(avisar4){
 				countAceleracion=0;
-				avisar2=false;
+				avisar4=false;
 				MOVEMENTSPEED=4;
 			}
 			//Si la nave no estaba moviendose ya hacia la derecha,
@@ -292,17 +293,16 @@ public class Craft {
 					MOVEMENTSPEED++;
 				}
 				else{
-					avisar1=true;
+					avisar3=true;
 				}
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN){
-			//nKeyPressed++;
 			down=true;
-			if(avisar1){
+			if(avisar3){
 				countAceleracion=0;
 				MOVEMENTSPEED=4;
-				avisar1=false;
+				avisar3=false;
 			}
 			//Si la nave no estaba moviendose ya hacia la izquierda,
 			//se actualiza el sprite
@@ -314,7 +314,7 @@ public class Craft {
 					MOVEMENTSPEED++;
 				}
 				else{
-					avisar2=true;
+					avisar4=true;
 				}
 			}
 		}
@@ -335,8 +335,7 @@ public class Craft {
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			left=false;
-			MOVEMENTSPEED=4;
-			countAceleracion=0;
+			avisar2=true;
 			if (right){
 				image=sprites[68];
 				llama=sprites[71];
@@ -344,8 +343,7 @@ public class Craft {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=false;
-			MOVEMENTSPEED=4;
-			countAceleracion=0;
+			avisar1=true;
 			if (left){
 				image=sprites[69];
 				llama=sprites[70];
@@ -353,15 +351,11 @@ public class Craft {
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
 			up=false;
-			MOVEMENTSPEED=4;
-			countAceleracion=0;
-			//nKeyPressed--;
+			avisar4=true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN){
 			down=false;
-			MOVEMENTSPEED=4;
-			countAceleracion=0;
-			//nKeyPressed--;
+			avisar3=true;
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			space=false;
@@ -377,7 +371,7 @@ public class Craft {
 
 	public Explosion[] explosion(Graphics2D g,Explosion[] explosion,Color color){
 		int inercia=1;
-		double gravedad=10;
+		double gravedad=0.5;
 		int enfriamiento=3;
 		int dx=20;
 		int dy=10;

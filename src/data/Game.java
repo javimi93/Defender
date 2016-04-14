@@ -175,14 +175,14 @@ public class Game extends JPanel {
 					g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
 					g.drawImage(scoreBoard.getImage(sprites[56]), this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
 					sound.start("Game Over");
-					implosion=true;
-					puntos=50;
+					//implosion=true;
+					//puntos=50;
 				}
 				else{
 					craft = new Craft(this, sprites,villager,scoreBoard);
 					villager= new Villager(this,craft);
-					implosion=true;
-					puntos=50;
+					//implosion=true;
+					//puntos=50;
 				}
 			}
 		 //Hay explosion activa
@@ -327,7 +327,7 @@ public class Game extends JPanel {
 
 			implosionTable[i]=new Explosion(0,80);
 		}
-		puntos=50;
+		puntos=250;
 		//Se inicia el sonido de la intro del juego durante 3 segundos y medio.
 		sound.start("start");
 		Thread.sleep(3500);
