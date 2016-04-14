@@ -50,7 +50,7 @@ public class Game extends JPanel {
 	boolean explosion=false;
 	boolean firstTime=true;
 	private int puntos=250;
-	private Explosion [] explosionTable=new Explosion[100];
+	private Explosion [] explosionTable=new Explosion[60];
 	private int villagersAlive = 0;
 	/*
 	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.

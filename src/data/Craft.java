@@ -326,11 +326,11 @@ public class Craft {
 
 	public Explosion[] explosion(Graphics2D g,Explosion[] explosion,Color color){
 		int inercia=1;
-		double gravedad=0.1;
+		double gravedad=10;
 		int enfriamiento=3;
-		int dx=5;
-		int dy=5;
-		int caosX=3;
+		int dx=20;
+		int dy=10;
+		int caosX=20;
 		double dif=Math.PI/5;
 		double ang=0;
 		ang=ang+dif;
@@ -354,7 +354,7 @@ public class Craft {
 				dy=-dy;
 			}
 			explosion[i]=new Explosion(explosion[i].getX()+dx,explosion[i].getY()+dy);
-			if(explosion[i].getY()>80){
+			if(explosion[i].getY()>80 && explosion[i].getY()<game.getHeight()  || explosion[i].getX()>0 && explosion[i].getX()<game.getWidth()){
 				g.fillOval(explosion[i].getX(),explosion[i].getY(),10,10);
 			}
 		}
