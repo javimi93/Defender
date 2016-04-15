@@ -397,6 +397,8 @@ public class Craft {
 		return new Rectangle(xInit, yInit, WIDTH, HEIGHT-10);
 	}
 
+	
+
 	public Explosion[] explosion(Graphics2D g,Explosion[] explosion,Color color){
 		int inercia=1;
 		double gravedad=0.5;
@@ -415,18 +417,18 @@ public class Craft {
 		dy=(int) (dyy+gravedad);
 		xInit=0;
 		yInit=80;
-		int n=0;
+		//int n=0;
 		g.setColor(color);
 		for(int i=0; i<explosion.length;i++){
-			n=(int)(Math.random()*(1000-1))+1;
+			/*n=(int)(Math.random()*(1000-1))+1;
 			if(n>500){
 				dx=-dx;
 			}
 			n=(int)(Math.random()*(1000-1))+1;
 			if(n>500){
 				dy=-dy;
-			}
-			explosion[i]=new Explosion(explosion[i].getX()+dx,explosion[i].getY()+dy);
+			}*/
+			explosion[i].setXY(explosion[i].getX()+(explosion[i].getIncrementoX()*explosion[i].getxAdd()), explosion[i].getY()+(explosion[i].getIncrementoY()*explosion[i].getyAdd()));
 			if(explosion[i].getY()>80 && explosion[i].getY()<game.getHeight()  && explosion[i].getX()>0 && explosion[i].getX()<game.getWidth()){
 				g.fillOval(explosion[i].getX(),explosion[i].getY(),10,10);
 			}
@@ -464,7 +466,7 @@ public class Craft {
 			if(n>500){
 				dy=-dy;
 			}
-			explosion[i]=new Explosion(explosion[i].getX()+dx,explosion[i].getY()+dy);
+		//explosion[i]=new Explosion(explosion[i].getX()+dx,explosion[i].getY()+dy);
 			if(explosion[i].getY()>80 && explosion[i].getY()<game.getHeight()  && explosion[i].getX()>0 && explosion[i].getX()<game.getWidth()){
 				g.fillOval(explosion[i].getX(),explosion[i].getY(),5,5);
 			}

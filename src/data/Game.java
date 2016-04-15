@@ -53,6 +53,7 @@ public class Game extends JPanel {
 	private static int puntos=250;
 	private Explosion [] explosionTable=new Explosion[60];
 	private static Explosion [] implosionTable=new Explosion[60];
+	private Explosion [] tablaExplosiones= new Explosion [16*10];
 	private int villagersAlive = 0;
 	/*
 	 * Constructor del juego que habilita la deteccion de teclas pulsadas y soltadas.
@@ -153,57 +154,53 @@ public class Game extends JPanel {
 				g.drawImage((sprites[5]), (this.getWidth()/2+x*y-200+25)-50, (this.getHeight()-100)/2, 45, 40, null);
 				x=35;
 				if(i>=2){
-					  y++;
+					y++;
 				}
 			}
 			scoreBoard.setnPuntuacion(scoreBoard.getnPuntuacion()+villagersAlive*100);
 		}
-		 //Ha terminado explosion
-		 else if(explosiones>=puntos){
-				explosion = false;
-				explosiones= 0;
-				restart--;
-				if(scoreBoard.getVidas()==0){
-					scoreBoard.paint(g2d, time);
-					g.drawImage(scoreBoard.getImage(sprites[45]), this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(scoreBoard.getImage(sprites[39]), this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(scoreBoard.getImage(sprites[51]), this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
+		//Ha terminado explosion
+		else if(explosiones>=puntos){
+			explosion = false;
+			explosiones= 0;
+			restart--;
+			if(scoreBoard.getVidas()==0){
+				scoreBoard.paint(g2d, time);
+				g.drawImage(scoreBoard.getImage(sprites[45]), this.getWidth()/2-200, (this.getHeight()-80)/2, 45, 40, null);
+				g.drawImage(scoreBoard.getImage(sprites[39]), this.getWidth()/2+35-200, (this.getHeight()-80)/2, 45, 40, null);
+				g.drawImage(scoreBoard.getImage(sprites[51]), this.getWidth()/2+35*2-200, (this.getHeight()-80)/2, 45, 40, null);
+				g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*3-200, (this.getHeight()-80)/2, 45, 40, null);
 
-					g.drawImage(scoreBoard.getImage(sprites[53]), this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(scoreBoard.getImage(sprites[60]), this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
-					g.drawImage(scoreBoard.getImage(sprites[56]), this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
-					sound.start("Game Over");
-					//implosion=true;
-					//puntos=50;
-				}
-				else{
-					craft = new Craft(this, sprites,villager,scoreBoard);
-					villager= new Villager(this,craft);
-					//implosion=true;
-					//puntos=50;
-				}
+				g.drawImage(scoreBoard.getImage(sprites[53]), this.getWidth()/2+35*4-200+25, (this.getHeight()-80)/2, 45, 40, null);
+				g.drawImage(scoreBoard.getImage(sprites[60]), this.getWidth()/2+35*5-200+25, (this.getHeight()-80)/2, 45, 40, null);
+				g.drawImage(scoreBoard.getImage(sprites[43]), this.getWidth()/2+35*6-200+25, (this.getHeight()-80)/2, 45, 40, null);
+				g.drawImage(scoreBoard.getImage(sprites[56]), this.getWidth()/2+35*7-200+25, (this.getHeight()-80)/2, 45, 40, null);
+				sound.start("Game Over");
+				//implosion=true;
+				//puntos=50;
 			}
-		 //Hay explosion activa
-		 else if(explosion){
+			else{
+				craft = new Craft(this, sprites,villager,scoreBoard);
+				villager= new Villager(this,craft);
+				//implosion=true;
+				//puntos=50;
+			}
+		}
+		//Hay explosion activa
+		else if(explosion){
 			/*if(explosiones>200){
 					explosionTable=craft.explosion(g2d,explosionTable,Color.YELLOW);
 				}
 				else{*/
-			explosionTable=craft.explosion(g2d,explosionTable,Color.WHITE);
+			tablaExplosiones=craft.explosion(g2d,tablaExplosiones,Color.WHITE);
 			//}
 			enemy.paint(g2d,sprites);
 			villager.paint(g2d, sprites);
 			scoreBoard.paint(g2d, time);
 			explosiones++;
 		}
-		 //Funcionamiento normal
+		//Funcionamiento normal
 		else{
-			for(int i=0; i<explosionTable.length;i++){
-
-				explosionTable[i]=new Explosion(craft.xInit,craft.yInit);
-			}
 			craft.paint(g2d);
 			enemy.paint(g2d,sprites);
 			villager.paint(g2d, sprites);
@@ -231,9 +228,10 @@ public class Game extends JPanel {
 	public void gameOver() {
 		sound.start("explosion");
 		explosion=true;
+		rellenarTablaExplosiones();
 		this.repaint();
 	}
-	
+
 	public void endLevel() {
 		endLevel=true;
 		this.repaint();
@@ -299,10 +297,133 @@ public class Game extends JPanel {
 		}
 	}
 
+	public void rellenarTablaExplosiones(){
+		int caso=0;
+		int incrementoX = 1;
+		int incrementoY = 1;
+		int [] xInit=new int [16];
+		int [] yInit=new int [16];
+		int count=0;
+		for(int i=0;i<xInit.length;i++){
+			xInit[i]=craft.xInit;
+			yInit[i]=craft.yInit;
+		}
+		int xInitAdd = 2;
+		int yInitAdd = 2;
+
+		for(int i=0;i<tablaExplosiones.length;i++){
+			switch(caso){
+			case 0:
+				incrementoX=1;
+				incrementoY=1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=1;
+				break;
+			case 1:
+				incrementoX=-1;
+				incrementoY=-1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=2;
+				break;
+			case 2:
+				incrementoX=1;
+				incrementoY=-1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=3;
+				break;
+			case 3:
+				incrementoX=-1;
+				incrementoY=1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=4;
+				break;
+			case 4:
+				incrementoX=1;
+				incrementoY=0;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=5;
+				break;
+			case 5:
+				incrementoX=0;
+				incrementoY=1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=6;
+				break;
+			case 6:
+				incrementoX=-1;
+				incrementoY=0;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=7;
+				break;
+			case 7:
+				incrementoX=0;
+				incrementoY=-1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=8;
+				break;
+			case 8:
+				incrementoX=2;
+				incrementoY=1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=9;
+				break;
+			case 9:
+				incrementoX=-2;
+				incrementoY=-1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=10;
+				break;
+			case 10:
+				incrementoX=2;
+				incrementoY=-1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=11;
+				break;
+			case 11:
+				incrementoX=-2;
+				incrementoY=1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=12;
+				break;
+			case 12:
+				incrementoX=1;
+				incrementoY=2;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=13;
+				break;
+			case 13:
+				incrementoX=-1;
+				incrementoY=-2;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=14;
+				break;
+			case 14:
+				incrementoX=-1;
+				incrementoY=2;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=15;
+				break;
+			case 15:
+				incrementoX=1;
+				incrementoY=-2;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				caso=0;
+				break;
+			}
+			count++;
+			if(count>=80){
+				count=0;
+				xInitAdd++;
+				yInitAdd++;
+			}
+		}
+
+	}
 	/*
 	 * Main del juego que lo inicia.
 	 */
 	public static void main(String[] args) throws InterruptedException {
+
 		tablaSprites();
 		sound=new Sound();
 		dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -325,7 +446,7 @@ public class Game extends JPanel {
 		frame.setVisible(true);
 		for(int i=0; i<implosionTable.length;i++){
 
-			implosionTable[i]=new Explosion(0,80);
+			//implosionTable[i]=new Explosion(0,80);
 		}
 		puntos=250;
 		//Se inicia el sonido de la intro del juego durante 3 segundos y medio.
