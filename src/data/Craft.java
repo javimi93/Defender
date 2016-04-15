@@ -228,93 +228,99 @@ public class Craft {
 
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			left=true;
-			if(avisar2){
-				countAceleracion=0;
-				avisar2=false;
-				MOVEMENTSPEED=4;
-			}
-			//Si la nave no estaba moviendose ya hacia la derecha,
-			//se actualiza el sprite
 			if (!right){
+				/*if(avisar2){
+					countAceleracion=0;
+					avisar2=false;
+					MOVEMENTSPEED=4;
+				}*/
+				//Si la nave no estaba moviendose ya hacia la derecha,
+				//se actualiza el sprite
+
 				image=sprites[69];
 				llama=sprites[71];
-			}
-			if(countAceleracion<5){
-				countAceleracion++;
-			}
-			else{
-				if(MOVEMENTSPEED<8){
-					MOVEMENTSPEED++;
+
+				if(countAceleracion<5){
+					countAceleracion++;
 				}
 				else{
-					avisar1=true;
+					if(MOVEMENTSPEED<8){
+						MOVEMENTSPEED++;
+					}
+					else{
+						avisar1=true;
+					}
 				}
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=true;
-			if(avisar1){
-				countAceleracion=0;
-				MOVEMENTSPEED=4;
-				avisar1=false;
-			}
-			//Si la nave no estaba moviendose ya hacia la izquierda,
-			//se actualiza el sprite
 			if (!left){
+				/*if(avisar1){
+					countAceleracion=0;
+					MOVEMENTSPEED=4;
+					avisar1=false;
+				}*/
+				//Si la nave no estaba moviendose ya hacia la izquierda,
+				//se actualiza el sprite
 				image=sprites[68];
 				llama=sprites[70];
-			}
-			if(countAceleracion<2){
-				countAceleracion++;
-			}
-			else{
-				if(MOVEMENTSPEED<8){
-					MOVEMENTSPEED++;
+				if(countAceleracion<2){
+					countAceleracion++;
 				}
 				else{
-					avisar2=true;
+					if(MOVEMENTSPEED<8){
+						MOVEMENTSPEED++;
+					}
+					else{
+						avisar2=true;
+					}
 				}
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
 			up=true;
-			if(avisar4){
-				countAceleracion=0;
-				avisar4=false;
-				MOVEMENTSPEED=4;
-			}
-			//Si la nave no estaba moviendose ya hacia la derecha,
-			//se actualiza el sprite
-			if(countAceleracion<2){
-				countAceleracion++;
-			}
-			else{
-				if(MOVEMENTSPEED<8){
-					MOVEMENTSPEED++;
+			if (!down){
+				/*if(avisar4){
+					countAceleracion=0;
+					avisar4=false;
+					MOVEMENTSPEED=4;
+				}*/
+				//Si la nave no estaba moviendose ya hacia la derecha,
+				//se actualiza el sprite
+				if(countAceleracion<2){
+					countAceleracion++;
 				}
 				else{
-					avisar3=true;
+					if(MOVEMENTSPEED<8){
+						MOVEMENTSPEED++;
+					}
+					else{
+						avisar3=true;
+					}
 				}
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN){
 			down=true;
-			if(avisar3){
-				countAceleracion=0;
-				MOVEMENTSPEED=4;
-				avisar3=false;
-			}
-			//Si la nave no estaba moviendose ya hacia la izquierda,
-			//se actualiza el sprite
-			if(countAceleracion<5){
-				countAceleracion++;
-			}
-			else{
-				if(MOVEMENTSPEED<8){
-					MOVEMENTSPEED++;
+			if(!up){
+				/*if(avisar3){
+					countAceleracion=0;
+					MOVEMENTSPEED=4;
+					avisar3=false;
+				}*/
+				//Si la nave no estaba moviendose ya hacia la izquierda,
+				//se actualiza el sprite
+				if(countAceleracion<5){
+					countAceleracion++;
 				}
 				else{
-					avisar4=true;
+					if(MOVEMENTSPEED<8){
+						MOVEMENTSPEED++;
+					}
+					else{
+						avisar4=true;
+					}
 				}
 			}
 		}
@@ -335,27 +341,49 @@ public class Craft {
 	public void keyReleased(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_LEFT){
 			left=false;
-			avisar2=true;
+			//avisar2=true;
 			if (right){
 				image=sprites[68];
 				llama=sprites[71];
+				/*KeyEvent k=new KeyEvent(game, HEIGHT, HEIGHT, HEIGHT, HEIGHT);
+				k.setKeyCode(KeyEvent.VK_RIGHT);
+				keyPressed(k);*/
+			}
+			else{
+				countAceleracion=0;
+				MOVEMENTSPEED=4;
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT){
 			right=false;
-			avisar1=true;
+			//avisar1=true;
 			if (left){
 				image=sprites[69];
 				llama=sprites[70];
+				/*KeyEvent k=new KeyEvent(game, HEIGHT, HEIGHT, HEIGHT, HEIGHT);
+				k.setKeyCode(KeyEvent.VK_LEFT);
+				keyPressed(k);*/
+			}
+			else{
+				countAceleracion=0;
+				MOVEMENTSPEED=4;
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP){
 			up=false;
-			avisar4=true;
+			if (!down){
+				countAceleracion=0;
+				MOVEMENTSPEED=4;
+				//avisar4=true;
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN){
 			down=false;
-			avisar3=true;
+			if (!up){
+				countAceleracion=0;
+				MOVEMENTSPEED=4;
+				//avisar3=true;
+			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
 			space=false;
