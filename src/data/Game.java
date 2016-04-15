@@ -303,6 +303,7 @@ public class Game extends JPanel {
 		int incrementoY = 1;
 		int [] xInit=new int [16];
 		int [] yInit=new int [16];
+		Color color=Color.WHITE;
 		int count=0;
 		for(int i=0;i<xInit.length;i++){
 			xInit[i]=craft.xInit;
@@ -314,99 +315,99 @@ public class Game extends JPanel {
 		for(int i=0;i<tablaExplosiones.length;i++){
 			switch(caso){
 			case 0:
-				incrementoX=1;
+				incrementoX=0;
 				incrementoY=1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=1;
 				break;
 			case 1:
-				incrementoX=-1;
-				incrementoY=-1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoX=1;
+				incrementoY=2;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=2;
 				break;
 			case 2:
 				incrementoX=1;
-				incrementoY=-1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoY=1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=3;
 				break;
 			case 3:
-				incrementoX=-1;
+				incrementoX=2;
 				incrementoY=1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=4;
 				break;
 			case 4:
 				incrementoX=1;
 				incrementoY=0;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=5;
 				break;
 			case 5:
-				incrementoX=0;
-				incrementoY=1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoX=2;
+				incrementoY=-1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=6;
 				break;
 			case 6:
-				incrementoX=-1;
-				incrementoY=0;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoX=1;
+				incrementoY=-1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=7;
 				break;
 			case 7:
-				incrementoX=0;
-				incrementoY=-1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoX=1;
+				incrementoY=-2;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=8;
 				break;
 			case 8:
-				incrementoX=2;
-				incrementoY=1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoX=0;
+				incrementoY=-1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=9;
 				break;
 			case 9:
-				incrementoX=-2;
-				incrementoY=-1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoX=-1;
+				incrementoY=-2;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=10;
 				break;
 			case 10:
-				incrementoX=2;
+				incrementoX=-1;
 				incrementoY=-1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=11;
 				break;
 			case 11:
 				incrementoX=-2;
-				incrementoY=1;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoY=-1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=12;
 				break;
 			case 12:
-				incrementoX=1;
-				incrementoY=2;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoX=-1;
+				incrementoY=0;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=13;
 				break;
 			case 13:
-				incrementoX=-1;
-				incrementoY=-2;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoX=-2;
+				incrementoY=1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=14;
 				break;
 			case 14:
 				incrementoX=-1;
-				incrementoY=2;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoY=1;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=15;
 				break;
 			case 15:
-				incrementoX=1;
-				incrementoY=-2;
-				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd);
+				incrementoX=-1;
+				incrementoY=2;
+				tablaExplosiones[i]=new Explosion(xInit[caso],yInit[caso],incrementoX,incrementoY,xInitAdd,yInitAdd,color);
 				caso=0;
 				break;
 			}
@@ -415,6 +416,7 @@ public class Game extends JPanel {
 				count=0;
 				xInitAdd++;
 				yInitAdd++;
+				color=Color.YELLOW;
 			}
 		}
 

@@ -1,5 +1,7 @@
 package data;
 
+import java.awt.Color;
+
 public class Explosion {
 
 	private int x;
@@ -8,14 +10,16 @@ public class Explosion {
 	private int incrementoY;
 	private int xAdd;
 	private int yAdd;
+	private Color color;
 	
-	public Explosion(int x, int y,int incrementoX, int incrementoY, int xAdd, int yAdd){
+	public Explosion(int x, int y,int incrementoX, int incrementoY, int xAdd, int yAdd,Color color){
 		this.x = x;
 		this.y= y;
 		this.incrementoX=incrementoX;
 		this.incrementoY=incrementoY;
 		this.xAdd=xAdd;
 		this.yAdd=yAdd;
+		this.color = color;
 	}
 
 	public int getX() {
@@ -61,5 +65,13 @@ public class Explosion {
 
 	public void setyAdd(int yAdd) {
 		this.yAdd = yAdd;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 }

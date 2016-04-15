@@ -428,6 +428,7 @@ public class Craft {
 			if(n>500){
 				dy=-dy;
 			}*/
+			g.setColor(explosion[i].getColor());
 			explosion[i].setXY(explosion[i].getX()+(explosion[i].getIncrementoX()*explosion[i].getxAdd()), explosion[i].getY()+(explosion[i].getIncrementoY()*explosion[i].getyAdd()));
 			if(explosion[i].getY()>80 && explosion[i].getY()<game.getHeight()  && explosion[i].getX()>0 && explosion[i].getX()<game.getWidth()){
 				g.fillOval(explosion[i].getX(),explosion[i].getY(),10,10);
