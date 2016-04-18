@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Game extends JPanel {
 
+	static Camera cam;
 	int xCraft=0;
 	int yCraft=0;
 	int xCraft1=0;
@@ -94,8 +95,10 @@ public class Game extends JPanel {
 	 * Pinta en cada invocacion todos los elementos del juego.
 	 */
 	public void paint(Graphics g) {
+		cam.tick(craft);
 		super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
+		g2d.translate(cam.getX(), cam.getY());
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
 		//implosion
@@ -206,6 +209,7 @@ public class Game extends JPanel {
 			villager.paint(g2d, sprites);
 			scoreBoard.paint(g2d, time);
 		}
+		g2d.translate(-cam.getX(), -cam.getY());
 	}
 
 
@@ -255,7 +259,7 @@ public class Game extends JPanel {
 		this.villagersAlive++;
 	}
 
-	/*
+	/* 
 	 * Inicializa la tabla de los spirtes
 	 */
 	public static void tablaSprites(){
@@ -421,11 +425,14 @@ public class Game extends JPanel {
 		}
 
 	}
+	
+	
 	/*
 	 * Main del juego que lo inicia.
 	 */
 	public static void main(String[] args) throws InterruptedException {
-
+		
+		cam = new Camera (0, 0);
 		tablaSprites();
 		sound=new Sound();
 		dim = Toolkit.getDefaultToolkit().getScreenSize();
