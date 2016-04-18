@@ -45,7 +45,7 @@ public class Game extends JPanel {
 	private static Craft craft;
 	private static ScoreBoard scoreBoard;
 	static Villager villager;
-	private static int WIDTH = 45;
+	static int WIDTH = 45;
 	private static int HEIGHT = 40;
 	static Enemy enemy;
 	boolean explosion=false;
@@ -432,12 +432,13 @@ public class Game extends JPanel {
 	 */
 	public static void main(String[] args) throws InterruptedException {
 		
-		cam = new Camera (0, 0);
+		
 		tablaSprites();
 		sound=new Sound();
 		dim = Toolkit.getDefaultToolkit().getScreenSize();
 		//Se inicia la pantalla de introduccion del juego.
 		Game game = new Game();
+		cam = new Camera (0, 0, game);
 		frame = new JFrame("Defender");
 		JPanel menu= new JPanel();
 		ImageIcon icon = new ImageIcon("datos/imagenes/intro.png");

@@ -3,14 +3,16 @@ package data;
 public class Camera {
 
 	private float x, y;
+	private Game game;
 	
-	public Camera(float x, float y){
+	public Camera(float x, float y, Game game){
 		this.x = x;
 		this.y = y;
+		this.game = game;
 	}
 	
 	public void tick(Craft craft){
-		x--;
+		this.x = -craft.getX() + game.getWidth();
 	}
 	
 	public void setX(float x){
