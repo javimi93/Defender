@@ -12,7 +12,7 @@ public class Camera {
 	}
 	
 	public void tick(Craft craft){
-		this.x = -craft.getX() + game.getWidth();
+		this.x = -craft.getX() + game.getWidth()/2;
 	}
 	
 	public void setX(float x){

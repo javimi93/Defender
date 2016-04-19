@@ -438,7 +438,6 @@ public class Game extends JPanel {
 		dim = Toolkit.getDefaultToolkit().getScreenSize();
 		//Se inicia la pantalla de introduccion del juego.
 		Game game = new Game();
-		cam = new Camera (0, 0, game);
 		frame = new JFrame("Defender");
 		JPanel menu= new JPanel();
 		ImageIcon icon = new ImageIcon("datos/imagenes/intro.png");
@@ -472,7 +471,8 @@ public class Game extends JPanel {
 			villager= new Villager(game,craft);
 			scoreBoard= new ScoreBoard(game,sprites);
 			craft = new Craft(game, sprites,villager,scoreBoard);
-			enemy = new Enemy(game,craft);			
+			enemy = new Enemy(game,craft);	
+			cam = new Camera (0, 0, game);
 			frame.setSize(dim);
 			frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 			frame.add(game,BorderLayout.CENTER);
