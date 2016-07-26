@@ -34,4 +34,5 @@ PRIORIDADES:
 
 -Extra: controles configurables
 		OPCIONES
+		Aprendizaje automatico
 - 3d
