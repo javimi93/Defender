@@ -11,3 +11,27 @@ PRIORIDADES:
 9: Pantalla Game Over	- v1.0
 10: Retoques movimiento	- v1.1
 11: Aldeanos			- v0.1
+
+///////
+
+-Humanoides, se mueven a ras de suelo, cada cierto tiempo movimiento aleatorio(izq o derecha).
+-Humanoides, caida. (Javier)
+
+- Landers, cogen al humanoide, intentan llegar hasta arriba, si lo consiguen te empiezan a atacar y se convierten en mutantes.
+-Bombers, se mueven , sueltan minas flotantes si lo tocas te mueres.
+- Baiters te persiguen. (Jaime)
+
+-Movimiento de la nave. (Javier)
+
+- Disparar solo un disparito. (Javier)
+
+- Mapa (Fernando)
+
+
+
+
+-Pantalla de inicio 
+
+-Extra: controles configurables
+		OPCIONES
+- 3d
