@@ -13,6 +13,7 @@ public class Craft {
 	int xInit = 0;
 	int yInit = 80;
 	int countAceleracion=0;
+	int countStopping=0;
 	boolean avisar1=false;
 	boolean avisar2=false;
 	boolean avisar3=false;
@@ -31,6 +32,7 @@ public class Craft {
 	private boolean up=false;
 	private boolean down=false;
 	private boolean space=false;
+	private boolean primeraVezPulsado = true;
 	private static int MOVEMENTSPEED= 4;
 	//Tabla de sprites
 	BufferedImage[] sprites;
@@ -40,7 +42,7 @@ public class Craft {
 	private Game game;
 	private Villager villager;
 	//Ultimo movimiento de la nave
-	private int lastMovement=1;
+	private int lastMovement=0;
 	//Variable que sirve si se debe pintar el enemigo
 	private boolean paint=false;
 	//Disparos activos de la nave
@@ -77,16 +79,38 @@ public class Craft {
 		if(left){
 			xMovement-=MOVEMENTSPEED;
 		}
-		if(right){
+		else if(right){
 			xMovement+=MOVEMENTSPEED;
 		}
-		if(up){
+		else if(up){
 			yMovement-=MOVEMENTSPEED;
+			lastMovement = 0;
 		}
-		if(down){
+		else if(down){
 			yMovement+=MOVEMENTSPEED;
+			lastMovement = 0;
+		}
+		else{
+			if(lastMovement !=0){
+				if(countStopping == 10){
+					countStopping=0;
+					if(lastMovement > 0){
+						lastMovement -= 1;
+						xMovement= lastMovement;
+					}
+					else{
+						lastMovement += 1;
+						xMovement = lastMovement;
+					}
+				}
+				else{
+					xMovement = lastMovement;
+					countStopping++;
+				}
+			}
 		}
 		if(space){
+			space=false;
 			shoots.add(new ShootCraft(game,this,scoreBoard));
 			shootsACTIVOS++;
 			/*Game.sound.stop();
@@ -98,12 +122,15 @@ public class Craft {
 		if (xInit+xMovement > game.getWidth() - WIDTH){
 			xMovement-=MOVEMENTSPEED;
 		}
-		if (yInit+yMovement < 80){
+		if (yInit+yMovement <= 80){
 			yMovement+=MOVEMENTSPEED;
 		}
-		if (yInit+yMovement > game.getHeight() - HEIGHT){
+		if(yInit+yMovement > 800-HEIGHT+15){
 			yMovement-=MOVEMENTSPEED;
 		}
+		/*if (yInit+yMovement > game.getHeight() - HEIGHT){
+			yMovement-=MOVEMENTSPEED;
+		}*/
 		//Si se produce una colision ente la nave y los disparos o el enemigo. Se acaba el juego.
 		if (collision()){
 			scoreBoard.decreaseVidas();
@@ -113,6 +140,10 @@ public class Craft {
 		if (pickVillager()){
 			pickedVillager = true;
 		}
+		else{
+			pickedVillager =false;
+		}
+
 		//Si se produce una colision entre un enemigo y un disparo, se elimina el disparo y el enemigo.
 		if(shootsACTIVOS > 0 && enemysACTIVOS > 0){
 			for(int i=0; i< shootsACTIVOS;i++){
@@ -187,7 +218,7 @@ public class Craft {
 				}
 			}
 			else {
-				if(lastMovement>0){
+				if(lastMovement == MOVEMENTSPEED){
 					//right
 					if(MOVEMENTSPEED>4){
 						g.drawImage(llama, xInit-50, yInit+10, 50, 15, null);
@@ -196,7 +227,7 @@ public class Craft {
 						g.drawImage(llama, xInit-20, yInit+10, 18, 15, null);
 					}
 				}
-				else{
+				else if(lastMovement == -MOVEMENTSPEED){
 					//left
 					if(MOVEMENTSPEED>4){
 						g.drawImage(llama, xInit+WIDTH, yInit+10, 50, 15, null);
@@ -205,12 +236,25 @@ public class Craft {
 						g.drawImage(llama, xInit+WIDTH, yInit+10, 18, 15, null);
 					}
 				}
+			}	
+		}
+		else{
+			if(lastMovement != 0){
+				if(lastMovement >0){
+					g.drawImage(llama, xInit-20, yInit+10, 18, 15, null);
+				}
+				else{
+					g.drawImage(llama, xInit+WIDTH, yInit+10, 18, 15, null);
+				}
 			}
 		}
 		//g.drawRect(xInit, yInit, WIDTH, HEIGHT-10); 
-		if(pickedVillager && !villager.getBounds().intersects(new Rectangle(0,800, 1000, 200))){
+		if(pickedVillager){
 			villager.setX(xInit);
-			villager.setY(yInit+HEIGHT-10);
+			villager.setY(yInit+HEIGHT-15);
+		}
+		else{
+			villager.setPicked(false);
 		}
 		for(int i=0; i< shootsACTIVOS;i++){
 			paint=shoots.get(i).paint(g,lastMovement);
@@ -325,8 +369,9 @@ public class Craft {
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
-			if(!space){
+			if(!space && primeraVezPulsado){
 				space=true;
+				primeraVezPulsado=false;
 				if(sound.isActivo()){
 					sound.stop();
 				}
@@ -386,7 +431,7 @@ public class Craft {
 			}
 		}
 		if (e.getKeyCode() == KeyEvent.VK_SPACE){
-			space=false;
+			primeraVezPulsado=true;
 		}
 	}
 
@@ -397,7 +442,7 @@ public class Craft {
 		return new Rectangle(xInit, yInit, WIDTH, HEIGHT-10);
 	}
 
-	
+
 
 	public Explosion[] explosion(Graphics2D g,Explosion[] explosion,Color color){
 		int inercia=1;
@@ -467,7 +512,7 @@ public class Craft {
 			if(n>500){
 				dy=-dy;
 			}
-		//explosion[i]=new Explosion(explosion[i].getX()+dx,explosion[i].getY()+dy);
+			//explosion[i]=new Explosion(explosion[i].getX()+dx,explosion[i].getY()+dy);
 			if(explosion[i].getY()>80 && explosion[i].getY()<game.getHeight()  && explosion[i].getX()>0 && explosion[i].getX()<game.getWidth()){
 				g.fillOval(explosion[i].getX(),explosion[i].getY(),5,5);
 			}

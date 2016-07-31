@@ -15,15 +15,16 @@ PRIORIDADES:
 ///////
 
 -Humanoides, se mueven a ras de suelo, cada cierto tiempo movimiento aleatorio(izq o derecha).
--Humanoides, caida. (Javier)
+-Humanoides, caida. (Javier) HECHO, el humanoide ahora esta para que lo coja la nave porque los enemigos no tenian la ia
+, solo es cambiar en pickvillager que este intersect con el enemigo y no con  la nave.
 
 - Landers, cogen al humanoide, intentan llegar hasta arriba, si lo consiguen te empiezan a atacar y se convierten en mutantes.
 -Bombers, se mueven , sueltan minas flotantes si lo tocas te mueres.
 - Baiters te persiguen. (Jaime)
 
--Movimiento de la nave. (Javier)
+-Movimiento de la nave. (Javier)  HECHO
 
-- Disparar solo un disparito. (Javier)
+- Disparar solo un disparito. (Javier) HECHO
 
 - Mapa (Fernando)
 
